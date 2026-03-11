@@ -1,53 +1,37 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Navbar } from '../Sections/Home/Navbar';
 import { HeroHome } from '../Sections/Home/HeroHome';
-import { BenefitsHome } from '../Sections/Home/BenefitsHome';
-import { DeviceShowcaseHome } from '../Sections/Home/DeviceShowcaseHome';
-import { ReportsHome } from '../Sections/Home/ReportsHome';
-import { FAQHome } from '../Sections/Home/FAQHome';
-import { FooterHome } from '../Sections/Home/FooterHome';
-import { DemoModal } from '../Sections/Home/DemoModal';
-import { WhatsAppButton } from '../Sections/Home/WhatsAppButton'; // Importamos el botón nuevo
+import { motion } from 'framer-motion';
 
-const Home = () => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
+// Definimos la interfaz para recibir la función del modal desde App.tsx
+interface HomeProps {
+    onOpenModal: () => void;
+}
 
-    const openModal = () => setIsModalOpen(true);
-    const closeModal = () => setIsModalOpen(false);
-
-    useEffect(() => {
-        if (isModalOpen) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = 'unset';
-        }
-        return () => { document.body.style.overflow = 'unset'; };
-    }, [isModalOpen]);
-
+const Home = ({ onOpenModal }: HomeProps) => {
     return (
-        <main className="relative z-10 w-full min-h-screen bg-[#020617] text-white selection:bg-[#00C1A3]/30">
-            {/* Navegación principal */}
-            <Navbar onOpenModal={openModal} />
-
+        <motion.main 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="relative z-10 w-full min-h-screen bg-[#020617] text-white selection:bg-[#00C1A3]/30"
+        >
+            {/* En una estructura de Website, el Home suele ser la carta de presentación.
+                Aquí solo dejamos el Hero. Las demás secciones ahora viven en sus 
+                propias páginas (BenefitsPage, FAQPage, etc.)
+            */}
             <div className="flex flex-col">
-                <HeroHome onOpenModal={openModal} />
-                <BenefitsHome />
-                <DeviceShowcaseHome />
-                <ReportsHome />
-                <FAQHome />
-                <FooterHome onOpenModal={openModal} />
+                <HeroHome onOpenModal={onOpenModal} />
+                
+                {/* TIP: Si quieres que el Home no se vea tan vacío, podrías agregar 
+                   aquí un pequeño "Resumen" o "Teaser" de los beneficios, 
+                   pero las secciones completas ya tienen su propia ruta. 
+                */}
             </div>
 
-            {/* Modal de demostración */}
-            <DemoModal
-                isOpen={isModalOpen}
-                onClose={closeModal}
-            />
-
-            {/* Botón flotante de WhatsApp siempre visible en el Home */}
-            <WhatsAppButton />
-        </main>
+            {/* Nota: El Modal, el Navbar, el Footer y el WhatsAppButton 
+               ya no van aquí. Se renderizan en App.tsx para que persistan 
+               en todas las páginas.
+            */}
+        </motion.main>
     );
 };
 
