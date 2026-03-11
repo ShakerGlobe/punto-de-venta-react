@@ -1,1 +1,54 @@
 @import "tailwindcss";
+
+/* 1. Bloqueo de desplazamiento de raíz */
+html,
+body {
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+    position: relative;
+    /* Evita el efecto elástico de 'rebote' lateral en iOS y Mac */
+    overscroll-behavior-x: none;
+    margin: 0;
+    padding: 0;
+    background-color: #020617;
+    /* Sincronizado con tu App.jsx */
+}
+
+/* 2. Blindaje para el contenedor de React */
+#root {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* 3. Evitar que las secciones con luces/brillos empujen el borde derecho */
+section {
+    width: 100%;
+    overflow: hidden;
+}
+
+/* 4. Fix para el zoom de iPhone (Culpable #1 del desplazamiento lateral) */
+@media (max-width: 768px) {
+
+    input,
+    textarea,
+    select {
+        font-size: 16px !important;
+    }
+}
+
+/* 5. Scrollbar minimalista para que no robe ancho de pantalla */
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background: #020617;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #1e293b;
+    border-radius: 10px;
+}
