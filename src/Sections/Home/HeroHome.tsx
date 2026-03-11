@@ -6,7 +6,8 @@ interface HeroProps {
 }
 
 export const HeroHome = ({ onOpenModal }: HeroProps) => {
-    const mascotImage = "/images/NEDIMI POS-04.png";
+    // Corregimos la ruta con encoding para el espacio, esto evita errores 404 en varios navegadores
+    const mascotImage = "/images/NEDIMI%20POS-04.png";
 
     return (
         <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden py-12 md:py-20 px-6 bg-[#020617] text-white">
@@ -20,7 +21,6 @@ export const HeroHome = ({ onOpenModal }: HeroProps) => {
             <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center relative z-10 w-full">
 
                 {/* LADO IZQUIERDO: BRANDING Y ACCIÓN */}
-                {/* Ajuste móvil: order-2 para que el texto quede abajo de la mascota en celulares */}
                 <div className="flex flex-col gap-6 md:gap-10 order-2 lg:order-1 text-center lg:text-left items-center lg:items-start">
                     <motion.div
                         initial={{ opacity: 0, y: -10 }}
@@ -40,7 +40,6 @@ export const HeroHome = ({ onOpenModal }: HeroProps) => {
                             className="flex flex-col"
                         >
                             <span className="text-[#00C1A3] font-black text-lg md:text-2xl tracking-[0.3em] md:tracking-[0.5em] uppercase lg:ml-2 mb-[-5px] md:mb-[-10px]">Sistema</span>
-                            {/* Ajuste de Texto: text-[3.8rem] en móvil para que no se rompa */}
                             <h1 className="text-[3.8rem] sm:text-[6rem] md:text-[9rem] lg:text-[10.5rem] font-[1000] tracking-tighter leading-[0.85] md:leading-[0.8] uppercase italic select-none">
                                 Nedimi<span className="text-transparent bg-clip-text bg-gradient-to-b from-[#00C1A3] to-[#007a67] drop-shadow-[0_0_20px_rgba(0,193,163,0.3)]">POS</span>
                             </h1>
@@ -75,20 +74,17 @@ export const HeroHome = ({ onOpenModal }: HeroProps) => {
                 </div>
 
                 {/* LADO DERECHO: MASCOTA */}
-                {/* Ajuste móvil: order-1 y altura reducida para que no ocupe toda la pantalla */}
                 <div className="relative flex justify-center items-center h-[280px] sm:h-[400px] md:h-[500px] lg:h-[600px] order-1 lg:order-2">
 
-                    {/* AURA FONDO */}
                     <div className="absolute w-[60%] h-[60%] bg-[#00C1A3]/20 blur-[50px] md:blur-[100px] rounded-full" />
 
-                    {/* IMAGEN MASCOTA */}
                     <motion.img
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.8, ease: "backOut" }}
                         src={mascotImage}
                         alt="Nedimi Mascota"
-                        className="relative z-10 w-full max-w-[220px] sm:max-w-[350px] md:max-w-[450px] lg:max-w-[500px] drop-shadow-[0_20px_40px_rgba(0,0,0,0.5)]"
+                        className="relative z-10 w-full max-w-[220px] sm:max-w-[350px] md:max-w-[450px] lg:max-w-[500px] drop-shadow-[0_20px_40px_rgba(0,0,0,0.5)] object-contain"
                     />
 
                     {/* TARJETAS FLOTANTES */}
@@ -100,7 +96,7 @@ export const HeroHome = ({ onOpenModal }: HeroProps) => {
                         <div className="p-2 md:p-3 bg-[#00C1A3]/20 rounded-lg md:rounded-2xl text-[#00C1A3]">
                             <Camera size={18} />
                         </div>
-                        <div className="hidden xs:block">
+                        <div className="hidden sm:block">
                             <p className="text-[7px] md:text-[8px] text-slate-400 font-black uppercase tracking-widest">Tecnología</p>
                             <p className="text-[10px] md:text-sm font-bold">Escáner Cámara</p>
                         </div>
@@ -114,7 +110,7 @@ export const HeroHome = ({ onOpenModal }: HeroProps) => {
                         <div className="p-2 md:p-3 bg-blue-500/20 rounded-lg md:rounded-2xl text-blue-400">
                             <Scale size={18} />
                         </div>
-                        <div className="hidden xs:block">
+                        <div className="hidden sm:block">
                             <p className="text-[7px] md:text-[8px] text-slate-400 font-black uppercase tracking-widest">Versatilidad</p>
                             <p className="text-[10px] md:text-sm font-bold">Venta por Gramaje</p>
                         </div>
@@ -128,7 +124,7 @@ export const HeroHome = ({ onOpenModal }: HeroProps) => {
                         <div className="p-2 md:p-3 bg-emerald-500/20 rounded-lg md:rounded-2xl text-emerald-400">
                             <FileSpreadsheet size={18} />
                         </div>
-                        <div className="hidden xs:block">
+                        <div className="hidden sm:block">
                             <p className="text-[7px] md:text-[8px] text-slate-400 font-black uppercase tracking-widest">Control</p>
                             <p className="text-[10px] md:text-sm font-bold">Reportes Excel</p>
                         </div>
