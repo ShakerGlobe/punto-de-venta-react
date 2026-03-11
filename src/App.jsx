@@ -3,7 +3,8 @@ import './index.css';
 
 function App() {
   return (
-    <div className="min-h-screen">
+    /* Forzamos el azul profundo de Nedimi y el color de texto blanco */
+    <div className="min-h-screen bg-[#001f3f] text-white">
       <Home />
     </div>
   );

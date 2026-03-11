@@ -1,17 +1,17 @@
 @import "tailwindcss";
 
 @theme {
-    --color-dark-bg: #020617;
-    --color-dark-surface: #0f172a;
-    /* Agregamos el color primario de AryPOS para usarlo como clase */
-    --color-primary: #00C1A3;
+    /* Identidad visual de Nedimi POS */
+    --color-nedimi-dark: #001f3f;
+    --color-nedimi-accent: #00C1A3;
+    --color-nedimi-text: #ffffff;
 }
 
 :root {
-    background-color: #020617;
+    /* Sincronizamos el fondo con el azul oscuro del logo */
+    background-color: #001f3f;
     color: white;
     color-scheme: dark;
-    /* --- ESTO HACE QUE LA NAVEGACIÓN SEA SUAVE --- */
     scroll-behavior: smooth;
 }
 
@@ -22,36 +22,39 @@ section {
 
 body {
     margin: 0;
-    background-color: #020617;
+    /* Forzamos el color de marca en el body */
+    background-color: #001f3f !important;
     min-height: 100vh;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    /* Mejora el renderizado de fuentes en modo oscuro */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
 #root {
-    background-color: #020617;
+    background-color: #001f3f;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
-/* --- SCROLLBAR PERSONALIZADA (Para que no se vea la gris fea por defecto) --- */
+/* --- SCROLLBAR PERSONALIZADA --- */
 ::-webkit-scrollbar {
     width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-    background: #020617;
+    background: #001f3f;
 }
 
 ::-webkit-scrollbar-thumb {
+    /* Color de contraste para el scroll */
     background: #1e293b;
     border-radius: 10px;
+    border: 2px solid #001f3f;
 }
 
 ::-webkit-scrollbar-thumb:hover {
+    /* Al pasar el mouse, usamos el verde de Nedimi */
     background: #00C1A3;
 }
 
