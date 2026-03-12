@@ -4,6 +4,8 @@ import { InfrastructureHome } from '../Sections/Home/InfraestructureHome';
 import { DashboardPreview } from '../Sections/Home/DashboardPreview';
 import { RegisterCTA } from '../components/RegisterCTA';
 import { PageTransition } from '../components/PageTransition';
+import { WhyChoosePOS } from '../Sections/Home/WhyChoosePOS';
+import { DeviceCompatibility } from '../Sections/Home/DeviceCompatibility';
 
 const Home = ({ onOpenModal }: { onOpenModal: () => void }) => {
     return (
@@ -13,6 +15,8 @@ const Home = ({ onOpenModal }: { onOpenModal: () => void }) => {
                 <BusinessMarquee />
                 <InfrastructureHome />
                 <DashboardPreview />
+                <WhyChoosePOS/>
+                <DeviceCompatibility/>
                 <RegisterCTA/>
             </main>
         </PageTransition>

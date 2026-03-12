@@ -13,7 +13,7 @@ import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer'; // Si en el archivo se llama FooterHome, cámbialo allí a Footer
 import { LoadingScreen } from './components/LoadingScreen';
 import { DemoModal } from './components/DemoModal';
-import  ScrollToTop  from './components/ScrollToTop';
+import { ScrollToTop } from './components/ScrollToTop';
 import { WhatsAppButton } from './components/WhatsAppButton';
 import PrivacyNotice from './components/PrivacyNotice';
 
