@@ -32,7 +32,6 @@ export const Navbar = ({ onOpenModal }: NavbarProps) => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    // Bloquear scroll correctamente
     useEffect(() => {
         if (mobileMenuOpen) {
             document.documentElement.style.overflow = 'hidden';
@@ -54,14 +53,12 @@ export const Navbar = ({ onOpenModal }: NavbarProps) => {
                     ? 'bg-[#020617]/85 backdrop-blur-2xl py-3 border-b border-[#00C1A3]/20'
                     : 'bg-transparent py-6 md:py-8'
                 }`}>
-                {/* BARRA DE PROGRESO */}
                 <motion.div
                     className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#00C1A3] to-cyan-500 origin-left z-[130]"
                     style={{ scaleX }}
                 />
 
                 <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-                    {/* LOGO */}
                     <Link
                         to="/"
                         onClick={() => setMobileMenuOpen(false)}
@@ -77,7 +74,6 @@ export const Navbar = ({ onOpenModal }: NavbarProps) => {
                         />
                     </Link>
 
-                    {/* DESKTOP MENU */}
                     <div className="hidden md:flex items-center bg-white/5 border border-white/10 px-6 py-2 rounded-full backdrop-blur-md gap-8">
                         {navLinks.map((link) => {
                             const isActive = location.pathname === link.path;
@@ -100,10 +96,10 @@ export const Navbar = ({ onOpenModal }: NavbarProps) => {
                         })}
                     </div>
 
-                    {/* BOTONES DERECHA */}
                     <div className="flex items-center gap-4">
+                        {/* BOTÓN DESKTOP: Ahora navega a /register */}
                         <button
-                            onClick={onOpenModal}
+                            onClick={() => navigate('/register')}
                             className="hidden sm:block relative px-6 py-2.5 bg-[#00C1A3] text-[#020617] text-[10px] font-[1000] rounded-xl group shadow-[0_0_20px_rgba(0,193,163,0.3)] transition-transform hover:scale-105 active:scale-95 overflow-hidden"
                         >
                             <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]" />
@@ -121,7 +117,6 @@ export const Navbar = ({ onOpenModal }: NavbarProps) => {
                 </div>
             </nav>
 
-            {/* MOBILE MENU - USANDO PORTAL O POSICIÓN FIJA INDEPENDIENTE */}
             <AnimatePresence>
                 {mobileMenuOpen && (
                     <motion.div
@@ -130,7 +125,6 @@ export const Navbar = ({ onOpenModal }: NavbarProps) => {
                         exit={{ opacity: 0 }}
                         className="fixed inset-0 bg-[#020617] z-[110] flex flex-col justify-center items-center overflow-hidden"
                     >
-                        {/* Círculo de luz de fondo para que no se vea vacío */}
                         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#00C1A3]/5 blur-[120px] rounded-full pointer-events-none" />
 
                         <div className="flex flex-col gap-8 w-full px-10 relative z-[111]">
@@ -155,8 +149,9 @@ export const Navbar = ({ onOpenModal }: NavbarProps) => {
                                 transition={{ delay: 0.4 }}
                                 className="mt-10 flex flex-col items-center"
                             >
+                                {/* BOTÓN MÓVIL: Ahora navega a /register */}
                                 <button
-                                    onClick={() => { onOpenModal(); setMobileMenuOpen(false); }}
+                                    onClick={() => { navigate('/register'); setMobileMenuOpen(false); }}
                                     className="w-full max-w-xs py-5 bg-[#00C1A3] text-[#020617] font-black italic uppercase rounded-2xl shadow-[0_20px_40px_rgba(0,193,163,0.2)]"
                                 >
                                     PROBAR GRATIS

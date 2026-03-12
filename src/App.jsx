@@ -18,6 +18,7 @@ import { WhatsAppButton } from './components/WhatsAppButton';
 import PrivacyNotice from './components/PrivacyNotice';
 
 import './index.css';
+import RegisterPage from './Pages/RegisterPage';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -60,6 +61,7 @@ function App() {
                   <Route path="/tecnologia" element={<TechnologicalPage />} />
                   <Route path="/preguntas" element={<FAQPage />} />
                   <Route path="/privacidad" element={<PrivacyNotice />} />
+                  <Route path="/register" element={<RegisterPage />} />
                   
                   {/* Comodín para rutas no encontradas */}
                   <Route path="*" element={<Home onOpenModal={openModal} />} />
