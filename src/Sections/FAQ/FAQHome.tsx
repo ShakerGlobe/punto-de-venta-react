@@ -44,9 +44,14 @@ const faqs = [
 export const FAQHome = () => {
     const [active, setActive] = useState<number | null>(null);
 
+    // Configuración de WhatsApp
+    const WHATSAPP_NUMBER = "525564604183";
+    const WHATSAPP_MESSAGE = encodeURIComponent("Hola, vengo de la web de Nedimi POS. Me gustaría hablar con un experto sobre el sistema.");
+    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`;
+
     return (
         <section id="faq" className="py-20 md:py-32 bg-transparent relative overflow-hidden scroll-mt-20">
-            {/* Decoración de fondo mejorada para visibilidad */}
+            {/* Decoración de fondo */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full md:w-[1000px] h-[300px] md:h-[400px] bg-gradient-to-r from-[#00C1A3]/10 to-blue-500/10 blur-[80px] md:blur-[120px] rounded-full -z-10" />
 
             <div className="max-w-7xl mx-auto px-6">
@@ -71,28 +76,58 @@ export const FAQHome = () => {
                                     resueltas
                                 </span>
                             </h2>
-                            <p className="text-slate-400 text-base md:text-lg mb-10 leading-relaxed max-w-md">
+                            <p className="text-slate-400 text-base md:text-lg mb-8 leading-relaxed max-w-md">
                                 Todo lo que necesitas saber para digitalizar tu negocio con la tecnología de Nedimi POS.
                             </p>
 
-                            {/* Card de ayuda rápida */}
-                            <div className="group p-6 md:p-8 rounded-[2rem] md:rounded-[2.5rem] bg-gradient-to-b from-[#001f3f]/80 to-[#001f3f]/40 border border-white/10 backdrop-blur-xl relative overflow-hidden">
+                            {/* NUEVO: Micro-badge de confianza (Social Proof) */}
+                            <div className="flex items-center gap-3 mb-10 text-slate-500 text-xs font-medium">
+                                <div className="flex -space-x-2">
+                                    {[1, 2, 3].map((i) => (
+                                        <div key={i} className="w-7 h-7 rounded-full border-2 border-[#020617] bg-slate-800 flex items-center justify-center overflow-hidden">
+                                            <div className="w-full h-full bg-gradient-to-tr from-slate-700 to-slate-500" />
+                                        </div>
+                                    ))}
+                                </div>
+                                <span>+500 negocios digitalizados</span>
+                            </div>
+
+                            {/* Card de ayuda rápida mejorada */}
+                            <div className="group p-6 md:p-8 rounded-[2.5rem] bg-gradient-to-b from-[#001f3f]/80 to-[#001f3f]/40 border border-white/10 backdrop-blur-xl relative overflow-hidden">
                                 <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
                                     <MessageCircle size={100} className="text-[#00C1A3]" />
                                 </div>
 
-                                <div className="flex items-center gap-4 mb-4 relative z-10">
+                                <div className="flex items-center justify-between mb-6 relative z-10">
                                     <div className="p-3 bg-[#00C1A3] rounded-2xl text-black shadow-[0_0_20px_rgba(0,193,163,0.3)]">
                                         <MessageCircle size={20} />
                                     </div>
-                                    <span className="font-bold text-white text-base md:text-lg">¿Aún tienes dudas?</span>
+                                    {/* Indicador de "En Línea" */}
+                                    <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20">
+                                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                                        <span className="text-[10px] text-emerald-500 font-bold uppercase tracking-tighter">Soporte Activo</span>
+                                    </div>
                                 </div>
-                                <p className="text-slate-400 text-sm mb-6 leading-relaxed relative z-10">
-                                    Nuestro equipo técnico te ayuda con la carga inicial de tus productos.
-                                </p>
-                                <button className="w-full py-4 rounded-xl md:rounded-2xl bg-white/5 border border-white/10 text-white text-[10px] md:text-xs font-bold uppercase tracking-widest hover:bg-[#00C1A3] hover:text-black transition-all duration-300 relative z-10">
-                                    Hablar con un experto
-                                </button>
+
+                                <div className="relative z-10">
+                                    <span className="font-bold text-white text-lg md:text-xl block mb-2">¿Aún tienes dudas?</span>
+                                    <p className="text-slate-400 text-sm mb-6 leading-relaxed">
+                                        Nuestro equipo técnico te ayuda con la carga inicial de tus productos **sin costo adicional**.
+                                    </p>
+
+                                    <a
+                                        href={whatsappUrl}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="flex items-center justify-center w-full py-4 rounded-xl md:rounded-2xl bg-[#00C1A3] text-black text-[10px] md:text-xs font-black uppercase tracking-widest hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 shadow-[0_10px_20px_rgba(0,193,163,0.2)]"
+                                    >
+                                        Hablar con un experto
+                                    </a>
+
+                                    <p className="text-center text-[9px] text-slate-500 mt-4 uppercase tracking-tighter font-semibold">
+                                        Respuesta inmediata vía WhatsApp
+                                    </p>
+                                </div>
                             </div>
                         </motion.div>
                     </div>
@@ -118,7 +153,6 @@ export const FAQHome = () => {
                                         className="w-full p-6 md:p-9 flex items-center justify-between text-left"
                                     >
                                         <div className="flex flex-col gap-2 md:gap-3 pr-4">
-                                            {/* Tag decorativo */}
                                             <div className={`flex items-center gap-2 text-[9px] md:text-[10px] font-bold uppercase tracking-[0.2em] transition-colors ${isActive ? 'text-[#00C1A3]' : 'text-slate-500'}`}>
                                                 {faq.icon}
                                                 {faq.tag}
@@ -155,6 +189,13 @@ export const FAQHome = () => {
                                 </motion.div>
                             );
                         })}
+
+                        {/* Pie de FAQ para móvil y desktop */}
+                        <div className="pt-6 text-center">
+                            <p className="text-slate-500 text-sm italic">
+                                ¿Tienes una pregunta diferente? <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="text-[#00C1A3] font-bold hover:underline">Escríbenos ahora</a>
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
