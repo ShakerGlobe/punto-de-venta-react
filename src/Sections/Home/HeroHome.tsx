@@ -1,9 +1,10 @@
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { motion, useMotionValue, useSpring, AnimatePresence } from "framer-motion";
 import { 
     ArrowRight, Box, Users, TrendingUp, 
-    Zap, ShieldCheck, Globe, Rocket, DollarSign, Cloud, CheckCircle2 
+    Zap, ShieldCheck, Globe, Rocket, DollarSign, Cloud, MousePointerClick 
 } from "lucide-react";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface HeroProps {
     onOpenModal: () => void;
@@ -23,9 +24,14 @@ const posBenefits = [
 ];
 
 export const HeroHome = ({ onOpenModal }: HeroProps) => {
+    const navigate = useNavigate();
     const mascotImage = "/images/NEDIMI%20POS-04.png";
     const containerRef = useRef<HTMLDivElement>(null);
+    
+    // Estado para controlar el mensaje de invitación
+    const [isHoveringMascot, setIsHoveringMascot] = useState(false);
 
+    // --- Seguimiento de Mouse para Parallax ---
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
     const springX = useSpring(mouseX, { stiffness: 50, damping: 20 });
@@ -46,17 +52,12 @@ export const HeroHome = ({ onOpenModal }: HeroProps) => {
             onMouseMove={handleMouseMove}
             className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#020617] px-6 py-20 lg:py-0"
         >
-            {/* 1. FONDO DINÁMICO (Carriles Únicos en Inglés) */}
+            {/* 1. FONDO DINÁMICO */}
             <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
                 <div className="absolute inset-0 bg-[radial-gradient(#ffffff05_1px,transparent_1px)] [background-size:80px_80px] opacity-50" />
                 
                 {posBenefits.map((item, i) => (
-                    <BenefitStream 
-                        key={item.text} 
-                        item={item} 
-                        index={i} 
-                        total={posBenefits.length}
-                    />
+                    <BenefitStream key={item.text} item={item} index={i} total={posBenefits.length} />
                 ))}
 
                 <motion.div 
@@ -68,9 +69,8 @@ export const HeroHome = ({ onOpenModal }: HeroProps) => {
 
             <div className="max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-16 items-center relative z-10">
                 
-                {/* 2. CONTENIDO PRINCIPAL (En Español) */}
+                {/* 2. COLUMNA IZQUIERDA: CONTENIDO */}
                 <div className="flex flex-col gap-8 text-center lg:text-left items-center lg:items-start order-2 lg:order-1">
-                    
                     <motion.div 
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
@@ -86,7 +86,7 @@ export const HeroHome = ({ onOpenModal }: HeroProps) => {
                         <motion.h1 
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            className="text-[13vw] sm:text-[9vw] lg:text-[10rem] font-[1000] leading-[0.8] italic uppercase tracking-tighter"
+                            className="text-[13vw] sm:text-[9vw] lg:text-[10rem] font-[1000] leading-[0.8] italic uppercase tracking-tighter text-white"
                         >
                             NEDIMI<br />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00C1A3] to-emerald-400 drop-shadow-[0_0_20px_rgba(0,193,163,0.3)]">
@@ -111,7 +111,7 @@ export const HeroHome = ({ onOpenModal }: HeroProps) => {
                         className="w-full sm:w-auto pt-4"
                     >
                         <button 
-                            onClick={onOpenModal}
+                            onClick={() => navigate('/register')}
                             className="group relative w-full sm:w-auto px-12 py-6 bg-[#00C1A3] text-[#020617] font-black rounded-3xl overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-[0_20px_50px_rgba(0,193,163,0.3)]"
                         >
                             <span className="relative z-10 flex items-center justify-center gap-3 text-lg italic uppercase tracking-widest">
@@ -121,24 +121,48 @@ export const HeroHome = ({ onOpenModal }: HeroProps) => {
                     </motion.div>
                 </div>
 
-                {/* 3. MASCOTA E INDICADORES (Burbujas en Inglés) */}
+                {/* 3. COLUMNA DERECHA: MASCOTA INTERACTIVA */}
                 <div className="relative flex justify-center items-center order-1 lg:order-2 h-[400px] lg:h-[700px]">
                     <motion.div
                         style={{ x: springX, y: springY }}
-                        className="relative z-10 w-full max-w-[500px]"
+                        className="relative z-10 w-fit h-fit cursor-pointer group"
+                        onMouseEnter={() => setIsHoveringMascot(true)}
+                        onMouseLeave={() => setIsHoveringMascot(false)}
+                        onClick={() => navigate('/register')}
                     >
-                        <div className="absolute inset-0 border border-white/5 rounded-full scale-125 opacity-40" />
+                        <AnimatePresence>
+                            {isHoveringMascot && (
+                                <motion.div
+                                    initial={{ opacity: 0, y: 20, x: "-50%", scale: 0.8 }}
+                                    animate={{ opacity: 1, y: 0, x: "-50%", scale: 1 }}
+                                    exit={{ opacity: 0, y: 10, x: "-50%", scale: 0.8 }}
+                                    // Cambiado a top-[15%] para bajarlo mucho más hacia el robot
+                                    className="absolute top-[15%] left-1/2 z-50 bg-white px-5 py-2 rounded-xl shadow-[0_10px_30px_rgba(0,193,163,0.5)] whitespace-nowrap"
+                                >
+                                    <div className="flex items-center gap-2">
+                                        <MousePointerClick size={14} className="text-[#00C1A3]" />
+                                        <span className="text-[#020617] font-[1000] italic uppercase text-[10px] tracking-widest">
+                                            ¡Pide tu prueba gratis!
+                                        </span>
+                                    </div>
+                                    <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-3 h-3 bg-white rotate-45" />
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+
+                        <div className="absolute inset-0 border border-white/5 rounded-full scale-150 opacity-20 pointer-events-none" />
 
                         <motion.img 
                             src={mascotImage}
-                            animate={{ y: [0, -20, 0] }}
+                            animate={{ y: [0, -15, 0] }}
                             transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                            className="w-full h-auto drop-shadow-[0_30px_60px_rgba(0,193,163,0.3)]"
+                            className="w-[280px] sm:w-[350px] lg:w-[420px] h-auto drop-shadow-[0_30px_60px_rgba(0,193,163,0.3)] transition-all duration-500 group-hover:brightness-110 group-hover:scale-[1.02]"
                         />
 
-                        {/* Indicadores que rodean al logo/mascota en Inglés */}
-                        <InfoBubble icon={<Zap size={18} />} label="Response" value="Instant" pos="top-0 -right-4" color="text-[#00C1A3]" delay={0} />
-                        <InfoBubble icon={<ShieldCheck size={18} />} label="Protocol" value="Security+" pos="bottom-12 -left-8" color="text-blue-400" delay={1} />
+                        <div className="pointer-events-none">
+                            <InfoBubble icon={<Zap size={18} />} label="Response" value="Instant" pos="top-0 -right-8" color="text-[#00C1A3]" delay={0} />
+                            <InfoBubble icon={<ShieldCheck size={18} />} label="Protocol" value="Security+" pos="bottom-12 -left-12" color="text-blue-400" delay={1} />
+                        </div>
                     </motion.div>
                 </div>
             </div>
@@ -146,6 +170,7 @@ export const HeroHome = ({ onOpenModal }: HeroProps) => {
     );
 };
 
+// --- Sub-componente: Flujo de BENEFICIOS ---
 const BenefitStream = ({ item, index, total }: { item: any, index: number, total: number }) => {
     const laneHeight = 10 + (index * (80 / (total - 1))); 
     const customDelay = index * 3;
@@ -154,30 +179,21 @@ const BenefitStream = ({ item, index, total }: { item: any, index: number, total
     return (
         <motion.div
             initial={{ left: "-25%", opacity: 0 }}
-            animate={{ 
-                left: "125%", 
-                opacity: [0, 0.6, 0.6, 0] 
-            }}
-            transition={{ 
-                duration: duration, 
-                repeat: Infinity, 
-                delay: customDelay, 
-                ease: "linear" 
-            }}
+            animate={{ left: "125%", opacity: [0, 0.6, 0.6, 0] }}
+            transition={{ duration, repeat: Infinity, delay: customDelay, ease: "linear" }}
             className={`absolute font-mono text-[11px] ${item.color} whitespace-nowrap flex items-center gap-3 pointer-events-none`}
             style={{ top: `${laneHeight}%` }}
         >
             <div className={`p-2 rounded-lg bg-current/15 ${item.glow} shadow-xl backdrop-blur-sm border border-current/20`}>
                 {item.icon}
             </div>
-            <span className="font-[1000] tracking-[0.25em] drop-shadow-[0_0_10px_rgba(0,0,0,0.5)] uppercase">
-                {item.text}
-            </span>
+            <span className="font-[1000] tracking-[0.25em] drop-shadow-[0_0_10px_rgba(0,0,0,0.5)] uppercase">{item.text}</span>
             <div className={`w-24 h-[2px] bg-gradient-to-r from-current to-transparent opacity-40 ml-2`} />
         </motion.div>
     );
 };
 
+// --- Sub-componente: Burbujas de Información Live ---
 const InfoBubble = ({ icon, label, value, pos, color, delay }: any) => (
     <motion.div 
         initial={{ scale: 0, opacity: 0 }}
@@ -190,7 +206,6 @@ const InfoBubble = ({ icon, label, value, pos, color, delay }: any) => (
         </div>
         <div className="flex flex-col">
             <div className="flex items-center gap-2">
-                {/* Labels en Inglés como se solicitó para los alrededores del logo */}
                 <span className="text-[10px] font-black text-white/50 uppercase tracking-tighter leading-none">{label}</span>
                 <div className="w-1.5 h-1.5 rounded-full bg-[#00C1A3] animate-pulse" />
             </div>
