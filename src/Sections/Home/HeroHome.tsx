@@ -1,297 +1,211 @@
-import { motion } from "framer-motion";
-import {
-    ArrowRight, Camera, Scale, FileSpreadsheet,
-    Database, BarChart3, Globe2, ShieldCheck, CheckCircle2,
-    Zap, Cpu, LayoutDashboard
+import { motion, useMotionValue, useSpring } from "framer-motion";
+import { 
+    ArrowRight, Box, Users, TrendingUp, 
+    Zap, ShieldCheck, Globe, Rocket, DollarSign, Cloud, CheckCircle2 
 } from "lucide-react";
+import React, { useRef } from "react";
 
 interface HeroProps {
     onOpenModal: () => void;
 }
 
+// --- Listado de BENEFICIOS ÚNICOS (9 elementos) ---
+const posBenefits = [
+    { text: "FAST_CHECKOUT", icon: <Zap size={14} />, color: "text-emerald-400", glow: "shadow-emerald-500/60" },
+    { text: "REALTIME_STOCK", icon: <Box size={14} />, color: "text-blue-400", glow: "shadow-blue-500/60" },
+    { text: "CLOUD_SYNC_24/7", icon: <Cloud size={14} />, color: "text-[#00C1A3]", glow: "shadow-[#00C1A3]/60" },
+    { text: "REVENUE_GROWTH", icon: <TrendingUp size={14} />, color: "text-amber-400", glow: "shadow-amber-500/60" },
+    { text: "SECURE_PAYMENTS", icon: <ShieldCheck size={14} />, color: "text-cyan-400", glow: "shadow-cyan-500/60" },
+    { text: "USER_CONTROL", icon: <Users size={14} />, color: "text-purple-400", glow: "shadow-purple-500/60" },
+    { text: "EASY_SCALABILITY", icon: <Rocket size={14} />, color: "text-indigo-400", glow: "shadow-indigo-500/60" },
+    { text: "GLOBAL_ACCESS", icon: <Globe size={14} />, color: "text-rose-400", glow: "shadow-rose-500/60" },
+    { text: "PROFIT_TRACKING", icon: <DollarSign size={14} />, color: "text-emerald-300", glow: "shadow-emerald-400/60" },
+];
+
 export const HeroHome = ({ onOpenModal }: HeroProps) => {
     const mascotImage = "/images/NEDIMI%20POS-04.png";
+    const containerRef = useRef<HTMLDivElement>(null);
 
-    const businessTypes = [
-        "Abarrotes", "Farmacias", "Ferreterías", "Papelerías",
-        "Boutiques", "Mini Supers", "Refaccionarias", "Cafeterías"
-    ];
+    // --- Seguimiento de Mouse para Parallax ---
+    const mouseX = useMotionValue(0);
+    const mouseY = useMotionValue(0);
+    const springX = useSpring(mouseX, { stiffness: 50, damping: 20 });
+    const springY = useSpring(mouseY, { stiffness: 50, damping: 20 });
 
-    const technicalStats = [
-        { label: "Sincronización", value: "Cloud", icon: <Database />, color: "from-[#00C1A3]", border: "hover:border-[#00C1A3]" },
-        { label: "Disponibilidad", value: "24/7", icon: <Globe2 />, color: "from-blue-500", border: "hover:border-blue-500" },
-        { label: "Respaldo", value: "Diario", icon: <ShieldCheck />, color: "from-emerald-500", border: "hover:border-emerald-500" },
-        { label: "Reportes", value: "Excel", icon: <FileSpreadsheet />, color: "from-purple-500", border: "hover:border-purple-500" },
-    ];
+    const handleMouseMove = (e: React.MouseEvent) => {
+        if (!containerRef.current) return;
+        const rect = containerRef.current.getBoundingClientRect();
+        const x = (e.clientX - rect.left - rect.width / 2) / 25;
+        const y = (e.clientY - rect.top - rect.height / 2) / 25;
+        mouseX.set(x);
+        mouseY.set(y);
+    };
 
     return (
-        <div className="bg-[#020617] w-full overflow-x-hidden">
-            {/* --- SECCIÓN HERO --- */}
-            <section id="home" className="relative min-h-[90vh] md:min-h-screen flex items-center justify-center overflow-hidden py-16 md:py-24 px-6 text-white">
-                <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-                    <div className="absolute top-[-10%] left-[-10%] w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-[#00C1A3]/10 blur-[80px] md:blur-[150px] rounded-full" />
-                    <div className="absolute bottom-[5%] right-[-10%] w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-blue-600/10 blur-[80px] md:blur-[150px] rounded-full" />
-                </div>
+        <section 
+            ref={containerRef}
+            onMouseMove={handleMouseMove}
+            className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#020617] px-6 py-20 lg:py-0"
+        >
+            {/* 1. FONDO DINÁMICO (ARREGLADO: SIN EMPALMES) */}
+            <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+                {/* Rejilla sutil */}
+                <div className="absolute inset-0 bg-[radial-gradient(#ffffff05_1px,transparent_1px)] [background-size:80px_80px] opacity-50" />
+                
+                {/* Generación de Carriles Únicos */}
+                {posBenefits.map((item, i) => (
+                    <BenefitStream 
+                        key={item.text} 
+                        item={item} 
+                        index={i} 
+                        total={posBenefits.length}
+                    />
+                ))}
 
-                <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 md:gap-16 items-center relative z-10 w-full">
-                    <div className="flex flex-col gap-6 md:gap-10 order-2 lg:order-1 text-center lg:text-left items-center lg:items-start">
-                        <motion.div
-                            initial={{ opacity: 0, y: -10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            className="inline-flex items-center gap-3 px-4 py-2 bg-white/5 border border-white/10 rounded-2xl w-fit backdrop-blur-md"
-                        >
-                            <span className="flex h-2 w-2 rounded-full bg-[#00C1A3] animate-pulse" />
-                            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">
-                                Solución Punto de Venta
-                            </span>
-                        </motion.div>
-
-                        <div className="space-y-4">
-                            <motion.div
-                                initial={{ opacity: 0, x: -30 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                className="flex flex-col"
-                            >
-                                <span className="text-[#00C1A3] font-black text-xl md:text-2xl tracking-[0.3em] md:tracking-[0.5em] uppercase lg:ml-2 mb-[-5px] md:mb-[-10px]">Sistema</span>
-                                <h1 className="text-[3.5rem] sm:text-[6rem] md:text-[9rem] lg:text-[10.5rem] font-[1000] tracking-tighter leading-[0.85] md:leading-[0.8] uppercase italic select-none">
-                                    Nedimi<span className="text-transparent bg-clip-text bg-gradient-to-b from-[#00C1A3] to-[#007a67] drop-shadow-[0_0_20px_rgba(0,193,163,0.3)]">POS</span>
-                                </h1>
-                            </motion.div>
-
-                            <motion.p
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.1 }}
-                                className="text-base md:text-2xl text-slate-400 max-w-xl leading-snug font-light lg:border-l-2 lg:border-[#00C1A3]/30 lg:pl-6"
-                            >
-                                Control inteligente para tu negocio. Gestiona inventarios, ventas y reportes de forma rápida y segura.
-                            </motion.p>
-                        </div>
-
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.2 }}
-                            className="flex flex-wrap gap-4 w-full justify-center lg:justify-start pt-4"
-                        >
-                            <button
-                                onClick={onOpenModal}
-                                className="group relative w-full sm:w-auto flex items-center justify-center gap-4 px-10 py-5 md:py-7 bg-[#00C1A3] text-[#020617] font-black rounded-2xl md:rounded-[2rem] transition-all hover:scale-105 active:scale-95 shadow-[0_20px_50px_rgba(0,193,163,0.3)] overflow-hidden"
-                            >
-                                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-                                <span className="relative z-10 flex items-center gap-2 text-base md:text-xl">
-                                    PROBAR AHORA <ArrowRight className="group-hover:translate-x-2 transition-transform" />
-                                </span>
-                            </button>
-                        </motion.div>
-                    </div>
-
-                    <div className="relative flex justify-center items-center h-[320px] sm:h-[450px] md:h-[550px] lg:h-[650px] order-1 lg:order-2">
-                        <div className="absolute w-[70%] h-[70%] bg-[#00C1A3]/15 blur-[60px] md:blur-[120px] rounded-full" />
-                        <motion.img
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ duration: 0.8, ease: "backOut" }}
-                            src={mascotImage}
-                            alt="Nedimi Mascota"
-                            className="relative z-10 w-full max-w-[240px] sm:max-w-[380px] md:max-w-[480px] lg:max-w-[550px] drop-shadow-[0_25px_50px_rgba(0,0,0,0.6)] object-contain"
-                        />
-                        <motion.div
-                            animate={{ y: [0, -12, 0] }}
-                            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                            className="absolute top-0 right-4 md:top-10 md:right-0 z-20 p-3 md:p-5 bg-white/10 backdrop-blur-xl border border-white/10 rounded-2xl md:rounded-3xl flex items-center gap-3 md:gap-4"
-                        >
-                            <div className="p-2 md:p-3 bg-[#00C1A3]/20 rounded-xl text-[#00C1A3]"><Camera size={20} /></div>
-                            <div className="hidden sm:block text-left">
-                                <p className="text-[8px] text-slate-400 font-black uppercase mb-1">Cámara</p>
-                                <p className="text-xs md:text-sm font-bold">Escaneo de Código</p>
-                            </div>
-                        </motion.div>
-                        <motion.div
-                            animate={{ y: [0, 12, 0] }}
-                            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-                            className="absolute bottom-4 left-4 md:bottom-20 md:-left-4 z-20 p-3 md:p-5 bg-white/10 backdrop-blur-xl border border-white/10 rounded-2xl md:rounded-3xl flex items-center gap-3 md:gap-4"
-                        >
-                            <div className="p-2 md:p-3 bg-blue-500/20 rounded-xl text-blue-400"><Scale size={20} /></div>
-                            <div className="hidden sm:block text-left">
-                                <p className="text-[8px] text-slate-400 font-black uppercase mb-1">Inventario</p>
-                                <p className="text-xs md:text-sm font-bold">Venta a Granel</p>
-                            </div>
-                        </motion.div>
-                    </div>
-                </div>
-            </section>
-
-            {/* --- MARQUEE (MODIFICADO VELOCIDAD EN MÓVIL) --- */}
-            <div className="relative py-20 overflow-hidden bg-white/[0.01] border-y border-white/5">
-                <div className="absolute inset-0 bg-gradient-to-r from-[#020617] via-transparent to-[#020617] z-10" />
-                {/* 25s en móvil para que sea rápido, 50s en desktop */}
-                <div className="flex whitespace-nowrap animate-[marquee_25s_linear_infinite] md:animate-[marquee_50s_linear_infinite]">
-                    {[...businessTypes, ...businessTypes].map((type, i) => (
-                        <motion.span
-                            key={i}
-                            whileHover={{ color: "#00C1A3", scale: 1.1 }}
-                            className="mx-12 text-4xl md:text-6xl font-black italic uppercase tracking-tighter text-slate-700/40 transition-colors cursor-default flex items-center gap-6"
-                        >
-                            {type} <Zap size={30} className="text-[#00C1A3]/20" />
-                        </motion.span>
-                    ))}
-                </div>
+                {/* Resplandor Central */}
+                <motion.div 
+                    animate={{ opacity: [0.1, 0.15, 0.1] }}
+                    transition={{ duration: 5, repeat: Infinity }}
+                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#00C1A3]/10 blur-[150px] rounded-full"
+                />
             </div>
 
-            {/* --- CARACTERÍSTICAS TÉCNICAS (CON ILUMINACIÓN AL HACER SCROLL) --- */}
-            <section className="max-w-7xl mx-auto px-6 py-32 relative">
-                <div className="text-center mb-20">
-                    <motion.h2
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        className="text-4xl md:text-5xl font-[1000] italic uppercase tracking-tighter text-white"
+            <div className="max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-16 items-center relative z-10">
+                
+                {/* 2. COLUMNA IZQUIERDA: CONTENIDO */}
+                <div className="flex flex-col gap-8 text-center lg:text-left items-center lg:items-start order-2 lg:order-1">
+                    
+                    <motion.div 
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        className="inline-flex items-center gap-2 px-4 py-2 bg-[#00C1A3]/10 border border-[#00C1A3]/30 rounded-2xl backdrop-blur-md shadow-[0_0_15px_rgba(0,193,163,0.1)]"
                     >
-                        Infraestructura <span className="text-[#00C1A3]">Robusta</span>
-                    </motion.h2>
-                </div>
+                        <Zap size={14} className="text-[#00C1A3]" />
+                        <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#00C1A3]">
+                            Power Your Business
+                        </span>
+                    </motion.div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                    {technicalStats.map((stat, i) => (
-                        <motion.div
-                            key={i}
-                            initial={{ opacity: 0.4, y: 30 }}
-                            whileInView={{
-                                opacity: 1,
-                                y: 0,
-                                borderColor: "rgba(255, 255, 255, 0.5)" // Se aclara el borde al entrar en vista
-                            }}
-                            whileHover={{ y: -15, scale: 1.02, borderColor: "rgba(0, 193, 163, 0.8)" }}
-                            transition={{ duration: 0.4 }}
-                            viewport={{ once: false, amount: 0.7 }} // Se activa cuando el 70% de la card es visible
-                            className={`group relative p-8 rounded-[2.5rem] bg-slate-900/50 border border-white/20 backdrop-blur-xl overflow-hidden transition-all duration-500 ${stat.border} hover:shadow-[0_20px_80px_-15px_rgba(0,0,0,0.7)]`}
+                    <div className="space-y-4">
+                        <motion.h1 
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="text-[13vw] sm:text-[9vw] lg:text-[10rem] font-[1000] leading-[0.8] italic uppercase tracking-tighter"
                         >
-                            {/* Brillo de fondo que se activa solo en móvil al estar en vista */}
-                            <motion.div
-                                className={`absolute inset-0 bg-gradient-to-br ${stat.color} to-transparent md:hidden`}
-                                initial={{ opacity: 0 }}
-                                whileInView={{ opacity: 0.12 }}
-                                transition={{ duration: 0.6 }}
-                            />
-
-                            {/* Brillo de fondo para desktop (Hover) */}
-                            <div className={`absolute inset-0 bg-gradient-to-br ${stat.color} to-transparent opacity-0 group-hover:opacity-10 transition-opacity duration-500 hidden md:block`} />
-
-                            <div className="absolute -right-4 -top-4 text-white opacity-[0.03] group-hover:opacity-10 transition-all duration-700 scale-[3] rotate-12">
-                                {stat.icon}
-                            </div>
-
-                            <div className={`mb-8 p-4 bg-white/5 rounded-2xl w-fit border border-white/10 group-hover:bg-white group-hover:text-[#020617] transition-all duration-300 shadow-xl relative z-10`}>
-                                {stat.icon}
-                            </div>
-
-                            <div className="relative z-10">
-                                <h3 className="text-5xl font-[1000] text-white mb-2 tracking-tighter drop-shadow-md">
-                                    {stat.value}
-                                </h3>
-                                <p className={`text-[12px] font-black uppercase tracking-[0.3em] transition-colors duration-300 text-slate-400 group-hover:text-white`}>
-                                    {stat.label}
-                                </p>
-                            </div>
-
-                            <div className={`absolute bottom-0 left-0 h-1 bg-gradient-to-r ${stat.color} to-transparent w-0 group-hover:w-full transition-all duration-500`} />
-                        </motion.div>
-                    ))}
-                </div>
-            </section>
-
-            {/* --- SECCIÓN DASHBOARD --- */}
-            <section className="max-w-7xl mx-auto px-6 pb-40">
-                <motion.div
-                    initial={{ opacity: 0, y: 40 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    className="relative rounded-[4rem] overflow-hidden bg-slate-900/40 border border-white/10 p-8 md:p-24 backdrop-blur-sm"
-                >
-                    <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#00C1A3]/5 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/2" />
-                    <div className="grid lg:grid-cols-2 gap-20 items-center relative z-10">
-                        <div className="text-center lg:text-left">
-                            <div className="flex items-center gap-2 mb-6 justify-center lg:justify-start">
-                                <div className="h-[2px] w-8 bg-[#00C1A3]" />
-                                <span className="text-xs font-black uppercase tracking-[0.4em] text-[#00C1A3]">Control Total</span>
-                            </div>
-                            <h2 className="text-5xl md:text-7xl font-[1000] italic uppercase tracking-tighter text-white mb-8 leading-[0.85]">
-                                Gestión de <br />
-                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00C1A3] to-blue-400">Alto Nivel.</span>
-                            </h2>
-                            <div className="grid gap-6 text-left">
-                                {["Cortes de caja", "Alertas de Stock", "Histórico de Ventas", "Gestión de Precios"].map((item, i) => (
-                                    <motion.div
-                                        key={i}
-                                        whileHover={{ x: 10 }}
-                                        className="flex items-center gap-4 bg-white/5 p-5 rounded-3xl border border-white/5 hover:bg-[#00C1A3]/10 hover:border-[#00C1A3]/20 transition-all cursor-default group"
-                                    >
-                                        <div className="bg-[#00C1A3] p-1 rounded-full group-hover:scale-125 transition-transform">
-                                            <CheckCircle2 size={14} className="text-[#020617]" />
-                                        </div>
-                                        <span className="text-sm font-bold uppercase tracking-widest text-slate-200">{item}</span>
-                                    </motion.div>
-                                ))}
-                            </div>
-                        </div>
-
-                        <motion.div style={{ perspective: 1000 }} className="relative group">
-                            <motion.div
-                                whileHover={{ rotateY: -10, rotateX: 5 }}
-                                transition={{ type: "spring", stiffness: 100 }}
-                                className="aspect-[4/3] rounded-[3rem] bg-[#020617] border-2 border-white/10 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.8)] overflow-hidden relative"
-                            >
-                                <div className="absolute inset-0 p-10 flex flex-col gap-8">
-                                    <div className="flex justify-between items-center">
-                                        <div className="flex gap-2">
-                                            <div className="h-3 w-3 rounded-full bg-red-500/50" />
-                                            <div className="h-3 w-3 rounded-full bg-yellow-500/50" />
-                                            <div className="h-3 w-3 rounded-full bg-green-500/50" />
-                                        </div>
-                                        <LayoutDashboard className="text-slate-700" size={20} />
-                                    </div>
-                                    <div className="flex gap-4">
-                                        <div className="h-20 flex-1 bg-white/5 rounded-2xl border border-white/10 p-4">
-                                            <div className="h-2 w-1/2 bg-white/10 rounded mb-2" />
-                                            <div className="h-6 w-3/4 bg-[#00C1A3]/20 rounded" />
-                                        </div>
-                                        <div className="h-20 flex-1 bg-white/5 rounded-2xl border border-white/10 p-4">
-                                            <div className="h-2 w-1/2 bg-white/10 rounded mb-2" />
-                                            <div className="h-6 w-3/4 bg-blue-500/20 rounded" />
-                                        </div>
-                                    </div>
-                                    <div className="flex-1 flex items-end gap-3 px-2">
-                                        {[40, 70, 45, 90, 65, 80, 55].map((h, i) => (
-                                            <motion.div
-                                                key={i}
-                                                initial={{ height: 0 }}
-                                                whileInView={{ height: `${h}%` }}
-                                                transition={{ delay: i * 0.1, duration: 1 }}
-                                                className="flex-1 bg-gradient-to-t from-[#00C1A3] to-[#00C1A3]/40 rounded-t-lg relative group/bar"
-                                            />
-                                        ))}
-                                    </div>
-                                </div>
-                                <div className="absolute inset-0 bg-gradient-to-t from-[#00C1A3]/10 to-transparent pointer-events-none" />
-                            </motion.div>
-                            <motion.div
-                                animate={{ y: [0, 15, 0] }}
-                                transition={{ duration: 4, repeat: Infinity }}
-                                className="absolute -bottom-6 -right-6 p-6 bg-blue-600 rounded-3xl shadow-xl z-20 hidden md:block"
-                            >
-                                <BarChart3 className="text-white" size={32} />
-                            </motion.div>
-                        </motion.div>
+                            NEDIMI<br />
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00C1A3] to-emerald-400 drop-shadow-[0_0_20px_rgba(0,193,163,0.3)]">
+                                POS
+                            </span>
+                        </motion.h1>
+                        
+                        <motion.p 
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.3 }}
+                            className="text-slate-400 text-lg md:text-2xl max-w-xl leading-relaxed font-light"
+                        >
+                            Intelligent commerce management. <span className="text-white font-medium">Global reach, instant sync,</span> and professional performance.
+                        </motion.p>
                     </div>
-                </motion.div>
-            </section>
 
-            <style dangerouslySetInnerHTML={{
-                __html: `
-                @keyframes marquee {
-                    0% { transform: translateX(0); }
-                    100% { transform: translateX(-50%); }
-                }
-            `}} />
-        </div>
+                    <motion.div 
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.5 }}
+                        className="w-full sm:w-auto pt-4"
+                    >
+                        <button 
+                            onClick={onOpenModal}
+                            className="group relative w-full sm:w-auto px-12 py-6 bg-[#00C1A3] text-[#020617] font-black rounded-3xl overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-[0_20px_50px_rgba(0,193,163,0.3)]"
+                        >
+                            <span className="relative z-10 flex items-center justify-center gap-3 text-lg italic uppercase tracking-widest">
+                                Get Free Access <ArrowRight className="group-hover:translate-x-2 transition-transform" />
+                            </span>
+                        </button>
+                    </motion.div>
+                </div>
+
+                {/* 3. COLUMNA DERECHA: MASCOTA E INDICADORES */}
+                <div className="relative flex justify-center items-center order-1 lg:order-2 h-[400px] lg:h-[700px]">
+                    <motion.div
+                        style={{ x: springX, y: springY }}
+                        className="relative z-10 w-full max-w-[500px]"
+                    >
+                        {/* Órbita decorativa */}
+                        <div className="absolute inset-0 border border-white/5 rounded-full scale-125 opacity-40" />
+
+                        <motion.img 
+                            src={mascotImage}
+                            animate={{ y: [0, -20, 0] }}
+                            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                            className="w-full h-auto drop-shadow-[0_30px_60px_rgba(0,193,163,0.3)]"
+                        />
+
+                        {/* Burbujas de Información Live */}
+                        <InfoBubble icon={<Zap size={18} />} label="Response" value="Instant" pos="top-0 -right-4" color="text-[#00C1A3]" delay={0} />
+                        <InfoBubble icon={<ShieldCheck size={18} />} label="Protocol" value="Security+" pos="bottom-12 -left-8" color="text-blue-400" delay={1} />
+                    </motion.div>
+                </div>
+            </div>
+        </section>
     );
 };
+
+// --- Sub-componente: Flujo de BENEFICIOS ÚNICOS (SIN CHOQUES) ---
+const BenefitStream = ({ item, index, total }: { item: any, index: number, total: number }) => {
+    // 1. Carril único: Divide la pantalla verticalmente entre el total de items
+    const laneHeight = 10 + (index * (80 / (total - 1))); 
+    
+    // 2. Timing: Separación de 3 segundos entre cada inicio
+    const customDelay = index * 3;
+    
+    // 3. Velocidad: Sincronizada para mantener formación
+    const duration = 16; 
+
+    return (
+        <motion.div
+            initial={{ left: "-25%", opacity: 0 }}
+            animate={{ 
+                left: "125%", 
+                opacity: [0, 0.6, 0.6, 0] 
+            }}
+            transition={{ 
+                duration: duration, 
+                repeat: Infinity, 
+                delay: customDelay, 
+                ease: "linear" 
+            }}
+            className={`absolute font-mono text-[11px] ${item.color} whitespace-nowrap flex items-center gap-3 pointer-events-none`}
+            style={{ top: `${laneHeight}%` }}
+        >
+            <div className={`p-2 rounded-lg bg-current/15 ${item.glow} shadow-xl backdrop-blur-sm border border-current/20`}>
+                {item.icon}
+            </div>
+            <span className="font-[1000] tracking-[0.25em] drop-shadow-[0_0_10px_rgba(0,0,0,0.5)] uppercase">
+                {item.text}
+            </span>
+            <div className={`w-24 h-[2px] bg-gradient-to-r from-current to-transparent opacity-40 ml-2`} />
+        </motion.div>
+    );
+};
+
+// --- Sub-componente: Burbujas de Información Live ---
+const InfoBubble = ({ icon, label, value, pos, color, delay }: any) => (
+    <motion.div 
+        initial={{ scale: 0, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ delay: 1 + delay, type: "spring", stiffness: 100 }}
+        className={`absolute ${pos} z-20 flex items-center gap-4 bg-slate-900/90 backdrop-blur-3xl border border-white/10 p-4 rounded-[1.5rem] shadow-2xl group cursor-default`}
+    >
+        <div className={`${color} p-2 rounded-xl bg-white/5 group-hover:scale-110 transition-transform shadow-inner`}>
+            {icon}
+        </div>
+        <div className="flex flex-col">
+            <div className="flex items-center gap-2">
+                <span className="text-[10px] font-black text-white/50 uppercase tracking-tighter leading-none">{label}</span>
+                <div className="w-1.5 h-1.5 rounded-full bg-[#00C1A3] animate-pulse" />
+            </div>
+            <span className={`text-base font-[1000] mt-1 italic uppercase ${color}`}>{value}</span>
+        </div>
+    </motion.div>
+);
