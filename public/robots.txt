@@ -1,0 +1,10 @@
+# Nedimi POS Robot Configuration
+User-agent: *
+Allow: /
+Allow: /puntodeventa
+Disallow: /admin
+Disallow: /api
+Disallow: /temp
+
+# Enlace directo al mapa del sitio para los buscadores
+Sitemap: https://nedimipos.com/sitemap.xml

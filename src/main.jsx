@@ -1,9 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
+import { HelmetProvider } from 'react-helmet-async'; // <--- Paso 1: Importar el proveedor
 import './index.css'
 
-// Añadimos una validación simple para TypeScript y consistencia
 const rootElement = document.getElementById('root');
 
 if (!rootElement) {
@@ -12,6 +12,8 @@ if (!rootElement) {
 
 ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
-    <App />
+    <HelmetProvider> {/* <--- Paso 2: Envolver la aplicación */}
+      <App />
+    </HelmetProvider>
   </React.StrictMode>,
 )

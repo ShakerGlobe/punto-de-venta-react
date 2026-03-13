@@ -19,7 +19,6 @@ export const LoadingScreen = () => {
                     clearInterval(interval);
                     return 100;
                 }
-                // Carga no lineal para que se sienta más "real"
                 const increment = prev > 80 ? 0.5 : 2;
                 return Math.min(prev + increment, 100);
             });
@@ -38,17 +37,19 @@ export const LoadingScreen = () => {
 
     return (
         <motion.div
-            initial={{ opacity: 1 }}
+            initial={{ y: 0 }}
+            // SALIDA DE "PERSIANA" (Sólida, sin opacidad, sin colores raros)
             exit={{
-                y: -1000,
-                opacity: 0,
-                transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] }
+                y: "-100%",
+                transition: {
+                    duration: 0.6,
+                    ease: [0.9, 0, 0.1, 1] // Ease muy agresivo al inicio y suave al final
+                }
             }}
             className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#020617] overflow-hidden"
         >
-            {/* 1. FONDO DINÁMICO DE TRANSACCIONES */}
+            {/* 1. FONDO DE CUADRÍCULA (Solo verde, nada de azul) */}
             <div className="absolute inset-0 z-0">
-                {/* Cuadrícula de precisión */}
                 <div className="absolute inset-0 opacity-[0.15]"
                     style={{
                         backgroundImage: `radial-gradient(#00C1A3 1px, transparent 1px)`,
@@ -56,7 +57,6 @@ export const LoadingScreen = () => {
                     }}
                 />
 
-                {/* Partículas de "Dinero/Ventas" flotando */}
                 {[...Array(12)].map((_, i) => (
                     <motion.div
                         key={i}
@@ -76,9 +76,8 @@ export const LoadingScreen = () => {
 
             {/* 2. CONTENEDOR CENTRAL */}
             <div className="relative z-10 flex flex-col items-center">
-
-                {/* Círculo de Energía Orbital */}
                 <div className="relative mb-16">
+                    {/* Quitamos el borde azul que causaba el ruido visual */}
                     <motion.div
                         animate={{ rotate: 360 }}
                         transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
@@ -87,10 +86,9 @@ export const LoadingScreen = () => {
                     <motion.div
                         animate={{ rotate: -360 }}
                         transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-                        className="absolute -inset-24 border border-blue-500/5 rounded-full"
+                        className="absolute -inset-24 border border-[#00C1A3]/5 rounded-full"
                     />
 
-                    {/* Logo Principal con Glitch sutil */}
                     <motion.div
                         initial={{ scale: 0.8, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
@@ -98,33 +96,26 @@ export const LoadingScreen = () => {
                     >
                         <motion.div
                             animate={{
-                                boxShadow: ["0 0 20px rgba(0,193,163,0.2)", "0 0 60px rgba(0,193,163,0.5)", "0 0 20px rgba(0,193,163,0.2)"]
+                                boxShadow: ["0 0 20px rgba(0,193,163,0.1)", "0 0 50px rgba(0,193,163,0.3)", "0 0 20px rgba(0,193,163,0.1)"]
                             }}
                             transition={{ duration: 2, repeat: Infinity }}
-                            className="absolute inset-0 bg-[#00C1A3]/20 blur-3xl rounded-full"
+                            className="absolute inset-0 bg-[#00C1A3]/10 blur-3xl rounded-full"
                         />
 
                         <h1 className="text-5xl md:text-7xl font-[1000] italic uppercase tracking-tighter text-white">
                             NEDIMI<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00C1A3] to-emerald-400">POS</span>
                         </h1>
 
-                        {/* Tagline de Venta */}
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 0.5 }}
-                            className="absolute -bottom-6 left-0 right-0 text-center"
-                        >
+                        <div className="absolute -bottom-6 left-0 right-0 text-center">
                             <span className="text-[10px] font-black tracking-[0.5em] text-emerald-500/80 uppercase">
                                 The Future of Retail
                             </span>
-                        </motion.div>
+                        </div>
                     </motion.div>
                 </div>
 
-                {/* 3. INTERFAZ DE CARGA TIPO TERMINAL */}
+                {/* 3. TERMINAL DE CARGA */}
                 <div className="w-80 space-y-6">
-                    {/* Barra de Progreso */}
                     <div className="relative h-1.5 w-full bg-white/5 rounded-full overflow-hidden border border-white/5">
                         <motion.div
                             initial={{ width: 0 }}
@@ -133,7 +124,6 @@ export const LoadingScreen = () => {
                         />
                     </div>
 
-                    {/* Meta-datos de carga */}
                     <div className="flex flex-col gap-4">
                         <div className="flex justify-between items-end font-mono">
                             <div className="flex flex-col">
@@ -145,7 +135,7 @@ export const LoadingScreen = () => {
                                     >
                                         {currentStatus.icon}
                                     </motion.div>
-                                    <span className="text-[11px] font-bold tracking-tighter uppercase whitespace-nowrap">
+                                    <span className="text-[11px] font-bold tracking-tighter uppercase">
                                         {currentStatus.text}
                                     </span>
                                 </div>
@@ -156,35 +146,12 @@ export const LoadingScreen = () => {
                                 </span>
                             </div>
                         </div>
-
-                        {/* Indicadores de "Sistema" en la parte inferior */}
-                        <div className="grid grid-cols-3 gap-2">
-                            {[1, 2, 3].map((i) => (
-                                <div key={i} className="h-1 bg-white/5 rounded-full overflow-hidden">
-                                    <motion.div
-                                        animate={{ x: ["-100%", "100%"] }}
-                                        transition={{ duration: 1 + i, repeat: Infinity, ease: "linear" }}
-                                        className="h-full w-1/2 bg-emerald-500/20"
-                                    />
-                                </div>
-                            ))}
-                        </div>
                     </div>
                 </div>
             </div>
 
-            {/* Overlay de Scan Final (Solo aparece al llegar al 90%+) */}
-            <AnimatePresence>
-                {percent > 90 && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        className="absolute inset-0 z-50 pointer-events-none bg-emerald-500/10 backdrop-blur-[2px]"
-                    />
-                )}
-            </AnimatePresence>
+            {/* Quitamos el Overlay verde/turquesa del final que causaba el efecto de "color raro" */}
 
-            {/* 4. RUIDO Y TEXTURA */}
             <div className="absolute inset-0 pointer-events-none opacity-[0.05] mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
         </motion.div>
     );

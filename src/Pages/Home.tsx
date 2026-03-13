@@ -6,18 +6,25 @@ import { RegisterCTA } from '../components/RegisterCTA';
 import { PageTransition } from '../components/PageTransition';
 import { WhyChoosePOS } from '../Sections/Home/WhyChoosePOS';
 import { DeviceCompatibility } from '../Sections/Home/DeviceCompatibility';
+import { SEO } from '../components/SEO'; // Importado OK
 
 const Home = ({ onOpenModal }: { onOpenModal: () => void }) => {
     return (
         <PageTransition>
+            {/* 1. AGREGAR EL COMPONENTE AQUÍ */}
+            <SEO
+                title="Punto de Venta Inteligente"
+                description="Moderniza tu negocio con NEDIMI POS. Control de inventarios, ventas en tiempo real y reportes avanzados en una sola plataforma."
+            />
+
             <main className="w-full">
                 <HeroHome onOpenModal={onOpenModal} />
                 <BusinessMarquee />
                 <InfrastructureHome />
                 <DashboardPreview />
-                <WhyChoosePOS/>
-                <DeviceCompatibility/>
-                <RegisterCTA/>
+                <WhyChoosePOS />
+                <DeviceCompatibility />
+                <RegisterCTA />
             </main>
         </PageTransition>
     );
