@@ -1,4 +1,4 @@
-import { RegisterHero } from "../Sections/register/RegisterHome";
+import { RegisterHome } from "../Sections/register/RegisterHome";
 import { PageTransition } from "../components/PageTransition";
 import { SEO } from "../components/SEO"; // 1. Importar
 
@@ -12,7 +12,7 @@ const RegisterPage = () => {
       />
 
       <div className="pt-24 pb-12">
-        <RegisterHero />
+        <RegisterHome />
       </div>
     </PageTransition>
   );
