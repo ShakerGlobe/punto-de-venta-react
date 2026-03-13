@@ -1,5 +1,5 @@
 import { motion, useMotionValue, useSpring } from "framer-motion";
-import { Zap, User, Building2, Mail, Lock, ArrowRight, ShieldCheck, Sparkles } from "lucide-react";
+import { Zap, User, Building2, Mail, Lock, ArrowRight, ShieldCheck, Sparkles, KeyRound, AlertTriangle } from "lucide-react";
 import React, { useRef } from "react";
 
 export const RegisterHero = () => {
@@ -19,7 +19,7 @@ export const RegisterHero = () => {
     };
 
     return (
-        <section 
+        <section
             ref={containerRef}
             onMouseMove={handleMouseMove}
             className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-[#020617] px-6 py-12"
@@ -27,7 +27,7 @@ export const RegisterHero = () => {
             {/* 1. FONDO: Líneas verdes constantes */}
             <div className="absolute inset-0 z-0 pointer-events-none">
                 <div className="absolute inset-0 bg-[radial-gradient(#ffffff05_1px,transparent_1px)] [background-size:80px_80px] opacity-40" />
-                
+
                 <motion.div style={{ x: springX, y: springY }} className="absolute inset-0">
                     {[...Array(10)].map((_, i) => (
                         <DataLine key={i} index={i} total={10} />
@@ -39,7 +39,7 @@ export const RegisterHero = () => {
 
             {/* 2. CONTENIDO: Formulario y Texto */}
             <div className="max-w-6xl w-full grid lg:grid-cols-2 gap-16 items-center relative z-10">
-                
+
                 {/* Lado Izquierdo: Mensaje de Valor */}
                 <div className="hidden lg:flex flex-col gap-8">
                     <motion.div
@@ -51,7 +51,7 @@ export const RegisterHero = () => {
                             <Sparkles size={14} className="text-[#00C1A3]" />
                             <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#00C1A3]">Trial Activation</span>
                         </div>
-                        
+
                         <h1 className="text-7xl font-[1000] text-white italic uppercase tracking-tighter leading-[0.85]">
                             COMIENZA TU <br />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00C1A3] to-emerald-400">
@@ -71,7 +71,7 @@ export const RegisterHero = () => {
                 </div>
 
                 {/* Lado Derecho: La Consola de Registro */}
-                <motion.div 
+                <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     className="bg-slate-900/40 backdrop-blur-3xl border border-white/10 p-8 md:p-12 rounded-[3rem] shadow-2xl relative overflow-hidden group"
@@ -89,6 +89,19 @@ export const RegisterHero = () => {
                             </div>
                             <InputField icon={<Mail size={18} />} label="Email Corporativo" placeholder="nombre@empresa.com" />
                             <InputField icon={<Lock size={18} />} label="Contraseña" type="password" placeholder="••••••••" />
+
+                            {/* --- AVISO CRÍTICO DE CONTRASEÑA ADAPTADO --- */}
+                            <div className="bg-amber-500/5 border-l-2 border-amber-500/40 p-4 space-y-2 rounded-r-xl">
+                                <div className="flex items-center gap-2">
+                                    <KeyRound size={14} className="text-amber-500" />
+                                    <span className="text-[10px] font-black text-amber-500 uppercase tracking-widest italic">
+                                        Security Notice
+                                    </span>
+                                </div>
+                                <p className="text-[11px] text-slate-400 font-medium leading-relaxed uppercase italic">
+                                    La contraseña que definas será tu <span className="text-amber-200">llave de acceso única</span> para la terminal demo. <span className="text-white">Asegúrate de guardarla.</span>
+                                </p>
+                            </div>
 
                             <div className="pt-4">
                                 <button className="w-full group relative py-5 bg-[#00C1A3] text-[#020617] font-[1000] italic uppercase rounded-2xl overflow-hidden transition-all hover:scale-[1.02] active:scale-95 shadow-[0_20px_40px_rgba(0,193,163,0.3)]">
@@ -109,7 +122,7 @@ export const RegisterHero = () => {
 // --- Sub-componentes auxiliares ---
 
 const DataLine = ({ index, total }: { index: number, total: number }) => {
-    const laneHeight = 5 + (index * (90 / (total - 1))); 
+    const laneHeight = 5 + (index * (90 / (total - 1)));
     return (
         <motion.div
             initial={{ left: "-20%", opacity: 0 }}
@@ -132,7 +145,7 @@ const InputField = ({ icon, label, placeholder, type = "text" }: any) => (
             <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-[#00C1A3] transition-colors">
                 {icon}
             </div>
-            <input 
+            <input
                 type={type}
                 placeholder={placeholder}
                 className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white placeholder:text-slate-700 outline-none focus:border-[#00C1A3]/50 focus:bg-white/[0.08] transition-all text-sm font-medium"
