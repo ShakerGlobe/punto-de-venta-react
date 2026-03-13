@@ -1,125 +1,191 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useState } from 'react';
+import {
+    DollarSign,
+    ShoppingCart,
+    Zap,
+    TrendingUp,
+    CreditCard,
+    CheckCircle2
+} from 'lucide-react';
 
 export const LoadingScreen = () => {
     const [percent, setPercent] = useState(0);
 
-    // Simulador de carga para el contador
     useEffect(() => {
         const interval = setInterval(() => {
-            setPercent((prev) => (prev < 100 ? prev + 1 : 100));
+            setPercent((prev) => {
+                if (prev >= 100) {
+                    clearInterval(interval);
+                    return 100;
+                }
+                // Carga no lineal para que se sienta más "real"
+                const increment = prev > 80 ? 0.5 : 2;
+                return Math.min(prev + increment, 100);
+            });
         }, 30);
         return () => clearInterval(interval);
     }, []);
+
+    const statusMessages = [
+        { limit: 20, text: "INICIALIZANDO TERMINAL...", icon: <CreditCard size={14} /> },
+        { limit: 50, text: "CONECTANDO PASARELAS DE PAGO...", icon: <DollarSign size={14} /> },
+        { limit: 80, text: "SINCRONIZANDO STOCK GLOBAL...", icon: <ShoppingCart size={14} /> },
+        { limit: 100, text: "SISTEMA LISTO PARA VENDER", icon: <Zap size={14} /> },
+    ];
+
+    const currentStatus = statusMessages.find(m => percent <= m.limit) || statusMessages[3];
 
     return (
         <motion.div
             initial={{ opacity: 1 }}
             exit={{
-                scale: 1.1,
-                filter: "blur(20px)",
+                y: -1000,
                 opacity: 0,
-                transition: { duration: 1, ease: [0.7, 0, 0.3, 1] }
+                transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] }
             }}
             className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#020617] overflow-hidden"
         >
-            {/* 1. FONDO DE MALLA TECNOLÓGICA */}
-            <div className="absolute inset-0 opacity-20"
-                style={{
-                    backgroundImage: `linear-gradient(#00C1A3 1px, transparent 1px), linear-gradient(90deg, #00C1A3 1px, transparent 1px)`,
-                    backgroundSize: '50px 50px'
-                }}
-            />
-
-            {/* 2. LUCES AMBIENTALES DINÁMICAS */}
+            {/* 1. FONDO DINÁMICO DE TRANSACCIONES */}
             <div className="absolute inset-0 z-0">
-                <motion.div
-                    animate={{
-                        scale: [1, 1.4, 1],
-                        opacity: [0.2, 0.4, 0.2],
-                        rotate: [0, 90, 0]
+                {/* Cuadrícula de precisión */}
+                <div className="absolute inset-0 opacity-[0.15]"
+                    style={{
+                        backgroundImage: `radial-gradient(#00C1A3 1px, transparent 1px)`,
+                        backgroundSize: '40px 40px'
                     }}
-                    transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
-                    className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-[#00C1A3]/30 blur-[150px] rounded-full"
                 />
-                <motion.div
-                    animate={{
-                        scale: [1.4, 1, 1.4],
-                        opacity: [0.1, 0.3, 0.1],
-                        rotate: [0, -90, 0]
-                    }}
-                    transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-                    className="absolute bottom-[-20%] right-[-10%] w-[60%] h-[60%] bg-blue-600/20 blur-[150px] rounded-full"
-                />
+
+                {/* Partículas de "Dinero/Ventas" flotando */}
+                {[...Array(12)].map((_, i) => (
+                    <motion.div
+                        key={i}
+                        initial={{ y: "110vh", x: `${Math.random() * 100}vw`, opacity: 0 }}
+                        animate={{ y: "-10vh", opacity: [0, 0.5, 0] }}
+                        transition={{
+                            duration: Math.random() * 3 + 2,
+                            repeat: Infinity,
+                            delay: Math.random() * 2
+                        }}
+                        className="absolute text-[#00C1A3]/30"
+                    >
+                        {i % 2 === 0 ? <DollarSign size={24} /> : <TrendingUp size={24} />}
+                    </motion.div>
+                ))}
             </div>
 
-            {/* 3. LÍNEA DE ESCANEO LÁSER */}
-            <motion.div
-                animate={{ translateY: ['-100vh', '100vh'] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-[#00C1A3] to-transparent z-20 opacity-50 shadow-[0_0_20px_#00C1A3]"
-            />
-
-            {/* 4. CONTENIDO CENTRAL */}
+            {/* 2. CONTENEDOR CENTRAL */}
             <div className="relative z-10 flex flex-col items-center">
 
-                {/* LOGO CON ANIMACIÓN DE REVELADO */}
-                <motion.div
-                    initial={{ letterSpacing: "1em", opacity: 0, filter: "blur(10px)" }}
-                    animate={{ letterSpacing: "0.4em", opacity: 1, filter: "blur(0px)" }}
-                    transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-                    className="relative mb-12"
-                >
-                    {/* Aura de poder detrás del logo */}
+                {/* Círculo de Energía Orbital */}
+                <div className="relative mb-16">
                     <motion.div
-                        animate={{ opacity: [0.3, 0.6, 0.3], scale: [1, 1.1, 1] }}
-                        transition={{ duration: 3, repeat: Infinity }}
-                        className="absolute inset-0 blur-[40px] bg-[#00C1A3]/40 rounded-full"
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+                        className="absolute -inset-16 border border-[#00C1A3]/10 rounded-full"
+                    />
+                    <motion.div
+                        animate={{ rotate: -360 }}
+                        transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                        className="absolute -inset-24 border border-blue-500/5 rounded-full"
                     />
 
-                    <h1 className="relative text-3xl md:text-5xl font-[1000] uppercase italic text-white select-none">
-                        NEDIMI<span className="text-transparent bg-clip-text bg-gradient-to-b from-[#00C1A3] to-[#007a67] drop-shadow-[0_0_15px_rgba(0,193,163,0.6)]">POS</span>
-                    </h1>
-                </motion.div>
-
-                {/* BARRA DE CARGA PRO */}
-                <div className="flex flex-col items-center gap-6">
-                    <div className="relative w-64 h-[4px] bg-white/10 rounded-full overflow-hidden border border-white/5 backdrop-blur-sm">
-                        {/* Progreso real */}
+                    {/* Logo Principal con Glitch sutil */}
+                    <motion.div
+                        initial={{ scale: 0.8, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        className="relative group"
+                    >
                         <motion.div
-                            initial={{ width: "0%" }}
-                            animate={{ width: `${percent}%` }}
-                            className="absolute top-0 left-0 h-full bg-[#00C1A3] shadow-[0_0_15px_#00C1A3]"
+                            animate={{
+                                boxShadow: ["0 0 20px rgba(0,193,163,0.2)", "0 0 60px rgba(0,193,163,0.5)", "0 0 20px rgba(0,193,163,0.2)"]
+                            }}
+                            transition={{ duration: 2, repeat: Infinity }}
+                            className="absolute inset-0 bg-[#00C1A3]/20 blur-3xl rounded-full"
                         />
-                        {/* Brillo viajero */}
+
+                        <h1 className="text-5xl md:text-7xl font-[1000] italic uppercase tracking-tighter text-white">
+                            NEDIMI<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00C1A3] to-emerald-400">POS</span>
+                        </h1>
+
+                        {/* Tagline de Venta */}
                         <motion.div
-                            animate={{ left: ["-100%", "200%"] }}
-                            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                            className="absolute top-0 h-full w-20 bg-gradient-to-r from-transparent via-white/40 to-transparent"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.5 }}
+                            className="absolute -bottom-6 left-0 right-0 text-center"
+                        >
+                            <span className="text-[10px] font-black tracking-[0.5em] text-emerald-500/80 uppercase">
+                                The Future of Retail
+                            </span>
+                        </motion.div>
+                    </motion.div>
+                </div>
+
+                {/* 3. INTERFAZ DE CARGA TIPO TERMINAL */}
+                <div className="w-80 space-y-6">
+                    {/* Barra de Progreso */}
+                    <div className="relative h-1.5 w-full bg-white/5 rounded-full overflow-hidden border border-white/5">
+                        <motion.div
+                            initial={{ width: 0 }}
+                            animate={{ width: `${percent}%` }}
+                            className="absolute inset-y-0 left-0 bg-gradient-to-r from-emerald-600 to-[#00C1A3] shadow-[0_0_20px_#00C1A3]"
                         />
                     </div>
 
-                    {/* ESTADO Y PORCENTAJE */}
-                    <div className="flex flex-col items-center gap-2">
-                        <div className="flex items-center gap-3">
-                            <span className="text-[#00C1A3] font-mono text-xl font-black tracking-tighter">
-                                {percent}%
-                            </span>
-                            <div className="h-4 w-[1px] bg-white/20" />
-                            <motion.span
-                                animate={{ opacity: [1, 0.4, 1] }}
-                                transition={{ duration: 1.5, repeat: Infinity }}
-                                className="text-[10px] font-bold uppercase tracking-[0.3em] text-slate-400"
-                            >
-                                {percent < 40 ? "Cargando Módulos..." : percent < 80 ? "Sincronizando Base de Datos..." : "Optimizando Interfaz..."}
-                            </motion.span>
+                    {/* Meta-datos de carga */}
+                    <div className="flex flex-col gap-4">
+                        <div className="flex justify-between items-end font-mono">
+                            <div className="flex flex-col">
+                                <span className="text-[9px] text-slate-500 uppercase tracking-widest mb-1">Status Report</span>
+                                <div className="flex items-center gap-2 text-[#00C1A3]">
+                                    <motion.div
+                                        animate={{ opacity: [1, 0, 1] }}
+                                        transition={{ duration: 0.5, repeat: Infinity }}
+                                    >
+                                        {currentStatus.icon}
+                                    </motion.div>
+                                    <span className="text-[11px] font-bold tracking-tighter uppercase whitespace-nowrap">
+                                        {currentStatus.text}
+                                    </span>
+                                </div>
+                            </div>
+                            <div className="text-right">
+                                <span className="text-3xl font-[1000] italic text-white leading-none">
+                                    {Math.round(percent)}%
+                                </span>
+                            </div>
+                        </div>
+
+                        {/* Indicadores de "Sistema" en la parte inferior */}
+                        <div className="grid grid-cols-3 gap-2">
+                            {[1, 2, 3].map((i) => (
+                                <div key={i} className="h-1 bg-white/5 rounded-full overflow-hidden">
+                                    <motion.div
+                                        animate={{ x: ["-100%", "100%"] }}
+                                        transition={{ duration: 1 + i, repeat: Infinity, ease: "linear" }}
+                                        className="h-full w-1/2 bg-emerald-500/20"
+                                    />
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </div>
             </div>
 
-            {/* EFECTO DE RUIDO CINEMATOGRÁFICO */}
-            <div className="absolute inset-0 pointer-events-none opacity-[0.03] mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+            {/* Overlay de Scan Final (Solo aparece al llegar al 90%+) */}
+            <AnimatePresence>
+                {percent > 90 && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        className="absolute inset-0 z-50 pointer-events-none bg-emerald-500/10 backdrop-blur-[2px]"
+                    />
+                )}
+            </AnimatePresence>
+
+            {/* 4. RUIDO Y TEXTURA */}
+            <div className="absolute inset-0 pointer-events-none opacity-[0.05] mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
         </motion.div>
     );
 };
