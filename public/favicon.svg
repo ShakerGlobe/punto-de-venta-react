@@ -1,4 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <style>
+    /* Por defecto para modo claro */
+    .letra-n { fill: #1a202c; }
+    
+    /* Cambia a blanco solo si el navegador está en modo oscuro */
+    @media (prefers-color-scheme: dark) {
+      .letra-n { fill: #ffffff; }
+    }
+  </style>
+  
   <text x="50%" y="55%" 
         dominant-baseline="middle" 
         text-anchor="middle" 
@@ -7,6 +17,6 @@
         font-style="italic" 
         font-size="65" 
         letter-spacing="-6">
-    <tspan fill="#ffffff">N</tspan><tspan fill="#17c3a5">P</tspan>
+    <tspan class="letra-n">N</tspan><tspan fill="#17c3a5">P</tspan>
   </text>
 </svg>
