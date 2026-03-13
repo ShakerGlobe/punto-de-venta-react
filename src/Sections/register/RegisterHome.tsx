@@ -51,7 +51,7 @@ export const RegisterHome = () => { // <--- Nombre corregido
         setIsSubmitting(true);
 
         try {
-            const response = await fetch('/api/registro.php', {
+            const response = await fetch('https://nedimi.com/nedimipos/api/registro.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
