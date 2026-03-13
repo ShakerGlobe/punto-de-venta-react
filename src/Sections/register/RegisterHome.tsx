@@ -51,7 +51,7 @@ export const RegisterHome = () => { // <--- Nombre corregido
         setIsSubmitting(true);
 
         try {
-            const response = await fetch('http://localhost/punto-de-venta-react/api/registro.php', {
+            const response = await fetch('/api/registro.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -68,7 +68,7 @@ export const RegisterHome = () => { // <--- Nombre corregido
                 
                 // Redirigir después de 2 segundos
                 setTimeout(() => {
-                    window.location.href = "TU_RUTA_EXTERNA_AQUI"; // <--- NO OLVIDES PONER TU RUTA
+                    window.location.href = "/nedimipos/puntodeventa/"; // <--- NO OLVIDES PONER TU RUTA
                 }, 2000);
             } else {
                 // Si hay error (ej. correo duplicado), cerrar modal y mostrar error en el formulario
