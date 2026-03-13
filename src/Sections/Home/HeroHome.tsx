@@ -32,7 +32,7 @@ const tableData = [
 ];
 
 export const HeroHome = ({ onOpenModal }: HeroProps) => {
-    const mascotImage = "/images/NEDIMI%20POS-04.png";
+    const mascotImage = "/images/NEDIMI POS-04.png";
     const containerRef = useRef<HTMLDivElement>(null);
     const [isHoveringMascot, setIsHoveringMascot] = useState(false);
     const navigate = useNavigate();
