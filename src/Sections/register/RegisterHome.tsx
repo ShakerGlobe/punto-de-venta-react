@@ -22,7 +22,7 @@ export const RegisterHome = () => {
     const [status, setStatus] = useState({
         loading: false,
         message: '',
-        type: '' // 'success' o 'error'
+        type: '' // 'success' o 'error' o 'warning'
     });
 
     // --- ESTADOS DEL MODAL DE CONFIRMACIÓN ---
@@ -39,7 +39,7 @@ export const RegisterHome = () => {
         return () => window.removeEventListener('resize', checkMobile);
     }, []);
 
-    // Bloquear el scroll del fondo cuando el modal está abierto (Crucial en móviles)
+    // Bloquear el scroll del fondo cuando el modal está abierto
     useEffect(() => {
         if (showModal) {
             document.body.style.overflow = 'hidden';
@@ -49,50 +49,88 @@ export const RegisterHome = () => {
         return () => { document.body.style.overflow = 'unset'; };
     }, [showModal]);
 
-    // --- 2. MANEJADORES DE EVENTOS ---
+    // --- 2. MANEJADORES DE EVENTOS Y VALIDACIÓN ---
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value
         });
-        if (status.type === 'error') setStatus({ ...status, message: '', type: '' });
+        // Limpiamos errores al escribir
+        if (status.type === 'error' || status.type === 'warning') {
+            setStatus({ loading: false, message: '', type: '' });
+        }
     };
 
+    // Validación local antes de abrir el modal
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+
+        // Validación básica
+        if (!formData.nombre.trim() || !formData.empresa.trim() || !formData.email.trim() || !formData.password.trim()) {
+            setStatus({ loading: false, message: 'Por favor, completa todos los campos.', type: 'warning' });
+            return;
+        }
+
+        // Validación de formato de email simple
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(formData.email)) {
+            setStatus({ loading: false, message: 'Ingresa un correo electrónico válido.', type: 'warning' });
+            return;
+        }
+
+        // Validación de contraseña segura (mínimo 6 caracteres)
+        if (formData.password.length < 6) {
+            setStatus({ loading: false, message: 'La contraseña debe tener al menos 6 caracteres.', type: 'warning' });
+            return;
+        }
+
         setStatus({ loading: false, message: '', type: '' });
-        setShowModal(true);
+        setShowModal(true); // Si todo está bien, mostramos confirmación
     };
 
+    // --- 3. CONEXIÓN REAL A LA BASE DE DATOS (API PHP) ---
     const handleAccept = async () => {
         setIsSubmitting(true);
+        setStatus({ loading: true, message: '', type: '' });
 
         try {
+            // Asegúrate de que esta URL sea la correcta en tu servidor
             const response = await fetch('https://nedimi.com/nedimipos/api/registro.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Accept': 'application/json'
                 },
                 body: JSON.stringify(formData)
             });
 
+            // Manejo de errores de red (ej. 500 Internal Server Error)
+            if (!response.ok) {
+                throw new Error(`Error del servidor: ${response.status}`);
+            }
+
             const data = await response.json();
 
             if (data.success) {
+                // Registro exitoso en BD
                 setIsCompleted(true);
+
+                // Limpiar formulario por seguridad
                 setFormData({ nombre: '', empresa: '', email: '', password: '' });
 
+                // Redirección al sistema
                 setTimeout(() => {
                     window.location.href = "/nedimipos/puntodeventa/";
                 }, 2000);
             } else {
+                // Error devuelto por PHP (ej. "El correo ya existe")
                 setShowModal(false);
-                setStatus({ loading: false, message: data.error, type: 'error' });
+                setStatus({ loading: false, message: data.error || 'No se pudo crear la cuenta.', type: 'error' });
             }
         } catch (error) {
-            console.error('Error:', error);
+            console.error('Error en el registro:', error);
             setShowModal(false);
-            setStatus({ loading: false, message: 'Fallo de conexión con el servidor.', type: 'error' });
+            setStatus({ loading: false, message: 'Hubo un problema de conexión. Inténtalo de nuevo.', type: 'error' });
         } finally {
             setIsSubmitting(false);
         }
@@ -126,7 +164,7 @@ export const RegisterHome = () => {
         >
             {/* FONDO ANIMADO */}
             <div className="absolute inset-0 z-0 pointer-events-none">
-                <div className="absolute inset-0 bg-[radial-gradient(#ffffff05_1px,transparent_1px)] [background-size:80px_80px] opacity-40" />
+                <div className="absolute inset-0 bg-[radial-gradient(#ffffff05_1px,transparent_1px)] [background-size:80px_80px] opacity-40 [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,#000_40%,transparent_100%)]" />
 
                 {!isMobile && (
                     <motion.div style={{ x: springX, y: springY }} className="absolute inset-0">
@@ -136,12 +174,12 @@ export const RegisterHome = () => {
                     </motion.div>
                 )}
 
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] lg:w-[600px] h-[400px] lg:h-[600px] bg-[#00C1A3]/10 blur-[120px] lg:blur-[150px] rounded-full" />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] lg:w-[600px] h-[400px] lg:h-[600px] bg-gradient-to-tr from-[#00C1A3]/10 to-emerald-500/5 blur-[120px] lg:blur-[150px] rounded-full" />
             </div>
 
             <div className="max-w-6xl w-full grid lg:grid-cols-2 gap-12 lg:gap-16 items-center relative z-10">
 
-                {/* --- LADO IZQUIERDO: TEXTOS (Ahora visible en móviles) --- */}
+                {/* --- LADO IZQUIERDO: TEXTOS --- */}
                 <div className="flex flex-col gap-6 lg:gap-8 text-center lg:text-left items-center lg:items-start">
                     <motion.div
                         initial={{ opacity: 0, x: -30 }}
@@ -149,7 +187,7 @@ export const RegisterHome = () => {
                         viewport={{ once: true }}
                         className="space-y-4 lg:space-y-6"
                     >
-                        <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#00C1A3]/10 border border-[#00C1A3]/20 rounded-full">
+                        <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#00C1A3]/10 border border-[#00C1A3]/20 rounded-full shadow-[0_0_15px_rgba(0,193,163,0.15)]">
                             <Sparkles size={14} className="text-[#00C1A3]" />
                             <span className="text-[10px] font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-[#00C1A3]">Trial Activation</span>
                         </div>
@@ -184,12 +222,15 @@ export const RegisterHome = () => {
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5 }}
-                    className="bg-slate-900/40 backdrop-blur-3xl border border-white/10 p-6 sm:p-8 md:p-12 rounded-[2rem] md:rounded-[3rem] shadow-2xl relative overflow-hidden w-full max-w-xl mx-auto lg:max-w-none"
+                    className="bg-slate-900/60 backdrop-blur-3xl border border-white/10 p-6 sm:p-8 md:p-12 rounded-[2rem] md:rounded-[3rem] shadow-[0_30px_60px_rgba(0,0,0,0.5)] relative overflow-hidden w-full max-w-xl mx-auto lg:max-w-none group"
                 >
+                    {/* Resplandor interno sutil */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none rounded-[2rem] md:rounded-[3rem]" />
+
                     <div className="relative z-10 space-y-6 md:space-y-8">
                         <div className="text-center sm:text-left">
-                            <h2 className="text-xl sm:text-2xl font-black text-white uppercase italic tracking-tighter">Crear Cuenta</h2>
-                            <p className="text-slate-500 text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.2em] mt-1 italic">Protocolo de Despliegue v2.0</p>
+                            <h2 className="text-2xl sm:text-3xl font-black text-white uppercase italic tracking-tighter">Crear Cuenta</h2>
+                            <p className="text-[#00C1A3] text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.2em] mt-1.5 italic">Protocolo de Despliegue v2.0</p>
                         </div>
 
                         <form className="space-y-4 md:space-y-5" onSubmit={handleSubmit}>
@@ -225,7 +266,7 @@ export const RegisterHome = () => {
                             />
                             <InputField
                                 icon={<Lock size={18} />}
-                                label="Contraseña"
+                                label="Contraseña (Mín. 6 caracteres)"
                                 name="password"
                                 type="password"
                                 value={formData.password}
@@ -248,12 +289,15 @@ export const RegisterHome = () => {
 
                             {/* --- MENSAJES DE ERROR VISUALES --- */}
                             <AnimatePresence>
-                                {status.message && status.type === 'error' && (
+                                {status.message && (status.type === 'error' || status.type === 'warning') && (
                                     <motion.div
                                         initial={{ opacity: 0, height: 0, y: -10 }}
                                         animate={{ opacity: 1, height: 'auto', y: 0 }}
                                         exit={{ opacity: 0, height: 0 }}
-                                        className="p-3 rounded-xl flex items-center gap-3 text-xs sm:text-sm font-medium bg-red-500/10 text-red-400 border border-red-500/20 overflow-hidden"
+                                        className={`p-3 rounded-xl flex items-center gap-3 text-xs sm:text-sm font-medium border overflow-hidden ${status.type === 'error'
+                                                ? 'bg-red-500/10 text-red-400 border-red-500/20'
+                                                : 'bg-amber-500/10 text-amber-400 border-amber-500/20'
+                                            }`}
                                     >
                                         <AlertTriangle size={16} className="flex-shrink-0" />
                                         <span>{status.message}</span>
@@ -264,12 +308,12 @@ export const RegisterHome = () => {
                             <div className="pt-2 md:pt-4">
                                 <button
                                     type="submit"
-                                    className="w-full group relative py-4 md:py-5 bg-[#00C1A3] text-[#020617] font-[1000] italic uppercase rounded-xl md:rounded-2xl overflow-hidden transition-all hover:scale-[1.02] active:scale-95 shadow-[0_15px_30px_rgba(0,193,163,0.3)] focus:outline-none focus:ring-4 focus:ring-[#00C1A3]/50"
+                                    className="w-full group/btn relative py-4 md:py-5 bg-gradient-to-r from-[#00C1A3] to-emerald-400 text-[#020617] font-[1000] italic uppercase rounded-xl md:rounded-2xl overflow-hidden transition-all hover:scale-[1.02] active:scale-95 shadow-[0_15px_30px_rgba(0,193,163,0.3)] focus:outline-none focus:ring-4 focus:ring-[#00C1A3]/50"
                                 >
                                     <span className="relative z-10 flex items-center justify-center gap-2 md:gap-3 text-base md:text-lg tracking-widest leading-none">
-                                        SOLICITAR ACCESO <ArrowRight size={18} className="group-hover:translate-x-2 transition-transform" />
+                                        SOLICITAR ACCESO <ArrowRight size={18} className="group-hover/btn:translate-x-2 transition-transform" />
                                     </span>
-                                    <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity" />
+                                    <div className="absolute inset-0 bg-white opacity-0 group-hover/btn:opacity-20 transition-opacity" />
                                 </button>
                             </div>
                         </form>
@@ -284,16 +328,16 @@ export const RegisterHome = () => {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-[100] flex items-center justify-center bg-[#020617]/80 backdrop-blur-md p-4"
+                        className="fixed inset-0 z-[100] flex items-center justify-center bg-[#020617]/90 backdrop-blur-md p-4"
                     >
                         <motion.div
                             initial={{ scale: 0.9, opacity: 0, y: 20 }}
                             animate={{ scale: 1, opacity: 1, y: 0 }}
                             exit={{ scale: 0.9, opacity: 0, y: 20 }}
                             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                            className="bg-slate-900 border border-white/10 p-6 sm:p-8 rounded-[2rem] shadow-2xl max-w-md w-full relative overflow-hidden"
+                            className="bg-slate-900 border border-white/10 p-6 sm:p-8 md:p-10 rounded-[2rem] shadow-[0_30px_60px_rgba(0,0,0,0.8)] max-w-md w-full relative overflow-hidden"
                         >
-                            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[200px] h-[200px] bg-[#00C1A3]/20 blur-[80px] rounded-full pointer-events-none" />
+                            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[250px] h-[250px] bg-[#00C1A3]/20 blur-[80px] rounded-full pointer-events-none" />
 
                             <div className="relative z-10 text-center space-y-6">
                                 <AnimatePresence mode="wait">
@@ -305,14 +349,15 @@ export const RegisterHome = () => {
                                             exit={{ opacity: 0, x: -20 }}
                                             className="space-y-6"
                                         >
-                                            <div className="w-16 h-16 bg-[#00C1A3]/10 text-[#00C1A3] rounded-full flex items-center justify-center mx-auto border border-[#00C1A3]/30">
+                                            <div className="w-16 h-16 bg-[#00C1A3]/10 text-[#00C1A3] rounded-full flex items-center justify-center mx-auto border border-[#00C1A3]/30 shadow-inner">
                                                 <User size={32} />
                                             </div>
                                             <div>
-                                                <h3 className="text-xl sm:text-2xl font-[1000] text-white italic uppercase">Confirmar Registro</h3>
+                                                <h3 className="text-xl sm:text-2xl font-[1000] text-white italic uppercase tracking-tight">Confirmar Registro</h3>
                                                 <p className="text-slate-400 font-light text-sm sm:text-base mt-2">¿Estás seguro de que deseas crear la cuenta para <strong className="text-white">{formData.empresa}</strong>?</p>
                                             </div>
-                                            <div className="flex flex-col-reverse sm:flex-row items-center gap-3 pt-2">
+
+                                            <div className="flex flex-col-reverse sm:flex-row items-center gap-3 pt-4">
                                                 <button
                                                     onClick={handleCancel}
                                                     disabled={isSubmitting}
@@ -338,18 +383,18 @@ export const RegisterHome = () => {
                                             key="step2"
                                             initial={{ opacity: 0, scale: 0.8 }}
                                             animate={{ opacity: 1, scale: 1 }}
-                                            className="space-y-6 py-4"
+                                            className="space-y-6 py-6"
                                         >
                                             <motion.div
                                                 animate={{ rotate: [0, 10, -10, 0], scale: [1, 1.1, 1] }}
                                                 transition={{ duration: 0.6, ease: "easeInOut" }}
-                                                className="w-20 h-20 bg-[#00C1A3]/20 text-[#00C1A3] rounded-full flex items-center justify-center mx-auto border-2 border-[#00C1A3]"
+                                                className="w-20 h-20 bg-[#00C1A3]/20 text-[#00C1A3] rounded-full flex items-center justify-center mx-auto border-2 border-[#00C1A3] shadow-[0_0_30px_rgba(0,193,163,0.3)]"
                                             >
                                                 <CheckCircle2 size={40} />
                                             </motion.div>
                                             <div>
-                                                <h3 className="text-2xl sm:text-3xl font-[1000] text-white italic uppercase tracking-tighter">Completado</h3>
-                                                <p className="text-[#00C1A3] font-bold tracking-widest uppercase text-xs mt-3 animate-pulse">Redirigiendo a tu sistema...</p>
+                                                <h3 className="text-2xl sm:text-3xl font-[1000] text-white italic uppercase tracking-tighter">¡Completado!</h3>
+                                                <p className="text-[#00C1A3] font-bold tracking-widest uppercase text-xs mt-3 animate-pulse">Redirigiendo al sistema...</p>
                                             </div>
                                         </motion.div>
                                     )}
@@ -407,15 +452,15 @@ const InputField = ({ icon, label, placeholder, type = "text", name, value, onCh
                 onChange={onChange}
                 required={required}
                 placeholder={placeholder}
-                className="w-full bg-white/5 border border-white/10 rounded-xl sm:rounded-2xl py-3.5 sm:py-4 pl-10 sm:pl-12 pr-4 text-white placeholder:text-slate-600 outline-none focus:border-[#00C1A3]/50 focus:bg-white/[0.08] focus:ring-2 focus:ring-[#00C1A3]/20 transition-all text-xs sm:text-sm font-medium"
+                className="w-full bg-white/5 border border-white/10 rounded-xl sm:rounded-2xl py-3.5 sm:py-4 pl-10 sm:pl-12 pr-4 text-white placeholder:text-slate-600 outline-none focus:border-[#00C1A3]/50 focus:bg-white/[0.05] focus:ring-2 focus:ring-[#00C1A3]/20 transition-all text-xs sm:text-sm font-medium"
             />
         </div>
     </div>
 );
 
 const StatusItem = ({ label, value }: { label: string, value: string }) => (
-    <div className="flex items-center gap-2 sm:gap-3 bg-white/5 px-3 py-1.5 rounded-full border border-white/5 lg:bg-transparent lg:border-transparent lg:px-0 lg:py-0">
-        <div className="w-1.5 h-1.5 rounded-full bg-[#00C1A3] animate-pulse" />
+    <div className="flex items-center gap-2 sm:gap-3 bg-white/5 px-3 py-1.5 rounded-full border border-white/5 lg:bg-transparent lg:border-transparent lg:px-0 lg:py-0 transition-colors hover:bg-white/10">
+        <div className="w-1.5 h-1.5 rounded-full bg-[#00C1A3] animate-pulse shadow-[0_0_5px_#00C1A3]" />
         <span className="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest">{label}:</span>
         <span className="text-[9px] sm:text-[10px] font-black text-white uppercase italic">{value}</span>
     </div>
