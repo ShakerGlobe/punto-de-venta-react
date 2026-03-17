@@ -5,6 +5,7 @@ import { RegisterCTA } from '../components/RegisterCTA';
 import { PageTransition } from '../components/PageTransition';
 // 1. Importas el componente SEO
 import { SEO } from '../components/SEO';
+import { TechStackHome } from '../Sections/technological/TechStackHome';
 
 const TechnologicalPage = () => {
   return (
@@ -19,6 +20,7 @@ const TechnologicalPage = () => {
         <TechnologyHero />
         <DeviceShowcaseHome />
         <ReportsHome />
+        <TechStackHome/>
         <RegisterCTA />
       </div>
     </PageTransition>
