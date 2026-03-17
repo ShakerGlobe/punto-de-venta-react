@@ -14,7 +14,6 @@ export const Navbar = ({ onOpenModal }: NavbarProps) => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    // Barra de progreso de lectura global
     const { scrollYProgress } = useScroll();
     const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
 
@@ -27,14 +26,12 @@ export const Navbar = ({ onOpenModal }: NavbarProps) => {
 
     useEffect(() => {
         const handleScroll = () => {
-            // Activamos la isla flotante un poco antes para mejor respuesta
             setScrolled(window.scrollY > 20);
         };
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    // Bloqueo de scroll en el body cuando el menú móvil está abierto
     useEffect(() => {
         if (mobileMenuOpen) {
             document.body.style.overflow = 'hidden';
@@ -51,22 +48,20 @@ export const Navbar = ({ onOpenModal }: NavbarProps) => {
 
     return (
         <>
-            {/* Indicador de Scroll Global (Separado de la Navbar para que siempre esté al tope) */}
             <motion.div
                 className="fixed top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#00C1A3] via-cyan-400 to-[#00C1A3] origin-left z-[150] shadow-[0_0_10px_#00C1A3]"
                 style={{ scaleX }}
             />
 
-            {/* --- CONTENEDOR DE LA NAVBAR (Dinámico) --- */}
             <header
                 className={`fixed w-full z-[140] transition-all duration-500 ease-out flex justify-center ${scrolled && !mobileMenuOpen
-                        ? 'top-3 sm:top-6 px-4' // Se desprende y flota
-                        : 'top-0 px-0' // Se pega al techo
+                        ? 'top-3 sm:top-6 px-4'
+                        : 'top-0 px-0'
                     }`}
             >
                 <nav
                     className={`w-full flex justify-between items-center transition-all duration-500 ${scrolled && !mobileMenuOpen
-                            ? 'max-w-5xl bg-[#020617]/70 backdrop-blur-2xl border border-white/10 rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.5)] py-3 px-5 sm:px-8'
+                            ? 'max-w-5xl bg-[#020617]/70 backdrop-blur-2xl border border-white/10 rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.5)] py-3 px-5 sm:px-8 lg:gap-10' // Se añadió lg:gap-10 aquí
                             : 'max-w-7xl bg-gradient-to-b from-[#020617]/90 to-transparent py-6 sm:py-8 px-6 sm:px-8'
                         } ${mobileMenuOpen ? 'bg-transparent py-6 px-6' : ''}`}
                 >
@@ -112,7 +107,6 @@ export const Navbar = ({ onOpenModal }: NavbarProps) => {
 
                     {/* --- BOTONES DE ACCIÓN --- */}
                     <div className="flex items-center gap-4 lg:gap-6 relative z-20">
-                        {/* Botón Desktop */}
                         <button
                             onClick={() => navigate('/register')}
                             className="hidden sm:flex items-center gap-2.5 px-6 sm:px-8 py-3 sm:py-3.5 bg-[#00C1A3] text-[#020617] text-xs sm:text-sm font-[1000] rounded-xl sm:rounded-2xl group transition-all duration-300 shadow-[0_10px_20px_rgba(0,193,163,0.2)] hover:shadow-[0_15px_30px_rgba(0,193,163,0.4)] hover:-translate-y-0.5 active:scale-95"
@@ -121,7 +115,6 @@ export const Navbar = ({ onOpenModal }: NavbarProps) => {
                             <span className="tracking-widest uppercase italic leading-none pt-0.5">Probar Gratis</span>
                         </button>
 
-                        {/* Toggle Menú Móvil - Botón con estilo "Glass" */}
                         <button
                             className="lg:hidden p-2.5 sm:p-3 rounded-xl bg-white/5 border border-white/10 text-white flex items-center justify-center transition-all active:scale-90 hover:bg-white/10 shadow-lg backdrop-blur-md"
                             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -153,11 +146,9 @@ export const Navbar = ({ onOpenModal }: NavbarProps) => {
                         transition={{ duration: 0.4 }}
                         className="fixed inset-0 bg-[#020617]/95 z-[130] flex flex-col justify-between overflow-y-auto"
                     >
-                        {/* Decoración de fondo */}
                         <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-[#00C1A3]/10 blur-[100px] rounded-full pointer-events-none" />
                         <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-cyan-500/10 blur-[100px] rounded-full pointer-events-none" />
 
-                        {/* Contenedor de Links */}
                         <div className="flex flex-col gap-6 w-full px-8 pt-32 pb-10 relative z-10 mt-10">
                             {navLinks.map((link, i) => {
                                 const isActive = location.pathname === link.path;
@@ -181,7 +172,6 @@ export const Navbar = ({ onOpenModal }: NavbarProps) => {
                             })}
                         </div>
 
-                        {/* Footer del Menú Móvil */}
                         <motion.div
                             initial={{ opacity: 0, y: 40 }}
                             animate={{ opacity: 1, y: 0 }}
