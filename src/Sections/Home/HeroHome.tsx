@@ -48,7 +48,7 @@ export const HeroHome = ({ onOpenModal }: HeroProps) => {
     const rotateY = useTransform(springX, [-20, 20], [-10, 10]);
 
     const handleMouseMove = (e: React.MouseEvent) => {
-        if (!containerRef.current || isMobile) return; // Desactivar parallax en móvil por rendimiento
+        if (!containerRef.current || isMobile) return; 
         const rect = containerRef.current.getBoundingClientRect();
         const x = (e.clientX - rect.left - rect.width / 2) / 30;
         const y = (e.clientY - rect.top - rect.height / 2) / 30;
@@ -75,7 +75,7 @@ export const HeroHome = ({ onOpenModal }: HeroProps) => {
 
                 <div className="max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-8 lg:gap-16 items-center relative z-10">
 
-                    {/* INFO IZQUIERDA (Texto y CTA) - Orden 2 en móvil, 1 en Desktop */}
+                    {/* INFO IZQUIERDA */}
                     <div className="flex flex-col gap-6 lg:gap-8 text-center lg:text-left items-center lg:items-start order-2 lg:order-1 mt-4 lg:mt-0">
                         <motion.div
                             initial={{ opacity: 0, y: -10 }}
@@ -92,10 +92,10 @@ export const HeroHome = ({ onOpenModal }: HeroProps) => {
                             <motion.h1
                                 initial={{ opacity: 0, x: -30 }}
                                 animate={{ opacity: 1, x: 0 }}
-                                className="text-6xl sm:text-7xl lg:text-[8rem] xl:text-[9.5rem] font-[1000] leading-[0.85] italic uppercase tracking-tighter text-white"
+                                className="text-6xl sm:text-7xl lg:text-[8rem] xl:text-[9.5rem] font-[1000] leading-[0.85] italic uppercase tracking-tighter text-white overflow-visible"
                             >
                                 NEDIMI<br />
-                                <span className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-[#00C1A3] via-emerald-400 to-[#00C1A3] bg-[length:200%_auto] animate-gradient-x pb-2 lg:pb-4 drop-shadow-lg">
+                                <span className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-[#00C1A3] via-emerald-400 to-[#00C1A3] bg-[length:200%_auto] animate-gradient-x pb-2 lg:pb-4 drop-shadow-lg pr-10 -mr-10 overflow-visible">
                                     POS
                                 </span>
                             </motion.h1>
@@ -116,7 +116,7 @@ export const HeroHome = ({ onOpenModal }: HeroProps) => {
                         </motion.div>
                     </div>
 
-                    {/* MASCOTA DERECHA - Orden 1 en móvil, 2 en Desktop */}
+                    {/* MASCOTA DERECHA */}
                     <div className="relative flex justify-center items-center order-1 lg:order-2 h-[320px] sm:h-[400px] lg:h-[700px] w-full">
                         <motion.div
                             style={{
@@ -131,14 +131,14 @@ export const HeroHome = ({ onOpenModal }: HeroProps) => {
                             onMouseLeave={() => setIsHoveringMascot(false)}
                             onClick={() => navigate('/register')}
                         >
-                            {/* Tooltip: Visible por hover en desktop, o estático y animado en móvil */}
                             <AnimatePresence>
                                 {(isHoveringMascot || isMobile) && (
                                     <motion.div
                                         initial={{ opacity: 0, y: 20, x: "-50%", scale: 0.8 }}
                                         animate={{ opacity: 1, y: 0, x: "-50%", scale: 1 }}
                                         exit={{ opacity: 0, y: 10, x: "-50%", scale: 0.8 }}
-                                        className={`absolute ${isMobile ? '-bottom-4' : '-top-12'} left-1/2 z-50 bg-white px-5 py-3 rounded-2xl shadow-[0_20px_60px_rgba(0,193,163,0.5)] whitespace-nowrap lg:-top-12`}
+                                        
+                                        className={`absolute top-12 left-1/2 z-50 bg-white px-5 py-3 rounded-2xl shadow-[0_20px_60px_rgba(0,193,163,0.5)] whitespace-nowrap`}
                                     >
                                         <div className="flex items-center gap-2">
                                             <MousePointerClick size={16} className="text-[#00C1A3] animate-bounce" />
@@ -146,12 +146,11 @@ export const HeroHome = ({ onOpenModal }: HeroProps) => {
                                                 ¡Pide tu prueba gratis!
                                             </span>
                                         </div>
-                                        <div className={`absolute ${isMobile ? '-top-1.5' : '-bottom-1.5'} left-1/2 -translate-x-1/2 w-4 h-4 bg-white rotate-45`} />
+                                        <div className={`absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-4 h-4 bg-white rotate-45`} />
                                     </motion.div>
                                 )}
                             </AnimatePresence>
 
-                            {/* Glow de fondo */}
                             <div className="absolute inset-0 bg-[#00C1A3]/20 rounded-full blur-[80px] lg:blur-[120px] group-hover:bg-[#00C1A3]/30 transition-colors duration-700 scale-110 lg:scale-125" />
 
                             <motion.img
@@ -177,7 +176,6 @@ export const HeroHome = ({ onOpenModal }: HeroProps) => {
     );
 };
 
-// --- COMPONENTES SECUNDARIOS ---
 const BenefitStream = ({ item, index, total }: { item: any, index: number, total: number }) => {
     const laneHeight = 15 + (index * (70 / (total - 1)));
     return (
