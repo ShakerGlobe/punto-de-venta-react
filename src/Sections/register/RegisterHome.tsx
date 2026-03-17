@@ -3,7 +3,8 @@
 import { motion, useMotionValue, useSpring, AnimatePresence } from "framer-motion";
 import {
     Zap, User, Building2, Mail, Lock, ArrowRight, ShieldCheck,
-    Sparkles, KeyRound, AlertTriangle, CheckCircle2, X, Loader2
+    Sparkles, KeyRound, AlertTriangle, CheckCircle2, X, Loader2,
+    Eye, EyeOff
 } from "lucide-react";
 import React, { useRef, useState, useEffect } from "react";
 
@@ -22,8 +23,10 @@ export const RegisterHome = () => {
     const [status, setStatus] = useState({
         loading: false,
         message: '',
-        type: '' // 'success' o 'error' o 'warning'
+        type: '' 
     });
+
+    const [showPassword, setShowPassword] = useState(false);
 
     // --- ESTADOS DEL MODAL DE CONFIRMACIÓN ---
     const [showModal, setShowModal] = useState(false);
@@ -31,7 +34,6 @@ export const RegisterHome = () => {
     const [isCompleted, setIsCompleted] = useState(false);
 
     // --- EFECTOS DE UX ---
-    // Detectar móvil para deshabilitar parallax pesado
     useEffect(() => {
         const checkMobile = () => setIsMobile(window.innerWidth < 1024);
         checkMobile();
@@ -39,7 +41,6 @@ export const RegisterHome = () => {
         return () => window.removeEventListener('resize', checkMobile);
     }, []);
 
-    // Bloquear el scroll del fondo cuando el modal está abierto
     useEffect(() => {
         if (showModal) {
             document.body.style.overflow = 'hidden';
@@ -55,47 +56,41 @@ export const RegisterHome = () => {
             ...formData,
             [e.target.name]: e.target.value
         });
-        // Limpiamos errores al escribir
         if (status.type === 'error' || status.type === 'warning') {
             setStatus({ loading: false, message: '', type: '' });
         }
     };
 
-    // Validación local antes de abrir el modal
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
-        // Validación básica
         if (!formData.nombre.trim() || !formData.empresa.trim() || !formData.email.trim() || !formData.password.trim()) {
             setStatus({ loading: false, message: 'Por favor, completa todos los campos.', type: 'warning' });
             return;
         }
 
-        // Validación de formato de email simple
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(formData.email)) {
             setStatus({ loading: false, message: 'Ingresa un correo electrónico válido.', type: 'warning' });
             return;
         }
 
-        // Validación de contraseña segura (mínimo 6 caracteres)
         if (formData.password.length < 6) {
             setStatus({ loading: false, message: 'La contraseña debe tener al menos 6 caracteres.', type: 'warning' });
             return;
         }
 
         setStatus({ loading: false, message: '', type: '' });
-        setShowModal(true); // Si todo está bien, mostramos confirmación
+        setShowModal(true); 
     };
 
-    // --- 3. CONEXIÓN REAL A LA BASE DE DATOS (API PHP) ---
+    // --- 3. CONEXIÓN A LA BASE DE DATOS ---
     const handleAccept = async () => {
         setIsSubmitting(true);
         setStatus({ loading: true, message: '', type: '' });
 
         try {
-            // Asegúrate de que esta URL sea la correcta en tu servidor
-            const response = await fetch('https://nedimi.com/nedimipos/api/registro.php', {
+            const response = await fetch('/api/registro.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -104,7 +99,6 @@ export const RegisterHome = () => {
                 body: JSON.stringify(formData)
             });
 
-            // Manejo de errores de red (ej. 500 Internal Server Error)
             if (!response.ok) {
                 throw new Error(`Error del servidor: ${response.status}`);
             }
@@ -112,18 +106,15 @@ export const RegisterHome = () => {
             const data = await response.json();
 
             if (data.success) {
-                // Registro exitoso en BD
                 setIsCompleted(true);
-
-                // Limpiar formulario por seguridad
                 setFormData({ nombre: '', empresa: '', email: '', password: '' });
 
-                // Redirección al sistema
+                // Ya no redirigimos al sistema. Cerramos el modal tras 4 segundos.
                 setTimeout(() => {
-                    window.location.href = "/nedimipos/puntodeventa/";
-                }, 2000);
+                    setShowModal(false);
+                    setIsCompleted(false);
+                }, 4000);
             } else {
-                // Error devuelto por PHP (ej. "El correo ya existe")
                 setShowModal(false);
                 setStatus({ loading: false, message: data.error || 'No se pudo crear la cuenta.', type: 'error' });
             }
@@ -178,7 +169,6 @@ export const RegisterHome = () => {
             </div>
 
             <div className="max-w-6xl w-full grid lg:grid-cols-2 gap-12 lg:gap-16 items-center relative z-10">
-
                 {/* --- LADO IZQUIERDO: TEXTOS --- */}
                 <div className="flex flex-col gap-6 lg:gap-8 text-center lg:text-left items-center lg:items-start">
                     <motion.div
@@ -224,7 +214,6 @@ export const RegisterHome = () => {
                     transition={{ duration: 0.5 }}
                     className="bg-slate-900/60 backdrop-blur-3xl border border-white/10 p-6 sm:p-8 md:p-12 rounded-[2rem] md:rounded-[3rem] shadow-[0_30px_60px_rgba(0,0,0,0.5)] relative overflow-hidden w-full max-w-xl mx-auto lg:max-w-none group"
                 >
-                    {/* Resplandor interno sutil */}
                     <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none rounded-[2rem] md:rounded-[3rem]" />
 
                     <div className="relative z-10 space-y-6 md:space-y-8">
@@ -264,15 +253,20 @@ export const RegisterHome = () => {
                                 placeholder="nombre@empresa.com"
                                 required
                             />
+                            
+                            {/* CAMPO DE CONTRASEÑA CON EL TOGGLE */}
                             <InputField
                                 icon={<Lock size={18} />}
                                 label="Contraseña (Mín. 6 caracteres)"
                                 name="password"
-                                type="password"
+                                type={showPassword ? "text" : "password"}
                                 value={formData.password}
                                 onChange={handleChange}
                                 placeholder="••••••••"
                                 required
+                                isPassword={true}
+                                showPassword={showPassword}
+                                onTogglePassword={() => setShowPassword(!showPassword)}
                             />
 
                             <div className="bg-amber-500/5 border-l-2 border-amber-500/40 p-3 md:p-4 space-y-1.5 md:space-y-2 rounded-r-xl">
@@ -393,8 +387,10 @@ export const RegisterHome = () => {
                                                 <CheckCircle2 size={40} />
                                             </motion.div>
                                             <div>
-                                                <h3 className="text-2xl sm:text-3xl font-[1000] text-white italic uppercase tracking-tighter">¡Completado!</h3>
-                                                <p className="text-[#00C1A3] font-bold tracking-widest uppercase text-xs mt-3 animate-pulse">Redirigiendo al sistema...</p>
+                                                <h3 className="text-2xl sm:text-3xl font-[1000] text-white italic uppercase tracking-tighter">¡Registro Exitoso!</h3>
+                                                <p className="text-[#00C1A3] font-bold tracking-widest uppercase text-xs mt-3 animate-pulse">
+                                                    Por favor, revisa tu bandeja de entrada para activar tu cuenta.
+                                                </p>
                                             </div>
                                         </motion.div>
                                     )}
@@ -408,7 +404,7 @@ export const RegisterHome = () => {
     );
 };
 
-// --- Sub-componentes auxiliares tipados y optimizados ---
+// --- Sub-componentes auxiliares ---
 
 const DataLine = ({ index, total }: { index: number, total: number }) => {
     const laneHeight = 10 + (index * (80 / (total - 1)));
@@ -434,9 +430,12 @@ interface InputFieldProps {
     value: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     required?: boolean;
+    isPassword?: boolean;
+    showPassword?: boolean;
+    onTogglePassword?: () => void;
 }
 
-const InputField = ({ icon, label, placeholder, type = "text", name, value, onChange, required }: InputFieldProps) => (
+const InputField = ({ icon, label, placeholder, type = "text", name, value, onChange, required, isPassword, showPassword, onTogglePassword }: InputFieldProps) => (
     <div className="space-y-1.5 group">
         <label className="text-[9px] sm:text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-2 group-focus-within:text-[#00C1A3] transition-colors">
             {label}
@@ -452,8 +451,17 @@ const InputField = ({ icon, label, placeholder, type = "text", name, value, onCh
                 onChange={onChange}
                 required={required}
                 placeholder={placeholder}
-                className="w-full bg-white/5 border border-white/10 rounded-xl sm:rounded-2xl py-3.5 sm:py-4 pl-10 sm:pl-12 pr-4 text-white placeholder:text-slate-600 outline-none focus:border-[#00C1A3]/50 focus:bg-white/[0.05] focus:ring-2 focus:ring-[#00C1A3]/20 transition-all text-xs sm:text-sm font-medium"
+                className={`w-full bg-white/5 border border-white/10 rounded-xl sm:rounded-2xl py-3.5 sm:py-4 pl-10 sm:pl-12 ${isPassword ? 'pr-12' : 'pr-4'} text-white placeholder:text-slate-600 outline-none focus:border-[#00C1A3]/50 focus:bg-white/[0.05] focus:ring-2 focus:ring-[#00C1A3]/20 transition-all text-xs sm:text-sm font-medium`}
             />
+            {isPassword && (
+                <button
+                    type="button"
+                    onClick={onTogglePassword}
+                    className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 text-slate-500 hover:text-[#00C1A3] transition-colors focus:outline-none"
+                >
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+            )}
         </div>
     </div>
 );

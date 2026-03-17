@@ -1,5 +1,5 @@
 <?php
-// Permitir que React se comunique con PHP en local
+// Permitir que React se comunique con PHP
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Content-Type");
 header("Content-Type: application/json");
@@ -18,11 +18,11 @@ if (!isset($datos->nombre) || !isset($datos->empresa) || !isset($datos->email) |
     exit;
 }
 
-// --- CREDENCIALES LOCALES DE XAMPP ---
+// --- CREDENCIALES DE TU BASE DE DATOS (Recuerda poner las de HostGator) ---
 $host = "localhost";
-$dbname = "punto_venta";
-$username = "root"; 
-$password_db = "";  
+$dbname = "punto_venta"; // <- Cambiar por tu_prefijo_punto_venta
+$username = "root";      // <- Cambiar por tu_prefijo_usuario
+$password_db = "";       // <- Cambiar por tu contraseña real
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password_db);
@@ -72,13 +72,59 @@ try {
 
     $pdo->commit();
 
+    // --- 3. ENVÍO DE CORREOS ELECTRÓNICOS ---
+
+    // Configuración para evitar la bandeja de Spam (Es vital usar un correo que exista en tu HostGator)
+    $remitente = "no-reply@nedimipos.com"; // Modifica esto si tu dominio principal es otro
+
+    // Correo 1: Para Orlando Palacios (Administrador)
+    $toAdmin = "orlando.palacios@nedimi.com";
+    $subjectAdmin = "Nuevo registro en Nedimi POS - " . $datos->empresa;
+    $headersAdmin  = "From: " . $remitente . "\r\n";
+    $headersAdmin .= "Content-Type: text/html; charset=UTF-8\r\n";
+
+    $cuerpoAdmin = "
+        <div style='font-family: Arial, sans-serif; color: #333;'>
+            <h2 style='color: #00C1A3;'>Nuevo Registro en Nedimi POS</h2>
+            <p>Se ha registrado un nuevo usuario en la plataforma. Aquí están los detalles:</p>
+            <ul>
+                <li><strong>Nombre de Usuario:</strong> {$datos->nombre}</li>
+                <li><strong>Empresa:</strong> {$datos->empresa}</li>
+                <li><strong>Correo de Registro:</strong> {$datos->email}</li>
+            </ul>
+        </div>
+    ";
+    mail($toAdmin, $subjectAdmin, $cuerpoAdmin, $headersAdmin);
+
+    // Correo 2: Para el Cliente
+    $toCliente = $datos->email;
+    $subjectCliente = "Bienvenido a Nedimi POS - Tus datos de acceso";
+    $headersCliente  = "From: " . $remitente . "\r\n";
+    $headersCliente .= "Content-Type: text/html; charset=UTF-8\r\n";
+
+    $cuerpoCliente = "
+        <div style='font-family: Arial, sans-serif; color: #333;'>
+            <h2 style='color: #00C1A3;'>¡Felicidades por tu registro!</h2>
+            <p>Hola <strong>{$datos->nombre}</strong>,</p>
+            <p>Estos son tus datos para iniciar sesión en tu punto de venta:</p>
+            <div style='background-color: #f4f4f4; padding: 15px; border-radius: 5px; margin: 20px 0;'>
+                <p style='margin: 0;'><strong>Enlace de acceso:</strong> <a href='https://nedimipos.com/puntodeventa/' style='color: #00C1A3;'>https://nedimipos.com/puntodeventa/</a></p>
+                <p style='margin: 5px 0 0 0;'><strong>Usuario:</strong> {$datos->email}</p>
+                <p style='margin: 5px 0 0 0;'><strong>Contraseña:</strong> {$datos->password}</p>
+            </div>
+            <p>Te recomendamos guardar este correo en un lugar seguro.</p>
+            <p>¡Mucho éxito en tus ventas!</p>
+        </div>
+    ";
+    mail($toCliente, $subjectCliente, $cuerpoCliente, $headersCliente);
+
+    // --- 4. RESPUESTA A REACT ---
     echo json_encode(["success" => true, "message" => "¡Cuenta creada exitosamente!"]);
 
 } catch (Exception $e) {
     if (isset($pdo) && $pdo->inTransaction()) {
         $pdo->rollBack();
     }
-    // En lugar de mostrar el error de SQL, mostramos esto:
     echo json_encode(["success" => false, "error" => "Ocurrió un problema en el servidor al intentar registrarte. Intenta de nuevo."]);
 }
 ?>
