@@ -1,14 +1,15 @@
 "use client";
 
 import { motion, useMotionValue, useSpring, AnimatePresence } from "framer-motion";
-import { 
-    Zap, User, Building2, Mail, Lock, ArrowRight, ShieldCheck, 
-    Sparkles, KeyRound, AlertTriangle, CheckCircle2, X, Loader2 
+import {
+    Zap, User, Building2, Mail, Lock, ArrowRight, ShieldCheck,
+    Sparkles, KeyRound, AlertTriangle, CheckCircle2, X, Loader2
 } from "lucide-react";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 
-export const RegisterHome = () => { // <--- Nombre corregido
+export const RegisterHome = () => {
     const containerRef = useRef<HTMLDivElement>(null);
+    const [isMobile, setIsMobile] = useState(false);
 
     // --- 1. ESTADOS DEL FORMULARIO ---
     const [formData, setFormData] = useState({
@@ -26,8 +27,27 @@ export const RegisterHome = () => { // <--- Nombre corregido
 
     // --- ESTADOS DEL MODAL DE CONFIRMACIÓN ---
     const [showModal, setShowModal] = useState(false);
-    const [isSubmitting, setIsSubmitting] = useState(false); // Cargando en el modal
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const [isCompleted, setIsCompleted] = useState(false);
+
+    // --- EFECTOS DE UX ---
+    // Detectar móvil para deshabilitar parallax pesado
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 1024);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+
+    // Bloquear el scroll del fondo cuando el modal está abierto (Crucial en móviles)
+    useEffect(() => {
+        if (showModal) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+        return () => { document.body.style.overflow = 'unset'; };
+    }, [showModal]);
 
     // --- 2. MANEJADORES DE EVENTOS ---
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,18 +55,15 @@ export const RegisterHome = () => { // <--- Nombre corregido
             ...formData,
             [e.target.name]: e.target.value
         });
-        // Quitar error visual si el usuario vuelve a escribir
-        if(status.type === 'error') setStatus({ ...status, message: '', type: '' });
+        if (status.type === 'error') setStatus({ ...status, message: '', type: '' });
     };
 
-    // Al darle a "Solicitar Acceso", SOLO abrimos el modal
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         setStatus({ loading: false, message: '', type: '' });
         setShowModal(true);
     };
 
-    // Al darle a "Aceptar" en el modal, HACEMOS LA PETICIÓN A PHP
     const handleAccept = async () => {
         setIsSubmitting(true);
 
@@ -62,16 +79,13 @@ export const RegisterHome = () => { // <--- Nombre corregido
             const data = await response.json();
 
             if (data.success) {
-                // Activar animación de éxito en el modal
                 setIsCompleted(true);
                 setFormData({ nombre: '', empresa: '', email: '', password: '' });
-                
-                // Redirigir después de 2 segundos
+
                 setTimeout(() => {
-                    window.location.href = "/nedimipos/puntodeventa/"; // <--- NO OLVIDES PONER TU RUTA
+                    window.location.href = "/nedimipos/puntodeventa/";
                 }, 2000);
             } else {
-                // Si hay error (ej. correo duplicado), cerrar modal y mostrar error en el formulario
                 setShowModal(false);
                 setStatus({ loading: false, message: data.error, type: 'error' });
             }
@@ -85,8 +99,10 @@ export const RegisterHome = () => { // <--- Nombre corregido
     };
 
     const handleCancel = () => {
-        setShowModal(false);
-        setIsCompleted(false);
+        if (!isSubmitting) {
+            setShowModal(false);
+            setIsCompleted(false);
+        }
     };
 
     // --- Lógica de Parallax ---
@@ -96,7 +112,7 @@ export const RegisterHome = () => { // <--- Nombre corregido
     const springY = useSpring(mouseY, { stiffness: 50, damping: 25 });
 
     const handleMouseMove = (e: React.MouseEvent) => {
-        if (!containerRef.current) return;
+        if (!containerRef.current || isMobile) return;
         const rect = containerRef.current.getBoundingClientRect();
         mouseX.set((e.clientX - rect.left - rect.width / 2) / 20);
         mouseY.set((e.clientY - rect.top - rect.height / 2) / 20);
@@ -106,133 +122,152 @@ export const RegisterHome = () => { // <--- Nombre corregido
         <section
             ref={containerRef}
             onMouseMove={handleMouseMove}
-            className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-[#020617] px-6 py-12"
+            className="relative min-h-[90vh] lg:min-h-screen flex items-center justify-center overflow-hidden bg-[#020617] px-6 py-16 md:py-24"
         >
+            {/* FONDO ANIMADO */}
             <div className="absolute inset-0 z-0 pointer-events-none">
                 <div className="absolute inset-0 bg-[radial-gradient(#ffffff05_1px,transparent_1px)] [background-size:80px_80px] opacity-40" />
 
-                <motion.div style={{ x: springX, y: springY }} className="absolute inset-0">
-                    {[...Array(10)].map((_, i) => (
-                        <DataLine key={i} index={i} total={10} />
-                    ))}
-                </motion.div>
+                {!isMobile && (
+                    <motion.div style={{ x: springX, y: springY }} className="absolute inset-0">
+                        {[...Array(8)].map((_, i) => (
+                            <DataLine key={i} index={i} total={8} />
+                        ))}
+                    </motion.div>
+                )}
 
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#00C1A3]/10 blur-[150px] rounded-full" />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] lg:w-[600px] h-[400px] lg:h-[600px] bg-[#00C1A3]/10 blur-[120px] lg:blur-[150px] rounded-full" />
             </div>
 
-            <div className="max-w-6xl w-full grid lg:grid-cols-2 gap-16 items-center relative z-10">
-                <div className="hidden lg:flex flex-col gap-8">
+            <div className="max-w-6xl w-full grid lg:grid-cols-2 gap-12 lg:gap-16 items-center relative z-10">
+
+                {/* --- LADO IZQUIERDO: TEXTOS (Ahora visible en móviles) --- */}
+                <div className="flex flex-col gap-6 lg:gap-8 text-center lg:text-left items-center lg:items-start">
                     <motion.div
                         initial={{ opacity: 0, x: -30 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        className="space-y-6"
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        className="space-y-4 lg:space-y-6"
                     >
                         <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#00C1A3]/10 border border-[#00C1A3]/20 rounded-full">
                             <Sparkles size={14} className="text-[#00C1A3]" />
-                            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#00C1A3]">Trial Activation</span>
+                            <span className="text-[10px] font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-[#00C1A3]">Trial Activation</span>
                         </div>
 
-                        <h1 className="text-7xl font-[1000] text-white italic uppercase tracking-tighter leading-[0.85]">
+                        <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[5rem] font-[1000] text-white italic uppercase tracking-tighter leading-[0.9] md:leading-[0.85]">
                             COMIENZA TU <br />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00C1A3] to-emerald-400">
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00C1A3] to-emerald-400 drop-shadow-sm">
                                 PRUEBA GRATIS
                             </span>
                         </h1>
-                        <p className="text-slate-400 text-xl font-light max-w-md">
+                        <p className="text-slate-400 text-base sm:text-lg md:text-xl font-light max-w-md mx-auto lg:mx-0">
                             Activa tu licencia de evaluación y descubre por qué <span className="text-white font-medium">Nedimi POS</span> es la opción #1 para ingenierías comerciales.
                         </p>
                     </motion.div>
 
-                    <div className="space-y-4">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.2 }}
+                        className="flex flex-wrap justify-center lg:justify-start gap-4 lg:flex-col lg:gap-4"
+                    >
                         <StatusItem label="Encryption" value="SSL+ Verified" />
                         <StatusItem label="Database" value="Real-time Sync" />
                         <StatusItem label="Access" value="Full Suite" />
-                    </div>
+                    </motion.div>
                 </div>
 
+                {/* --- LADO DERECHO: FORMULARIO --- */}
                 <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    className="bg-slate-900/40 backdrop-blur-3xl border border-white/10 p-8 md:p-12 rounded-[3rem] shadow-2xl relative overflow-hidden group"
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5 }}
+                    className="bg-slate-900/40 backdrop-blur-3xl border border-white/10 p-6 sm:p-8 md:p-12 rounded-[2rem] md:rounded-[3rem] shadow-2xl relative overflow-hidden w-full max-w-xl mx-auto lg:max-w-none"
                 >
-                    <div className="relative z-10 space-y-8">
-                        <div>
-                            <h2 className="text-2xl font-black text-white uppercase italic tracking-tighter">Crear Cuenta</h2>
-                            <p className="text-slate-500 text-[10px] font-bold uppercase tracking-[0.2em] mt-1 italic">Protocolo de Despliegue v2.0</p>
+                    <div className="relative z-10 space-y-6 md:space-y-8">
+                        <div className="text-center sm:text-left">
+                            <h2 className="text-xl sm:text-2xl font-black text-white uppercase italic tracking-tighter">Crear Cuenta</h2>
+                            <p className="text-slate-500 text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.2em] mt-1 italic">Protocolo de Despliegue v2.0</p>
                         </div>
 
-                        <form className="space-y-5" onSubmit={handleSubmit}>
-                            <div className="grid md:grid-cols-2 gap-5">
-                                <InputField 
-                                    icon={<User size={18} />} 
-                                    label="Nombre" 
+                        <form className="space-y-4 md:space-y-5" onSubmit={handleSubmit}>
+                            <div className="grid sm:grid-cols-2 gap-4 md:gap-5">
+                                <InputField
+                                    icon={<User size={18} />}
+                                    label="Nombre"
                                     name="nombre"
                                     value={formData.nombre}
                                     onChange={handleChange}
-                                    placeholder="Tu nombre" 
+                                    placeholder="Tu nombre"
                                     required
                                 />
-                                <InputField 
-                                    icon={<Building2 size={18} />} 
-                                    label="Empresa" 
+                                <InputField
+                                    icon={<Building2 size={18} />}
+                                    label="Empresa"
                                     name="empresa"
                                     value={formData.empresa}
                                     onChange={handleChange}
-                                    placeholder="Tu negocio" 
+                                    placeholder="Tu negocio"
                                     required
                                 />
                             </div>
-                            <InputField 
-                                icon={<Mail size={18} />} 
-                                label="Email Corporativo" 
+                            <InputField
+                                icon={<Mail size={18} />}
+                                label="Email Corporativo"
                                 name="email"
                                 type="email"
                                 value={formData.email}
                                 onChange={handleChange}
-                                placeholder="nombre@empresa.com" 
+                                placeholder="nombre@empresa.com"
                                 required
                             />
-                            <InputField 
-                                icon={<Lock size={18} />} 
-                                label="Contraseña" 
+                            <InputField
+                                icon={<Lock size={18} />}
+                                label="Contraseña"
                                 name="password"
-                                type="password" 
+                                type="password"
                                 value={formData.password}
                                 onChange={handleChange}
-                                placeholder="••••••••" 
+                                placeholder="••••••••"
                                 required
                             />
 
-                            <div className="bg-amber-500/5 border-l-2 border-amber-500/40 p-4 space-y-2 rounded-r-xl">
+                            <div className="bg-amber-500/5 border-l-2 border-amber-500/40 p-3 md:p-4 space-y-1.5 md:space-y-2 rounded-r-xl">
                                 <div className="flex items-center gap-2">
                                     <KeyRound size={14} className="text-amber-500" />
-                                    <span className="text-[10px] font-black text-amber-500 uppercase tracking-widest italic">
+                                    <span className="text-[9px] sm:text-[10px] font-black text-amber-500 uppercase tracking-widest italic">
                                         Security Notice
                                     </span>
                                 </div>
-                                <p className="text-[11px] text-slate-400 font-medium leading-relaxed uppercase italic">
+                                <p className="text-[10px] sm:text-[11px] text-slate-400 font-medium leading-relaxed uppercase italic">
                                     La contraseña que definas será tu <span className="text-amber-200">llave de acceso única</span> para la terminal demo. <span className="text-white">Asegúrate de guardarla.</span>
                                 </p>
                             </div>
 
                             {/* --- MENSAJES DE ERROR VISUALES --- */}
-                            {status.message && status.type === 'error' && (
-                                <motion.div 
-                                    initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-                                    className="p-3 rounded-xl flex items-center gap-3 text-sm font-medium bg-red-500/10 text-red-400 border border-red-500/20"
-                                >
-                                    <AlertTriangle size={16} className="flex-shrink-0" />
-                                    <span>{status.message}</span>
-                                </motion.div>
-                            )}
+                            <AnimatePresence>
+                                {status.message && status.type === 'error' && (
+                                    <motion.div
+                                        initial={{ opacity: 0, height: 0, y: -10 }}
+                                        animate={{ opacity: 1, height: 'auto', y: 0 }}
+                                        exit={{ opacity: 0, height: 0 }}
+                                        className="p-3 rounded-xl flex items-center gap-3 text-xs sm:text-sm font-medium bg-red-500/10 text-red-400 border border-red-500/20 overflow-hidden"
+                                    >
+                                        <AlertTriangle size={16} className="flex-shrink-0" />
+                                        <span>{status.message}</span>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
 
-                            <div className="pt-4">
-                                <button 
+                            <div className="pt-2 md:pt-4">
+                                <button
                                     type="submit"
-                                    className="w-full group relative py-5 bg-[#00C1A3] text-[#020617] font-[1000] italic uppercase rounded-2xl overflow-hidden transition-all hover:scale-[1.02] active:scale-95 shadow-[0_20px_40px_rgba(0,193,163,0.3)]"
+                                    className="w-full group relative py-4 md:py-5 bg-[#00C1A3] text-[#020617] font-[1000] italic uppercase rounded-xl md:rounded-2xl overflow-hidden transition-all hover:scale-[1.02] active:scale-95 shadow-[0_15px_30px_rgba(0,193,163,0.3)] focus:outline-none focus:ring-4 focus:ring-[#00C1A3]/50"
                                 >
-                                    <span className="relative z-10 flex items-center justify-center gap-3 text-lg tracking-widest leading-none">
-                                        SOLICITAR ACCESO <ArrowRight className="group-hover:translate-x-2 transition-transform" />
+                                    <span className="relative z-10 flex items-center justify-center gap-2 md:gap-3 text-base md:text-lg tracking-widest leading-none">
+                                        SOLICITAR ACCESO <ArrowRight size={18} className="group-hover:translate-x-2 transition-transform" />
                                     </span>
                                     <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity" />
                                 </button>
@@ -249,16 +284,16 @@ export const RegisterHome = () => { // <--- Nombre corregido
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-50 flex items-center justify-center bg-[#020617]/80 backdrop-blur-md px-4"
+                        className="fixed inset-0 z-[100] flex items-center justify-center bg-[#020617]/80 backdrop-blur-md p-4"
                     >
                         <motion.div
                             initial={{ scale: 0.9, opacity: 0, y: 20 }}
                             animate={{ scale: 1, opacity: 1, y: 0 }}
                             exit={{ scale: 0.9, opacity: 0, y: 20 }}
                             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                            className="bg-slate-900 border border-white/10 p-8 rounded-[2rem] shadow-2xl max-w-md w-full relative overflow-hidden"
+                            className="bg-slate-900 border border-white/10 p-6 sm:p-8 rounded-[2rem] shadow-2xl max-w-md w-full relative overflow-hidden"
                         >
-                            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[300px] h-[300px] bg-[#00C1A3]/10 blur-[80px] rounded-full pointer-events-none" />
+                            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[200px] h-[200px] bg-[#00C1A3]/20 blur-[80px] rounded-full pointer-events-none" />
 
                             <div className="relative z-10 text-center space-y-6">
                                 <AnimatePresence mode="wait">
@@ -274,24 +309,24 @@ export const RegisterHome = () => { // <--- Nombre corregido
                                                 <User size={32} />
                                             </div>
                                             <div>
-                                                <h3 className="text-2xl font-[1000] text-white italic uppercase">Confirmar Registro</h3>
-                                                <p className="text-slate-400 font-light mt-2">¿Estás seguro de que deseas crear la cuenta para <strong>{formData.empresa}</strong>?</p>
+                                                <h3 className="text-xl sm:text-2xl font-[1000] text-white italic uppercase">Confirmar Registro</h3>
+                                                <p className="text-slate-400 font-light text-sm sm:text-base mt-2">¿Estás seguro de que deseas crear la cuenta para <strong className="text-white">{formData.empresa}</strong>?</p>
                                             </div>
-                                            <div className="flex items-center gap-3 pt-4">
-                                                <button 
+                                            <div className="flex flex-col-reverse sm:flex-row items-center gap-3 pt-2">
+                                                <button
                                                     onClick={handleCancel}
                                                     disabled={isSubmitting}
-                                                    className="flex-1 py-3.5 px-4 bg-white/5 hover:bg-white/10 text-slate-300 font-bold rounded-xl transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+                                                    className="w-full sm:flex-1 py-3.5 px-4 bg-white/5 hover:bg-white/10 text-slate-300 font-bold rounded-xl transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
                                                 >
                                                     <X size={18} /> Cancelar
                                                 </button>
-                                                <button 
+                                                <button
                                                     onClick={handleAccept}
                                                     disabled={isSubmitting}
-                                                    className="flex-1 py-3.5 px-4 bg-[#00C1A3] text-[#020617] font-black italic uppercase tracking-wider rounded-xl hover:scale-105 active:scale-95 transition-all shadow-[0_10px_20px_rgba(0,193,163,0.3)] flex items-center justify-center gap-2 disabled:opacity-80 disabled:hover:scale-100"
+                                                    className="w-full sm:flex-1 py-3.5 px-4 bg-[#00C1A3] text-[#020617] font-black italic uppercase tracking-wider rounded-xl hover:scale-105 active:scale-95 transition-all shadow-[0_10px_20px_rgba(0,193,163,0.3)] flex items-center justify-center gap-2 disabled:opacity-80 disabled:hover:scale-100"
                                                 >
                                                     {isSubmitting ? (
-                                                        <><Loader2 size={18} className="animate-spin" /> Creando...</>
+                                                        <><Loader2 size={18} className="animate-spin" /> Procesando</>
                                                     ) : (
                                                         <>Aceptar <ArrowRight size={18} /></>
                                                     )}
@@ -305,15 +340,15 @@ export const RegisterHome = () => { // <--- Nombre corregido
                                             animate={{ opacity: 1, scale: 1 }}
                                             className="space-y-6 py-4"
                                         >
-                                            <motion.div 
-                                                animate={{ rotate: [0, 10, -10, 0] }} 
-                                                transition={{ duration: 0.5, ease: "easeInOut" }}
+                                            <motion.div
+                                                animate={{ rotate: [0, 10, -10, 0], scale: [1, 1.1, 1] }}
+                                                transition={{ duration: 0.6, ease: "easeInOut" }}
                                                 className="w-20 h-20 bg-[#00C1A3]/20 text-[#00C1A3] rounded-full flex items-center justify-center mx-auto border-2 border-[#00C1A3]"
                                             >
                                                 <CheckCircle2 size={40} />
                                             </motion.div>
                                             <div>
-                                                <h3 className="text-3xl font-[1000] text-white italic uppercase tracking-tighter">Registro Completado</h3>
+                                                <h3 className="text-2xl sm:text-3xl font-[1000] text-white italic uppercase tracking-tighter">Completado</h3>
                                                 <p className="text-[#00C1A3] font-bold tracking-widest uppercase text-xs mt-3 animate-pulse">Redirigiendo a tu sistema...</p>
                                             </div>
                                         </motion.div>
@@ -328,16 +363,16 @@ export const RegisterHome = () => { // <--- Nombre corregido
     );
 };
 
-// --- Sub-componentes auxiliares ---
+// --- Sub-componentes auxiliares tipados y optimizados ---
 
 const DataLine = ({ index, total }: { index: number, total: number }) => {
-    const laneHeight = 5 + (index * (90 / (total - 1)));
+    const laneHeight = 10 + (index * (80 / (total - 1)));
     return (
         <motion.div
             initial={{ left: "-20%", opacity: 0 }}
-            animate={{ left: "110%", opacity: [0, 0.4, 0.4, 0] }}
-            transition={{ duration: 8 + index, repeat: Infinity, delay: index * 1.5, ease: "linear" }}
-            className="absolute h-[1px] bg-gradient-to-r from-transparent via-[#00C1A3] to-transparent"
+            animate={{ left: "110%", opacity: [0, 0.3, 0.3, 0] }}
+            transition={{ duration: 10 + index, repeat: Infinity, delay: index * 1.5, ease: "linear" }}
+            className="absolute h-[1px] bg-gradient-to-r from-transparent via-[#00C1A3] to-transparent will-change-transform"
             style={{ top: `${laneHeight}%`, width: `${100 + index * 50}px` }}
         >
             <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-1 bg-[#00C1A3] rounded-full shadow-[0_0_10px_#00C1A3]" />
@@ -345,13 +380,24 @@ const DataLine = ({ index, total }: { index: number, total: number }) => {
     );
 };
 
-const InputField = ({ icon, label, placeholder, type = "text", name, value, onChange, required }: any) => (
+interface InputFieldProps {
+    icon: React.ReactNode;
+    label: string;
+    placeholder: string;
+    type?: string;
+    name: string;
+    value: string;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    required?: boolean;
+}
+
+const InputField = ({ icon, label, placeholder, type = "text", name, value, onChange, required }: InputFieldProps) => (
     <div className="space-y-1.5 group">
-        <label className="text-[9px] font-black text-slate-500 uppercase tracking-[0.2em] ml-2 group-focus-within:text-[#00C1A3] transition-colors">
+        <label className="text-[9px] sm:text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-2 group-focus-within:text-[#00C1A3] transition-colors">
             {label}
         </label>
         <div className="relative">
-            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-[#00C1A3] transition-colors">
+            <div className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-[#00C1A3] transition-colors">
                 {icon}
             </div>
             <input
@@ -361,16 +407,16 @@ const InputField = ({ icon, label, placeholder, type = "text", name, value, onCh
                 onChange={onChange}
                 required={required}
                 placeholder={placeholder}
-                className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white placeholder:text-slate-700 outline-none focus:border-[#00C1A3]/50 focus:bg-white/[0.08] transition-all text-sm font-medium"
+                className="w-full bg-white/5 border border-white/10 rounded-xl sm:rounded-2xl py-3.5 sm:py-4 pl-10 sm:pl-12 pr-4 text-white placeholder:text-slate-600 outline-none focus:border-[#00C1A3]/50 focus:bg-white/[0.08] focus:ring-2 focus:ring-[#00C1A3]/20 transition-all text-xs sm:text-sm font-medium"
             />
         </div>
     </div>
 );
 
 const StatusItem = ({ label, value }: { label: string, value: string }) => (
-    <div className="flex items-center gap-3">
-        <div className="w-1 h-1 rounded-full bg-[#00C1A3] animate-pulse" />
-        <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">{label}:</span>
-        <span className="text-[10px] font-black text-white uppercase italic">{value}</span>
+    <div className="flex items-center gap-2 sm:gap-3 bg-white/5 px-3 py-1.5 rounded-full border border-white/5 lg:bg-transparent lg:border-transparent lg:px-0 lg:py-0">
+        <div className="w-1.5 h-1.5 rounded-full bg-[#00C1A3] animate-pulse" />
+        <span className="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest">{label}:</span>
+        <span className="text-[9px] sm:text-[10px] font-black text-white uppercase italic">{value}</span>
     </div>
 );
