@@ -29,11 +29,12 @@ export const DashboardPreview = () => {
                     transition={{ duration: 0.7 }}
                     className="relative rounded-[2rem] md:rounded-[3rem] lg:rounded-[4rem] overflow-hidden bg-slate-900/40 border border-[#00C1A3]/20 p-8 md:p-16 lg:p-24 backdrop-blur-xl shadow-[0_20px_80px_rgba(0,193,163,0.07)]"
                 >
-                    {/* Brillo de fondo sutil */}
+                    {/* Brillo de fondo */}
                     <div className="absolute top-0 right-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-[#00C1A3]/10 blur-[120px] rounded-full pointer-events-none translate-x-1/3 -translate-y-1/3" />
 
                     <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center relative z-10">
-                        {/* Lado Izquierdo: Textos y Características */}
+                        
+                        {/* LADO IZQUIERDO */}
                         <div className="order-2 lg:order-1">
                             <motion.div
                                 initial={{ opacity: 0, x: -30 }}
@@ -50,104 +51,73 @@ export const DashboardPreview = () => {
 
                             <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-[1000] italic uppercase text-white mb-6 md:mb-8 leading-[0.9] tracking-tighter">
                                 Gestión de <br />
-                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00C1A3] to-blue-400 drop-shadow-sm">
+                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00C1A3] to-blue-400">
                                     Alto Nivel.
                                 </span>
                             </h2>
                             <p className="text-slate-400 text-sm md:text-base lg:text-lg mb-8 md:mb-10 font-light max-w-lg">
-                                Visualiza el rendimiento de tu negocio en tiempo real. Toma decisiones basadas en datos precisos con nuestra interfaz intuitiva y métricas automatizadas.
+                                Visualiza el rendimiento de tu negocio en tiempo real. Toma decisiones basadas en datos precisos.
                             </p>
 
-                            <div className="grid gap-3 md:gap-4">
+                            <div className="grid gap-3">
                                 {features.map((item, i) => (
-                                    <motion.div
-                                        key={i}
-                                        initial={{ opacity: 0, x: -20 }}
-                                        whileInView={{ opacity: 1, x: 0 }}
-                                        viewport={{ once: true }}
-                                        transition={{ delay: 0.3 + (i * 0.1) }}
-                                        whileHover={{ x: 8, backgroundColor: "rgba(255,255,255,0.08)" }}
-                                        className="flex items-center gap-4 bg-white/5 p-4 md:p-5 rounded-2xl border border-white/5 cursor-default transition-colors duration-300"
-                                    >
-                                        <div className="p-1 rounded-full bg-[#00C1A3]/20">
-                                            <CheckCircle2 size={18} className="text-[#00C1A3]" />
-                                        </div>
-                                        <span className="text-xs md:text-sm font-bold uppercase tracking-widest text-slate-200">
-                                            {item}
-                                        </span>
-                                    </motion.div>
+                                    <div key={i} className="flex items-center gap-4 bg-white/5 p-4 rounded-2xl border border-white/5">
+                                        <CheckCircle2 size={18} className="text-[#00C1A3]" />
+                                        <span className="text-xs md:text-sm font-bold uppercase tracking-widest text-slate-200">{item}</span>
+                                    </div>
                                 ))}
                             </div>
                         </div>
 
-                        {/* Lado Derecho: Mini Dashboard Animado */}
+                        {/* LADO DERECHO: MINI DASHBOARD CON BARRAS CORREGIDAS */}
                         <motion.div
                             initial={{ opacity: 0, scale: 0.95 }}
                             whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.6, delay: 0.4 }}
-                            className="order-1 lg:order-2 relative w-full aspect-[4/3] sm:aspect-[16/10] lg:aspect-[4/3] bg-[#0f172a] rounded-[2rem] border border-slate-700/50 p-4 sm:p-6 md:p-8 overflow-hidden shadow-2xl flex flex-col group"
+                            className="order-1 lg:order-2 relative w-full aspect-[4/3] bg-[#0f172a] rounded-[2rem] border border-slate-700/50 p-6 sm:p-8 flex flex-col group"
                         >
-                            {/* Cabecera de Ventana macOS style */}
-                            <div className="flex items-center justify-between mb-6 md:mb-8 border-b border-slate-800 pb-4">
+                            {/* Cabecera macOS */}
+                            <div className="flex items-center justify-between mb-8 border-b border-slate-800 pb-4">
                                 <div className="flex gap-2">
-                                    <div className="w-2.5 h-2.5 rounded-full bg-slate-700 group-hover:bg-red-500 transition-colors" />
-                                    <div className="w-2.5 h-2.5 rounded-full bg-slate-700 group-hover:bg-amber-500 transition-colors" />
-                                    <div className="w-2.5 h-2.5 rounded-full bg-slate-700 group-hover:bg-emerald-500 transition-colors" />
+                                    <div className="w-2.5 h-2.5 rounded-full bg-red-500" />
+                                    <div className="w-2.5 h-2.5 rounded-full bg-amber-500" />
+                                    <div className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
                                 </div>
-                                <div className="flex gap-2">
-                                    <div className="h-2 w-16 bg-slate-800 rounded-full" />
-                                    <div className="h-2 w-8 bg-slate-800 rounded-full" />
+                                <div className="h-2 w-16 bg-slate-800 rounded-full" />
+                            </div>
+
+                            <div className="flex justify-between items-end mb-8">
+                                <div className="space-y-1">
+                                    <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">Ventas Semanales</span>
+                                    <h3 className="text-3xl font-[1000] text-white tracking-tighter">$124,500</h3>
+                                </div>
+                                <div className="text-emerald-400 bg-emerald-400/10 px-2 py-1 rounded-lg flex items-center gap-1 text-[10px] font-bold">
+                                    <TrendingUp size={12} /> +14%
                                 </div>
                             </div>
 
-                            {/* Info de Métricas simuladas */}
-                            <div className="flex justify-between items-end mb-6">
-                                <div>
-                                    <span className="text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] text-slate-500">
-                                        Ventas de la semana
-                                    </span>
-                                    <div className="flex items-center gap-3 mt-1">
-                                        <h3 className="text-2xl sm:text-3xl md:text-4xl font-[1000] text-white tracking-tighter">
-                                            $124,500
-                                        </h3>
-                                        <div className="flex items-center gap-1 text-emerald-400 bg-emerald-400/10 px-2 py-1 rounded-lg">
-                                            <TrendingUp size={14} />
-                                            <span className="text-[10px] font-bold">+14%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="hidden sm:flex p-3 bg-[#00C1A3]/10 border border-[#00C1A3]/20 rounded-xl text-[#00C1A3]">
-                                    <BarChart3 size={24} />
-                                </div>
-                            </div>
-
-                            {/* Gráfico de Barras Animado */}
-                            <div className="flex items-end justify-between gap-2 md:gap-4 flex-1 mt-auto pt-4 relative">
-                                {/* Líneas de fondo del gráfico */}
-                                <div className="absolute inset-0 flex flex-col justify-between pointer-events-none opacity-20">
-                                    <div className="w-full border-t border-dashed border-slate-600" />
-                                    <div className="w-full border-t border-dashed border-slate-600" />
-                                    <div className="w-full border-t border-dashed border-slate-600" />
+                            {/* CONTENEDOR DE GRÁFICO */}
+                            <div className="flex items-end justify-between gap-2 md:gap-4 flex-1 relative min-h-[160px] pt-4">
+                                {/* Líneas de fondo */}
+                                <div className="absolute inset-0 flex flex-col justify-between pointer-events-none opacity-10">
+                                    <div className="w-full border-t border-slate-600" />
+                                    <div className="w-full border-t border-slate-600" />
+                                    <div className="w-full border-t border-slate-600" />
                                 </div>
 
                                 {chartData.map((data, i) => (
-                                    <div key={i} className="flex-1 flex flex-col items-center gap-2 z-10 group/bar">
-                                        <div className="w-full h-32 sm:h-40 md:h-48 bg-slate-800/50 rounded-t-md relative flex items-end">
+                                    <div key={i} className="flex-1 flex flex-col items-center gap-2 z-10 h-full justify-end">
+                                        <div className="w-full bg-slate-800/40 rounded-t-md relative flex items-end h-full overflow-hidden">
                                             <motion.div
                                                 initial={{ height: 0 }}
                                                 whileInView={{ height: `${data.height}%` }}
-                                                viewport={{ once: true, margin: "-50px" }}
-                                                transition={{ duration: 0.8, delay: 0.5 + (i * 0.1), type: "spring" }}
-                                                className="w-full bg-gradient-to-t from-[#00C1A3]/80 to-[#00C1A3] rounded-t-md relative transition-all group-hover/bar:brightness-110"
-                                            >
-                                                {/* Tooltip al hacer hover en la barra */}
-                                                <div className="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover/bar:opacity-100 transition-opacity bg-white text-[#020617] text-[10px] font-bold py-1 px-2 rounded">
-                                                    {data.height}%
-                                                </div>
-                                            </motion.div>
+                                                viewport={{ once: true, amount: 0.1 }}
+                                                transition={{ duration: 1, delay: 0.3 + (i * 0.1), ease: "easeOut" }}
+                                                className="w-full bg-gradient-to-t from-[#00C1A3] to-emerald-400 rounded-t-md relative shadow-[0_0_15px_rgba(0,193,163,0.3)]"
+                                            />
                                         </div>
-                                        <span className="text-[9px] md:text-[10px] font-bold text-slate-500 uppercase">{data.label}</span>
+                                        <span className="text-[9px] font-bold text-slate-500 uppercase">{data.label}</span>
                                     </div>
                                 ))}
                             </div>
