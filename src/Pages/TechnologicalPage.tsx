@@ -21,7 +21,6 @@ const TechnologicalPage = () => {
         <DeviceShowcaseHome />
         <ReportsHome />
         <TechStackHome/>
-        <RegisterCTA />
       </div>
     </PageTransition>
   );

@@ -17,7 +17,6 @@ const BenefitsPage = () => {
       <div className="pt-24 pb-12">
         <BenefitsHero />
         <BenefitsHome />
-        <RegisterCTA />
       </div>
     </PageTransition>
   );

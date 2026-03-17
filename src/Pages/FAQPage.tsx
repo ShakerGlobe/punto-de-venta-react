@@ -16,7 +16,6 @@ const TechnologicalPage = () => {
       <div className="pt-24 pb-12">
         <FAQHero />
         <FAQHome />
-        <RegisterCTA />
       </div>
     </PageTransition>
   );
