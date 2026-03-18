@@ -1,92 +1,124 @@
 @import "tailwindcss";
 
 @theme {
-    /* Identidad visual de Nedimi POS */
-    --color-nedimi-dark: #001f3f;
+    /* Identidad visual de Nedimi POS unificada */
+    --color-nedimi-dark: #020617;
+    /* Cambiado a nuestro tono Slate 950 oficial */
     --color-nedimi-accent: #00C1A3;
     --color-nedimi-text: #ffffff;
 }
 
 :root {
-    background-color: #001f3f;
-    color: white;
+    background-color: var(--color-nedimi-dark);
+    color: var(--color-nedimi-text);
     color-scheme: dark;
     scroll-behavior: smooth;
-    /* CAMBIO: Forzamos a que el scrollbar solo exista aquí */
-    overflow-y: scroll; 
 }
 
-html, body, #root {
-  background-color: #020617; 
-  margin: 0;
-  padding: 0;
-}
-
-section {
-    scroll-margin-top: 5rem;
-}
-
+/* --- RESET Y FLUJO BASE --- */
+html,
 body {
     margin: 0;
     padding: 0;
-    background-color: #001f3f !important;
+    background-color: var(--color-nedimi-dark);
+    width: 100%;
     min-height: 100vh;
 
-    /* --- AJUSTE: Solo el body maneja el flujo vertical --- */
-    width: 100%;
-    max-width: 100vw;
+    /* Prevenir scroll horizontal indeseado de forma limpia y estándar */
     overflow-x: hidden;
-    overflow-y: auto; 
-    position: relative;
-    /* ------------------------------------------------ */
 
+    /* Tipografía optimizada para pantallas de alta resolución */
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
 }
 
 #root {
-    background-color: #001f3f;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     width: 100%;
-    /* CAMBIO: overflow: clip evita que el contenedor de React genere un segundo scroll */
-    overflow: clip; 
+    position: relative;
+    /* Nota: Se eliminó 'overflow: clip' porque rompe los menús pegajosos (sticky) 
+       y las sombras (glows) que salen de los bordes. */
 }
 
-/* --- CLASES DE APOYO RESPONSIVO --- */
-@media (max-width: 640px) {
-    input, textarea, select {
-        font-size: 16px !important;
-    }
-
-    .responsive-container {
-        padding-left: 1rem;
-        padding-right: 1rem;
-    }
-}
-
-/* --- SCROLLBAR PERSONALIZADA --- */
-::-webkit-scrollbar {
-    width: 6px;
-}
-
-::-webkit-scrollbar-track {
-    background: #001f3f;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #1e293b;
-    border-radius: 10px;
-    border: 2px solid #001f3f;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #00C1A3;
+/* --- UTILIDADES GLOBALES --- */
+section {
+    /* Para que los enlaces ancla (#id) no queden ocultos debajo de la Navbar flotante */
+    scroll-margin-top: 6rem;
 }
 
 * {
     box-sizing: border-box;
+    /* Elimina el recuadro gris nativo al tocar botones en móviles táctiles */
     -webkit-tap-highlight-color: transparent;
+}
+
+/* Detalle Premium: Selección de texto con los colores de la marca */
+::selection {
+    background-color: rgba(0, 193, 163, 0.3);
+    /* #00C1A3 con transparencia */
+    color: #ffffff;
+}
+
+::-moz-selection {
+    background-color: rgba(0, 193, 163, 0.3);
+    color: #ffffff;
+}
+
+/* --- SCROLLBAR PREMIUM --- */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #020617;
+    /* Mismo color del fondo para que se mezcle */
+}
+
+::-webkit-scrollbar-thumb {
+    background: #1e293b;
+    /* Slate 800 */
+    border-radius: 10px;
+    border: 2px solid #020617;
+    /* Crea un efecto de padding dentro del track */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #00C1A3;
+    /* Color de marca al interactuar */
+}
+
+/* --- PREVENCIÓN DE BUGS EN MÓVILES --- */
+/* iOS Safari hace zoom automático si la letra de un input es menor a 16px. Esto lo previene. */
+@media (max-width: 640px) {
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="number"],
+    textarea,
+    select {
+        font-size: 16px !important;
+    }
+}
+
+/* --- ACCESIBILIDAD --- */
+/* Apaga animaciones pesadas si el usuario tiene activado el "movimiento reducido" en su SO */
+@media (prefers-reduced-motion: reduce) {
+    html:focus-within {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
 }
