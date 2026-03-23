@@ -40,7 +40,7 @@ const DemoPage = () => {
             {activePage.startsWith('reportes') && (
                 <ViewReportes
                     {...commonProps}
-                    seccion={activePage}
+                    activePage={activePage}
                 />
             )}
         </DemoHero>
