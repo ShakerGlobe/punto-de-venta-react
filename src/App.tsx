@@ -8,6 +8,7 @@ import BenefitsPage from './Pages/BenefitsPage';
 import FAQPage from './Pages/FAQPage';
 import TechnologicalPage from './Pages/TechnologicalPage';
 import RegisterPage from './Pages/RegisterPage';
+import DemoPage from './Pages/DemoPage'; // <--- AGREGADO
 
 // --- COMPONENTES GLOBALES ---
 import { Navbar } from './components/Navbar';
@@ -21,26 +22,19 @@ import PrivacyNotice from './components/PrivacyNotice';
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  // Al mover el Router a main.tsx, ahora podemos usar useLocation aquí
   const location = useLocation();
 
-  // Efecto de Carga Inicial
   useEffect(() => {
-    // 3.5 segundos de carga para Nedimi POS
     const timer = setTimeout(() => setIsLoading(false), 3500);
     return () => clearTimeout(timer);
   }, []);
 
-  // Funciones para controlar el modal desde cualquier parte
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
   return (
     <div className="min-h-screen bg-[#020617] text-white">
-      {/* Reset de scroll automático al cambiar de ruta */}
       <ScrollToTop />
-
       <AnimatePresence mode="wait">
         {isLoading ? (
           <LoadingScreen key="loading" />
@@ -53,10 +47,7 @@ const App = () => {
             transition={{ duration: 0.6, ease: "easeInOut" }}
             className="min-h-screen flex flex-col relative w-full"
           >
-            {/* El Navbar Global */}
             <Navbar onOpenModal={openModal} />
-
-            {/* Contenedor Principal con Transiciones entre Rutas */}
             <main className="flex-grow w-full relative z-10">
               <AnimatePresence mode="wait">
                 <Routes location={location} key={location.pathname}>
@@ -67,13 +58,13 @@ const App = () => {
                   <Route path="/privacidad" element={<PrivacyNotice />} />
                   <Route path="/register" element={<RegisterPage />} />
 
-                  {/* Redirección segura para rutas no encontradas (Mejora el SEO) */}
+                  {/* RUTA DE LA DEMO AGREGADA */}
+                  <Route path="/demo" element={<DemoPage />} />
+
                   <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
               </AnimatePresence>
             </main>
-
-            {/* Componentes Globales de interacción */}
             <Footer onOpenModal={openModal} />
             <WhatsAppButton />
             <DemoModal isOpen={isModalOpen} onClose={closeModal} />
