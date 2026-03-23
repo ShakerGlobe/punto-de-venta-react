@@ -148,36 +148,47 @@ export const ViewVentas = ({ isDarkMode, toggleTheme }) => {
     return (
         <div className={`space-y-6 transition-colors duration-500 ${theme.text} p-4`}>
 
-            {/* HEADER ESTILO PÍLDORA */}
-            <header className="flex justify-between items-center mb-8">
-                <h1 className={`text-2xl font-black tracking-tight ${isDarkMode ? 'text-[#00C1A3]' : 'text-[#008f78]'}`}>
-                    Ventas
-                </h1>
+            {/* HEADER EN FORMA DE PASTILLA */}
+            <header className={`flex justify-between items-center mb-6 px-8 py-4 rounded-[2rem] border backdrop-blur-md transition-all duration-500 ${isDarkMode
+                ? 'bg-[#0a0f1d]/60 border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.3)]'
+                : 'bg-white/70 border-slate-200 shadow-xl shadow-slate-200/50'
+                }`}>
+                {/* Lado Izquierdo: Título y Módulo */}
+                <div className="flex flex-col">
+                    <span className={`text-[9px] uppercase tracking-[0.3em] font-black mb-0.5 ${isDarkMode ? 'text-[#00C1A3]/60' : 'text-slate-400'}`}>
+                        Módulo de Control
+                    </span>
+                    <h1 className={`text-2xl font-black tracking-tighter flex items-center gap-2 ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>
+                        <div className="w-1.5 h-5 bg-[#00C1A3] rounded-full" />
+                        VENTAS
+                    </h1>
+                </div>
 
-                <div className="flex items-center gap-3">
-                    {/* Botón de Tema Estilo Cuadrado Redondeado */}
+                {/* Lado Derecho: Controles e Info de Usuario */}
+                <div className="flex items-center gap-6">
                     <button
                         onClick={toggleTheme}
-                        className={`p-3 rounded-2xl border transition-all ${isDarkMode
-                            ? 'bg-[#0f172a] border-white/10 hover:bg-white/5'
-                            : 'bg-white border-slate-200 shadow-sm hover:bg-slate-50'
+                        className={`p-2.5 rounded-xl transition-all active:scale-90 ${isDarkMode
+                            ? 'bg-white/5 hover:bg-white/10 text-yellow-400'
+                            : 'bg-slate-100 hover:bg-slate-200 text-slate-500'
                             }`}
                     >
-                        {isDarkMode ? <Sun size={20} className="text-yellow-400" /> : <Moon size={20} className="text-slate-400" />}
+                        {isDarkMode ? <Sun size={20} strokeWidth={2.5} /> : <Moon size={20} strokeWidth={2.5} />}
                     </button>
 
-                    {/* Contenedor Perfil Estilo Píldora */}
-                    <div className={`flex items-center gap-4 px-6 py-2 rounded-full border transition-all ${isDarkMode
-                        ? 'bg-[#0f172a] border-white/10'
-                        : 'bg-white border-slate-200 shadow-sm'
-                        }`}>
-                        <p className={`text-sm font-bold whitespace-nowrap ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>
-                            Hola Nedimi Admin
-                        </p>
+                    <div className={`h-8 w-[1px] ${isDarkMode ? 'bg-white/10' : 'bg-slate-200'}`} />
 
-                        {/* Avatar Circular */}
-                        <div className="w-9 h-9 rounded-full bg-[#00C1A3] flex items-center justify-center text-[#050335] shadow-lg shadow-[#00C1A3]/20">
-                            <User size={18} strokeWidth={2.5} />
+                    <div className="flex items-center gap-4">
+                        <div className="flex flex-col items-end hidden sm:flex">
+                            <p className={`text-[10px] font-black uppercase tracking-widest opacity-40 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+                                Admin
+                            </p>
+                            <p className={`text-sm font-bold whitespace-nowrap ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>
+                                Nedimi Admin
+                            </p>
+                        </div>
+                        <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#00C1A3] to-[#00dcb9] flex items-center justify-center text-[#050335] shadow-lg shadow-[#00C1A3]/20 border-2 border-white/20">
+                            <User size={20} strokeWidth={2.5} />
                         </div>
                     </div>
                 </div>
@@ -550,4 +561,3 @@ export const ViewVentas = ({ isDarkMode, toggleTheme }) => {
 };
 
 export default ViewVentas;
-
