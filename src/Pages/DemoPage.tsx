@@ -1,9 +1,5 @@
 import React, { useState } from "react";
-
-// Importación del Hero desde la carpeta InteractiveDemo
 import { DemoHero } from "../Sections/InteractiveDemo/DemoHero";
-
-// Importación de las vistas
 import { ViewInicio } from "../Sections/InteractiveDemo/ViewInicio";
 import { ViewVentas } from "../Sections/InteractiveDemo/ViewVentas";
 import { ViewCatalogo } from "../Sections/InteractiveDemo/ViewCatalogo";
@@ -14,10 +10,7 @@ const DemoPage = () => {
     const [activePage, setActivePage] = useState('inicio');
     const [isDarkMode, setIsDarkMode] = useState(true);
 
-    // Función para cambiar el tema
     const toggleTheme = () => setIsDarkMode(!isDarkMode);
-
-    // Empaquetamos las props comunes para no repetir código
     const commonProps = { isDarkMode, toggleTheme };
 
     return (
@@ -26,12 +19,30 @@ const DemoPage = () => {
             setActivePage={setActivePage}
             isDarkMode={isDarkMode}
         >
-            {/* Renderizado lógico de las vistas con props compartidas */}
-            {activePage === 'inicio' && <ViewInicio   {...commonProps} />}
-            {activePage === 'ventas' && <ViewVentas   {...commonProps} />}
-            {activePage === 'catalogo' && <ViewCatalogo {...commonProps} />}
+            {/* INICIO */}
+            {activePage === 'inicio' && <ViewInicio {...commonProps} />}
+
+            {/* VENTAS */}
+            {activePage === 'ventas' && <ViewVentas {...commonProps} />}
+
+            {/* CATÁLOGO (CORREGIDO PARA SUB-MENÚS) */}
+            {activePage.startsWith('catalogo') && (
+                <ViewCatalogo
+                    {...commonProps}
+                    seccion={activePage} // <--- Le pasa 'catalogo_productos' o 'catalogo_proveedores'
+                />
+            )}
+
+            {/* USUARIOS */}
             {activePage === 'usuarios' && <ViewUsuarios {...commonProps} />}
-            {activePage === 'reportes' && <ViewReportes {...commonProps} />}
+
+            {/* REPORTES (CORREGIDO PARA SUB-MENÚS) */}
+            {activePage.startsWith('reportes') && (
+                <ViewReportes
+                    {...commonProps}
+                    seccion={activePage}
+                />
+            )}
         </DemoHero>
     );
 };

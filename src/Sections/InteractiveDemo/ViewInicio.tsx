@@ -126,21 +126,59 @@ export const ViewInicio = ({ isDarkMode, toggleTheme }) => {
 
             <div className={`max-w-7xl mx-auto space-y-6 transition-colors duration-500 ${theme.text}`}>
 
-                {/* HEADER */}
-                <header className={`flex justify-between items-center transition-all duration-500 ${isTutorialActive && currentStep === 0 ? 'relative z-[101] scale-[1.03] bg-white/5 p-4 rounded-3xl backdrop-blur-md ring-2 ring-[#00C1A3]/30' : ''}`}>
-                    <h1 className={`text-2xl font-black tracking-tight ${isDarkMode ? 'text-[#00C1A3]' : 'text-[#008f78]'}`}>Panel Principal</h1>
-                    <div className="flex items-center gap-4">
-                        <button onClick={toggleTheme} className="p-2.5 rounded-xl border border-white/5 hover:bg-[#00C1A3]/10 transition-colors">
-                            {isDarkMode ? <Sun size={20} className="text-yellow-400" /> : <Moon size={20} className="text-slate-400" />}
+                {/* HEADER EN FORMA DE PASTILLA (ESTILO UNIFICADO) */}
+                <header className={`relative z-[110] flex justify-between items-center mb-10 px-8 py-4 rounded-[2rem] border backdrop-blur-md transition-all duration-500 ${isDarkMode
+                        ? 'bg-[#0a0f1d]/60 border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.3)]'
+                        : 'bg-white/70 border-slate-200 shadow-xl shadow-slate-200/50'
+                    } ${isTutorialActive && currentStep === 0 ? 'ring-2 ring-[#00C1A3]/50 scale-[1.01]' : ''}`}>
+
+                    {/* Sección Izquierda: Título y Módulo */}
+                    <div className="flex flex-col">
+                        <span className={`text-[10px] uppercase tracking-[0.2em] font-black mb-1 ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>
+                            Panel de Control
+                        </span>
+                        <h1 className="text-[#00C1A3] text-2xl font-black tracking-tight flex items-center gap-3">
+                            <Sparkles size={24} className="fill-[#00C1A3]/20" /> Dashboard
+                        </h1>
+                    </div>
+
+                    {/* Sección Derecha: Acciones y Perfil */}
+                    <div className="flex items-center gap-6">
+                        {/* BOTÓN DÍA/NOCHE */}
+                        <button
+                            onClick={toggleTheme}
+                            className={`p-2.5 rounded-2xl transition-all hover:scale-110 active:scale-95 ${isDarkMode ? 'bg-white/5 hover:bg-white/10' : 'bg-slate-100 hover:bg-slate-200'
+                                }`}
+                        >
+                            {isDarkMode ? (
+                                <Sun size={22} className="text-yellow-400 fill-yellow-400/20" />
+                            ) : (
+                                <Moon size={22} className="text-indigo-600 fill-indigo-600/10" />
+                            )}
                         </button>
-                        <div className={`flex items-center gap-3 px-3 py-1.5 rounded-full border ${theme.card}`}>
-                            <span className="text-xs font-bold px-2">Nedimi Admin</span>
-                            <div className="w-8 h-8 rounded-full bg-[#00C1A3] flex items-center justify-center text-[#050335] shadow-lg">
-                                <User size={18} strokeWidth={3} />
+
+                        {/* Info de Usuario */}
+                        <div className={`flex items-center gap-4 pl-6 border-l ${isDarkMode ? 'border-white/10' : 'border-slate-200'}`}>
+                            <div className="flex flex-col items-end">
+                                <span className={`text-[10px] uppercase font-black ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>Sesión activa</span>
+                                <span className={`text-sm font-bold ${isDarkMode ? 'text-slate-200' : 'text-slate-700'}`}>Admin Nedimi</span>
+                            </div>
+                            <div className="w-10 h-10 rounded-2xl bg-[#00C1A3] flex items-center justify-center shadow-[0_0_15px_rgba(0,193,163,0.3)]">
+                                <User size={20} className="text-[#050335]" fill="currentColor" />
                             </div>
                         </div>
                     </div>
-                    {isTutorialActive && currentStep === 0 && <TutorialCard step={steps[0]} onNext={nextStep} onSkip={() => setIsTutorialActive(false)} totalSteps={steps.length} currentIdx={currentStep} />}
+
+                    {/* TOOLTIP DEL TUTORIAL */}
+                    {isTutorialActive && currentStep === 0 && (
+                        <TutorialCard
+                            step={steps[0]}
+                            onNext={nextStep}
+                            onSkip={() => setIsTutorialActive(false)}
+                            totalSteps={steps.length}
+                            currentIdx={currentStep}
+                        />
+                    )}
                 </header>
 
                 {/* BANNER */}
