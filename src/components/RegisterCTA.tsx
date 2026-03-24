@@ -34,9 +34,6 @@ export const RegisterCTA = () => {
                     viewport={{ once: true }}
                     className="flex flex-col items-center gap-4"
                 >
-                    {/* 1. leading-[0.9]: Se redujo drásticamente el interlineado para subir el texto.
-                        2. Se eliminó pb-4 del segundo span para evitar espacio extra innecesario.
-                    */}
                     <h2 className="text-4xl md:text-6xl font-[1000] text-white italic uppercase tracking-tighter leading-[0.9] overflow-visible">
                         <span className="block pr-10 -mr-10 overflow-visible">
                             ¿LISTO PARA
@@ -60,9 +57,22 @@ export const RegisterCTA = () => {
                         <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]" />
                     </button>
 
-                    <div className="flex items-center gap-2 mt-4 text-[10px] font-black text-slate-500 uppercase tracking-[0.3em]">
-                        <div className="w-1.5 h-1.5 rounded-full bg-[#00C1A3]" />
-                        Sin tarjetas de crédito · Activación instantánea
+                    <div className="flex flex-col items-center gap-3 mt-4">
+                        <div className="flex items-center gap-2 text-[10px] font-black text-slate-500 uppercase tracking-[0.3em]">
+                            <div className="w-1.5 h-1.5 rounded-full bg-[#00C1A3]" />
+                            Sin tarjetas de crédito · Activación instantánea
+                        </div>
+
+                        {/* MINI SECCIÓN DE LOGIN */}
+                        <p className="text-[11px] font-bold text-slate-400 uppercase tracking-widest">
+                            ¿Ya tienes una cuenta?{" "}
+                            <button 
+                                onClick={() => window.location.href = '/puntodeventa/'}
+                                className="text-[#00C1A3] hover:text-white transition-colors underline decoration-[#00C1A3]/30 underline-offset-4"
+                            >
+                                Inicia sesión
+                            </button>
+                        </p>
                     </div>
                 </motion.div>
             </div>

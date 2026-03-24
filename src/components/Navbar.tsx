@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, useScroll, useSpring, AnimatePresence } from 'framer-motion';
-import { Menu, X, ChevronRight, Sparkles } from 'lucide-react';
+import { Menu, X, ChevronRight, Sparkles, UserCircle } from 'lucide-react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 
 interface NavbarProps {
@@ -67,7 +67,7 @@ export const Navbar = ({ onOpenModal }: NavbarProps) => {
                         </span>
                     </Link>
 
-                    {/* --- MENÚ DESKTOP (Ajustado para 5 links) --- */}
+                    {/* --- MENÚ DESKTOP --- */}
                     <div className={`hidden lg:flex items-center transition-all duration-300 ${scrolled ? 'gap-1' : 'gap-2 bg-white/[0.03] border border-white/5 p-1.5 rounded-full shadow-inner'
                         }`}>
                         {navLinks.map((link) => {
@@ -93,7 +93,18 @@ export const Navbar = ({ onOpenModal }: NavbarProps) => {
                     </div>
 
                     {/* --- BOTONES DE ACCIÓN --- */}
-                    <div className="flex items-center gap-4 relative z-20 shrink-0">
+                    <div className="flex items-center gap-3 relative z-20 shrink-0">
+                        {/* Botón Inicia Sesión (RESALTADO - Desktop) */}
+                        <button
+                            onClick={() => window.location.href = '/puntodeventa/'}
+                            className={`hidden sm:flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-amber-400 text-amber-950 font-[1000] rounded-full group transition-all duration-300 shadow-[0_10px_20px_rgba(245,158,11,0.2)] hover:shadow-[0_15px_30px_rgba(245,158,11,0.4)] active:scale-95 ${scrolled ? 'px-6 py-3 text-[10px]' : 'px-8 py-4 text-xs'
+                                }`}
+                        >
+                            <UserCircle size={scrolled ? 14 : 16} />
+                            <span className="tracking-widest uppercase italic leading-none">Inicia Sesión</span>
+                        </button>
+
+                        {/* Botón Probar Gratis (Desktop) */}
                         <button
                             onClick={() => navigate('/register')}
                             className={`hidden sm:flex items-center justify-center gap-2 bg-[#00C1A3] text-[#020617] font-[1000] rounded-full group transition-all duration-300 shadow-[0_10px_20px_rgba(0,193,163,0.2)] hover:shadow-[0_15px_30px_rgba(0,193,163,0.4)] active:scale-95 ${scrolled ? 'px-6 py-3 text-[10px]' : 'px-8 py-4 text-xs'
@@ -155,10 +166,19 @@ export const Navbar = ({ onOpenModal }: NavbarProps) => {
                                 );
                             })}
                         </div>
-                        <div className="px-8 pb-12 w-full mt-auto">
+                        <div className="px-8 pb-12 w-full mt-auto flex flex-col gap-4">
+                            {/* Botón Inicia Sesión (RESALTADO - Móvil) */}
+                            <button
+                                onClick={() => { window.location.href = '/puntodeventa/'; setMobileMenuOpen(false); }}
+                                className="w-full py-5 bg-gradient-to-r from-amber-500 to-amber-400 text-amber-950 shadow-[0_15px_30px_rgba(245,158,11,0.3)] font-[1000] italic uppercase tracking-widest text-lg rounded-2xl flex items-center justify-center gap-3 active:scale-95 transition-transform"
+                            >
+                                <UserCircle size={20} /> INICIA SESIÓN
+                            </button>
+
+                            {/* Botón Probar Gratis (Móvil) */}
                             <button
                                 onClick={() => { navigate('/register'); setMobileMenuOpen(false); }}
-                                className="w-full py-5 bg-[#00C1A3] text-[#020617] font-[1000] italic uppercase tracking-widest text-lg rounded-2xl flex items-center justify-center gap-3"
+                                className="w-full py-5 bg-[#00C1A3] text-[#020617] font-[1000] italic uppercase tracking-widest text-lg rounded-2xl flex items-center justify-center gap-3 active:scale-95 transition-transform"
                             >
                                 <Sparkles size={20} /> PROBAR GRATIS
                             </button>
