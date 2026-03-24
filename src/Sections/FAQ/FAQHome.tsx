@@ -12,7 +12,7 @@ const faqs = [
     {
         q: "¿Necesito comprar un escáner?",
         a: "No es necesario. Puedes usar la cámara de tu celular o tablet como un escáner profesional. Si ya tienes uno físico USB o Bluetooth, también es 100% compatible.",
-        tag: "Hardware",
+        tag: "Dispositivos necesarios",
         icon: <PackageSearch className="w-4 h-4" />
     },
     {

@@ -98,7 +98,7 @@ export const TechnologyHero = () => {
                     transition={{ duration: 0.6, delay: 0.2 }}
                     className="mt-6 md:mt-8 text-slate-400 text-base sm:text-lg md:text-2xl max-w-2xl lg:max-w-4xl font-light leading-relaxed px-4"
                 >
-                    Fusionamos hardware robusto con sistemas <span className="text-white font-medium underline decoration-[#00C1A3]/50 decoration-2 underline-offset-4">Cloud Native</span> para ofrecerte una estabilidad inquebrantable en cada proceso.
+                    Fusionamos equipo robusto con sistemas <span className="text-white font-medium underline decoration-[#00C1A3]/50 decoration-2 underline-offset-4">Almacenamiento en la nube activo</span> para ofrecerte una estabilidad inquebrantable en cada proceso.
                 </motion.p>
 
                 {/* Línea de base decorativa */}

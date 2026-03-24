@@ -57,7 +57,7 @@ export const TechStackHome = () => {
                         </span>
                     </h2>
                     <p className="text-slate-400 text-lg font-light leading-relaxed">
-                        Nedimi POS utiliza una base tecnológica optimizada para la **máxima compatibilidad**. Al eliminar frameworks pesados en el cliente, garantizamos rapidez y estabilidad absoluta.
+                        Nedimi POS utiliza una base tecnológica optimizada para la **máxima compatibilidad**. Al eliminar estructuras pesadas del lado del usuario, garantizamos una rapidez y estabilidad total.
                     </p>
                 </div>
 
@@ -84,7 +84,7 @@ export const TechStackHome = () => {
                     <TechModule 
                         icon={<Smartphone size={20} />} 
                         title="Universal Web" 
-                        label="Compatible con cualquier hardware."
+                        label="Compatible con cualquier dispositivo (Computadora o celular)."
                         colorKey="emerald"
                     />
                 </div>
@@ -102,7 +102,7 @@ export const TechStackHome = () => {
                         </div>
                         <h3 className="text-3xl font-bold text-white uppercase italic tracking-tighter mb-4">Eficiencia Energética</h3>
                         <p className="text-slate-400 text-sm leading-relaxed mb-6 font-light">
-                            Diseñamos el POS para consumir recursos mínimos. Esto permite una vida útil más larga de tus equipos y una velocidad de respuesta constante sin importar el hardware.
+                            Diseñamos el POS para consumir recursos mínimos. Esto permite una vida útil más larga de tus equipos y una velocidad de respuesta constante sin importar el dispositivo que se tenga.
                         </p>
                         <div className="flex items-center gap-2 text-[10px] font-bold text-white uppercase bg-white/5 border border-white/10 px-4 py-2 rounded-xl w-fit">
                             <ShieldCheck size={14} className="text-[#00C1A3]" />

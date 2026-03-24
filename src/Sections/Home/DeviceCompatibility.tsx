@@ -120,7 +120,7 @@ export const DeviceCompatibility = () => {
                             transition={{ delay: 0.2 }}
                             className="text-slate-400 text-sm md:text-base lg:text-lg font-light leading-relaxed max-w-xl"
                         >
-                            Nedimi POS es agnóstico al hardware. Gestiona desde la comodidad de tu oficina en <span className="text-white font-medium">PC</span> o vende directamente en el pasillo con tu <span className="text-white font-medium">Smartphone</span>.
+                            Con Nedimi POS deja de preocuparte por los dispositivos que se tengan a la mano. Gestiona desde la comodidad de tu oficina en <span className="text-white font-medium">Computadora</span> o vende directamente en el pasillo desde tu <span className="text-white font-medium">Teléfono Celular</span>.
                         </motion.p>
 
                         {/* Feature Cards */}

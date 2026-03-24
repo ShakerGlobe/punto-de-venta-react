@@ -43,7 +43,7 @@ export const InfrastructureHome = () => {
     ];
 
     return (
-        <section className="w-full relative bg-[#020617] py-24 lg:py-40 px-6 overflow-hidden">
+        <section className="w-full relative bg-[#020617] py-24 lg:py-5 px-6 overflow-hidden">
             
             {/* FONDO TÉCNICO */}
             <div className="absolute inset-0 z-0">

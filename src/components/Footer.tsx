@@ -63,7 +63,7 @@ export const Footer = ({ onOpenModal }: FooterProps) => {
                             </h3>
                         </Link>
                         <p className="text-slate-400 text-sm md:text-base leading-relaxed max-w-sm mx-auto md:mx-0 font-light">
-                            Llevando la gestión de negocios al siguiente nivel con tecnología cloud de última generación.
+                            Llevando la gestión de negocios al siguiente nivel con tecnología en la nube de última generación.
                         </p>
 
                         <div className="flex flex-wrap justify-center md:justify-start gap-3 pt-2">
@@ -142,7 +142,7 @@ export const Footer = ({ onOpenModal }: FooterProps) => {
                                 </span>
                             </div>
                             <p className="text-xs text-slate-400 leading-relaxed font-medium relative z-10">
-                                Sincronización Cloud y bases de datos funcionando con normalidad.
+                                Sincronización en la nube y bases de datos funcionando con normalidad.
                             </p>
 
                             {/* BOTÓN VOLVER ARRIBA */}
