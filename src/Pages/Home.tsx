@@ -19,11 +19,17 @@ const Home = ({ onOpenModal }: { onOpenModal: () => void }) => {
 
             <main className="w-full">
                 <HeroHome onOpenModal={onOpenModal} />
+
                 <BusinessMarquee />
-                <InfrastructureHome />
-                <DashboardPreview />
+
                 <WhyChoosePOS />
+
                 <DeviceCompatibility />
+
+                <DashboardPreview />
+
+                <InfrastructureHome />
+
                 <RegisterCTA />
             </main>
         </PageTransition>
