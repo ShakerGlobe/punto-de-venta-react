@@ -63,7 +63,7 @@ export const HeroHome = ({ onOpenModal }: HeroProps) => {
                 ref={containerRef}
                 onMouseMove={handleMouseMove}
                 // Ajuste de paddings para PC: lg:pt-40 aleja el contenido de la Navbar.
-                className="relative min-h-[90vh] lg:min-h-screen flex items-center justify-center overflow-hidden px-6 pt-32 pb-16 lg:pt-40 lg:pb-24"
+                className="relative min-h-[90vh] lg:min-h-screen flex items-center justify-center overflow-hidden px-6 pt-32 pb-16 lg:pt-15 lg:pb-4"
             >
                 {/* FONDO TÉCNICO ANIMADO */}
                 <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
