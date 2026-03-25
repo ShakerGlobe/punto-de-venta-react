@@ -14,8 +14,8 @@ export const WhyChoosePOS = () => {
 
     const reasons = [
         {
-            title: "Adiós al Error Humano",
-            desc: "Automatiza cálculos y cobros. Elimina las cuentas hechas a mano que desangran tu utilidad.",
+            title: "DEJA DE EQUIVOCARTE AL COBRAR",
+            desc: "Olvídate de cuentas mal hechas o precios incorrectos. Todo se calcula automáticamente.",
             icon: <Zap size={24} />,
             color: "text-emerald-400",
             bgHover: "group-hover:bg-emerald-500/[0.03]",
@@ -23,8 +23,8 @@ export const WhyChoosePOS = () => {
             glow: "bg-emerald-500/20"
         },
         {
-            title: "Control de Inventario",
-            desc: "Sabe exactamente qué tienes y qué te falta en tiempo real. Se acabó el 'deja voy a ver si hay'.",
+            title: "CONOCE EXACTAMENTE QUÉ TIENES",
+            desc: "Deja de “creer” que hay producto. Ve en tiempo real qué tienes y qué te falta.",
             icon: <Database size={24} />,
             color: "text-cyan-400",
             bgHover: "group-hover:bg-cyan-500/[0.03]",
@@ -32,8 +32,8 @@ export const WhyChoosePOS = () => {
             glow: "bg-cyan-500/20"
         },
         {
-            title: "Reportes Inteligentes",
-            desc: "Gráficas claras de tus ventas y ganancias. Toma decisiones basadas en datos concretos.",
+            title: "ENTIENDE TU NEGOCIO EN SEGUNDOS",
+            desc: "Mira cuánto vendes, qué ganas y qué productos te dejan más dinero.",
             icon: <BarChart3 size={24} />,
             color: "text-purple-400",
             bgHover: "group-hover:bg-purple-500/[0.03]",
@@ -41,8 +41,8 @@ export const WhyChoosePOS = () => {
             glow: "bg-purple-500/20"
         },
         {
-            title: "Seguridad Blindada",
-            desc: "Control total sobre los empleados y resguardo de efectivo. Evita el robo hormiga al instante.",
+            title: "EVITA PÉRDIDAS Y ROBO HORMIGA",
+            desc: "Controla lo que entra y sale. Detecta faltantes y protege tu dinero.",
             icon: <ShieldCheck size={24} />,
             color: "text-blue-400",
             bgHover: "group-hover:bg-blue-500/[0.03]",
@@ -50,8 +50,8 @@ export const WhyChoosePOS = () => {
             glow: "bg-blue-500/20"
         },
         {
-            title: "Velocidad Extrema",
-            desc: "Despacha a tus clientes en segundos. Un cliente que no hace fila es un cliente que siempre regresa.",
+            title: "ATIENDE MÁS RÁPIDO A TUS CLIENTES",
+            desc: "Registra ventas en segundos y evita filas en tu tienda.",
             icon: <Clock size={24} />,
             color: "text-amber-400",
             bgHover: "group-hover:bg-amber-500/[0.03]",
@@ -59,8 +59,8 @@ export const WhyChoosePOS = () => {
             glow: "bg-amber-500/20"
         },
         {
-            title: "Escalabilidad Total",
-            desc: "Diseñado para crecer. Desde un local pequeño hasta una cadena de sucursales en la nube.",
+            title: "CRECE SIN COMPLICARTE",
+            desc: "Empieza con una tienda y administra todo fácilmente desde un solo lugar.",
             icon: <TrendingUp size={24} />,
             color: "text-[#00C1A3]",
             bgHover: "group-hover:bg-[#00C1A3]/[0.03]",
@@ -94,14 +94,14 @@ export const WhyChoosePOS = () => {
                             <div className="inline-flex items-center gap-2 px-4 py-1.5 md:px-5 md:py-2 rounded-full bg-[#00C1A3]/10 border border-[#00C1A3]/20 shadow-[0_0_15px_rgba(0,193,163,0.15)] mb-6 md:mb-8">
                                 <CheckCircle2 size={14} className="text-[#00C1A3] animate-pulse" />
                                 <span className="text-[#00C1A3] font-black uppercase tracking-[0.2em] sm:tracking-[0.3em] text-[9px] md:text-[10px]">
-                                    Ingeniería para crecer
+                                    SOLUCIONA LOS PROBLEMAS DE TU TIENDA
                                 </span>
                             </div>
 
                             <h2 className="text-4xl sm:text-5xl md:text-6xl font-[1000] text-white italic uppercase tracking-tighter leading-[0.9] md:leading-[0.95]">
-                                ¿POR QUÉ NECESITAS <br className="hidden lg:block" />
+                                Si no tienes control <br className="hidden lg:block" />
                                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00C1A3] via-emerald-400 to-cyan-400 drop-shadow-sm pb-2">
-                                    UN SISTEMA POS?
+                                    Estás perdiendo dinero
                                 </span>
                             </h2>
                         </motion.div>
@@ -113,7 +113,8 @@ export const WhyChoosePOS = () => {
                             transition={{ delay: 0.2 }}
                             className="text-slate-400 text-base md:text-lg font-light leading-relaxed max-w-xl mx-auto lg:mx-0"
                         >
-                            Administrar un negocio a ciegas es el camino directo al estancamiento. Nedimi POS automatiza tu operación para que recuperes tu tiempo y dinero.
+                            Si hoy llevas tu tienda con libreta o de memoria, es normal que pierdas dinero sin darte cuenta.
+                            Nedimi POS te ayuda a tener control total de tus productos, ventas y dinero en segundos.
                         </motion.p>
                     </div>
 
