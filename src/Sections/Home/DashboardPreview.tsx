@@ -3,10 +3,10 @@ import { CheckCircle2, LayoutDashboard, BarChart3, TrendingUp } from "lucide-rea
 
 export const DashboardPreview = () => {
     const features = [
-        "Cortes de caja en 1 clic",
-        "Alertas de Stock mínimo",
-        "Histórico de Ventas detallado",
-        "Control multi-usuario"
+        "REVISA TU DINERO EN SEGUNDOS",
+        "SABES CUÁNDO TE ESTÁS QUEDANDO SIN PRODUCTO",
+        "REVISA TODAS TUS VENTAS CUANDO QUIERAS",
+        "CONTROLA LO QUE HACE CADA EMPLEADO"
     ];
 
     const chartData = [
@@ -45,18 +45,19 @@ export const DashboardPreview = () => {
                             >
                                 <LayoutDashboard size={14} className="text-blue-400" />
                                 <span className="text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] text-blue-400">
-                                    Panel de Control
+                                    CONTROL TOTAL DE TU NEGOCIO
                                 </span>
                             </motion.div>
 
-                            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-[1000] italic uppercase text-white mb-6 md:mb-8 leading-[0.9] tracking-tighter">
-                                Gestión de <br />
+                            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-[1000] italic uppercase text-white mb-6 md:mb-8 leading-[0.9] tracking-tighter">
+                                Ve todo lo que pasa en tu Tienda <br />
                                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00C1A3] to-blue-400">
-                                    Alto Nivel.
+                                    En Tiempo Real.
                                 </span>
                             </h2>
                             <p className="text-slate-400 text-sm md:text-base lg:text-lg mb-8 md:mb-10 font-light max-w-lg">
-                                Visualiza el rendimiento de tu negocio en tiempo real. Toma decisiones basadas en datos precisos.
+                                 Revisa tus ventas, tu dinero y tu inventario en segundos.
+                                 Toma decisiones rápidas sin depender de libretas o cálculos manuales.
                             </p>
 
                             <div className="grid gap-3">
