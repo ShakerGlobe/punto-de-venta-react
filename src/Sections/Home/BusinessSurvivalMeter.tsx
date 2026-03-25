@@ -72,7 +72,7 @@ export const BusinessSurvivalMeter = () => {
                                 <span className="text-red-600 drop-shadow-[0_0_20px_rgba(220,38,38,0.8)]">en una libreta?</span>
                             </span>
                         ) : (
-                            <span>Toma el control <br />del futuro.</span>
+                            <span>Toma el control de tu tienda <br />desde hoy.</span>
                         )}
                     </h2>
                 </div>
