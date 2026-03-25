@@ -168,16 +168,17 @@ export const BenefitsHome = () => {
                         whileInView={{ opacity: 1, scale: 1 }}
                         className="inline-block text-[#00C1A3] font-black uppercase tracking-[0.4em] text-[10px] md:text-xs bg-[#00C1A3]/10 px-8 py-3 rounded-full border border-[#00C1A3]/30 mb-8 shadow-[0_0_30px_rgba(0,193,163,0.2)]"
                     >
-                        Poder Ilimitado
+                        DEJA DE PERDER DINERO EN TU TIENDA
                     </motion.span>
-                    <h2 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-[1000] text-white tracking-tighter italic uppercase leading-[0.85] mb-8">
-                        Domina tu <br />
+                    <h2 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-[1000] text-white tracking-tighter italic uppercase leading-[0.85] mb-8">
+                        TOMA CONTROL DE TU TIENDA <br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00C1A3] via-cyan-400 to-blue-500 drop-shadow-[0_0_30px_rgba(0,193,163,0.3)]">
-                            Negocio
+                            DESDE HOY
                         </span>
                     </h2>
                     <p className="text-slate-400 text-lg md:text-xl font-light max-w-2xl mx-auto leading-relaxed">
-                        Olvida los cuadernos y el desorden. Nedimi es la evolución tecnológica que tu punto de venta necesita para escalar al siguiente nivel.
+                        Deja atrás las libretas, los errores y el desorden.
+                        Con Nedimi POS puedes controlar tu dinero, tu inventario y tus ventas de forma fácil desde tu celular.
                     </p>
                 </div>
 
@@ -202,10 +203,10 @@ export const BenefitsHome = () => {
                     >
                         <div className="flex items-center gap-4 mb-10">
                             <XCircle className="text-red-500 w-8 h-8" />
-                            <h3 className="text-2xl font-black uppercase text-slate-500 italic">Sistema Obsoleto</h3>
+                            <h3 className="text-2xl font-black uppercase text-slate-500 italic">SIN SISTEMA (COMO LO HACES HOY)</h3>
                         </div>
                         <ul className="space-y-6">
-                            {["Cuentas manuales lentas", "Pérdida de inventario", "Sin reportes reales"].map((t, i) => (
+                            {["Ventas anotadas a mano", "Pérdidas sin darte cuenta", "No sabes cuánto ganas realmente"].map((t, i) => (
                                 <li key={i} className="flex gap-4 items-center text-slate-500 font-bold uppercase text-xs tracking-widest">
                                     <Notebook size={18} /> {t}
                                 </li>
@@ -220,10 +221,10 @@ export const BenefitsHome = () => {
                     >
                         <div className="flex items-center gap-4 mb-10">
                             <CheckCircle2 className="text-[#00C1A3] w-8 h-8 drop-shadow-[0_0_10px_#00C1A3]" />
-                            <h3 className="text-2xl font-black uppercase text-white italic">Nedimi Experience</h3>
+                            <h3 className="text-2xl font-black uppercase text-white italic">Con Nedimi POS</h3>
                         </div>
                         <ul className="space-y-6">
-                            {["Ventas en milisegundos", "Stock automatizado", "Nube sincronizada"].map((t, i) => (
+                            {["Ventas rápidas desde tu celular", "Inventario controlado automáticamente", "Ves cuánto ganas en tiempo real"].map((t, i) => (
                                 <li key={i} className="flex gap-4 items-center text-white font-bold uppercase text-xs tracking-widest">
                                     <Zap size={18} className="text-[#00C1A3] fill-[#00C1A3]/20" /> {t}
                                 </li>
