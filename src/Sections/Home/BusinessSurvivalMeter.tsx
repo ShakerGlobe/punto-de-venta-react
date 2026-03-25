@@ -130,20 +130,20 @@ export const BusinessSurvivalMeter = () => {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
                     <PainCard 
                         icon={isChaos ? <Notebook size={24}/> : <CheckCircle2 size={24}/>}
-                        title={isChaos ? "Cuentas en Papel" : "Todo en la Nube"}
-                        desc={isChaos ? "Libretas manchadas, hojas perdidas y errores matemáticos. Si el papel se pierde, tu dinero también." : "Acceso instantáneo desde cualquier lugar. Tu información está segura y respaldada para siempre."}
+                        title={isChaos ? "Cuentas en Papel" : "Tu tienda siempre contigo"}
+                        desc={isChaos ? "Libretas manchadas, hojas perdidas y errores matemáticos. Si el papel se pierde, tu dinero también." : "Accede a tu negocio desde tu celular en cualquier momento. Toda tu información segura, sin perder datos."}
                         isChaos={isChaos}
                     />
                     <PainCard 
                         icon={isChaos ? <Eraser size={24}/> : <BarChart3 size={24}/>}
-                        title={isChaos ? "Fugas Invisibles" : "Ganancia Real"}
-                        desc={isChaos ? "El 'robo hormiga' y los errores de cambio son invisibles a mano. Estás perdiendo dinero sin saberlo." : "Reportes automáticos de utilidad. Mira exactamente cuánto estás ganando por cada producto vendido."}
+                        title={isChaos ? "Fugas Invisibles" : "Conoce exactamente cuánto ganas"}
+                        desc={isChaos ? "El 'robo hormiga' y los errores de cambio son invisibles a mano. Estás perdiendo dinero sin saberlo." : "Deja de adivinar. Ve tus ganancias por producto y toma mejores decisiones para tu negocio."}
                         isChaos={isChaos}
                     />
                     <PainCard 
                         icon={isChaos ? <SearchX size={24}/> : <Smartphone size={24}/>}
-                        title={isChaos ? "Sin Inventario" : "Control Total"}
-                        desc={isChaos ? "No sabes qué tienes ni qué te falta hasta que se acaba. Vendes a ciegas y pierdes clientes." : "Alertas de stock bajo. Nunca vuelvas a decirle 'no tenemos' a un cliente interesado."}
+                        title={isChaos ? "Sin Inventario" : "NUNCA TE QUEDES SIN PRODUCTO"}
+                        desc={isChaos ? "No sabes qué tienes ni qué te falta hasta que se acaba. Vendes a ciegas y pierdes clientes." : "Recibe alertas cuando algo se esté acabando y evita perder ventas por falta de inventario."}
                         isChaos={isChaos}
                     />
                 </div>
@@ -160,7 +160,7 @@ export const BusinessSurvivalMeter = () => {
                         onClick={() => navigate('/register')}
                         className="px-10 py-4 bg-[#00C1A3] text-[#020617] font-[1000] italic uppercase tracking-widest rounded-xl shadow-[0_15px_40px_rgba(0,193,163,0.3)] hover:scale-105 transition-all active:scale-95"
                     >
-                        Adquirir Nedimi POS Ahora
+                        PROBAR GRATIS SIN COMPROMISO
                     </button>
                 </motion.div>
             </div>
