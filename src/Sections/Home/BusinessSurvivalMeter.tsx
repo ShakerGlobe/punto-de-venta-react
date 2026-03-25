@@ -33,7 +33,7 @@ export const BusinessSurvivalMeter = () => {
     const navigate = useNavigate();
 
     return (
-        <section className={`relative py-2 md:py-14 overflow-hidden transition-colors duration-700 ${isChaos ? 'bg-[#0a0000]' : 'bg-[#020617]'}`}>
+        <section className={`relative py-14 md:py-18 overflow-hidden transition-colors duration-700 ${isChaos ? 'bg-[#0a0000]' : 'bg-[#020617]'}`}>
             
             {/* --- FONDO ATMOSFÉRICO --- */}
             <div className="absolute inset-0 z-0">
