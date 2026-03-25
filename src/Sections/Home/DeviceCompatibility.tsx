@@ -96,7 +96,7 @@ export const DeviceCompatibility = () => {
                                 className="inline-block mb-4"
                             >
                                 <span className="text-cyan-400 font-black uppercase tracking-[0.2em] sm:tracking-[0.3em] text-[10px] sm:text-xs bg-cyan-400/10 px-4 sm:px-5 py-2 rounded-full border border-cyan-400/20">
-                                    Flexibilidad Multiplataforma
+                                    FUNCIONA EN TU CELULAR, SIN COMPRAR NADA
                                 </span>
                             </motion.div>
                             <motion.h2
@@ -106,9 +106,9 @@ export const DeviceCompatibility = () => {
                                 transition={{ delay: 0.1 }}
                                 className="text-4xl sm:text-5xl lg:text-6xl font-[1000] text-white italic uppercase tracking-tighter mt-2 leading-[0.9]"
                             >
-                                TU NEGOCIO <br />
+                                USA TU TIENDA DESDE TU CELULAR <br />
                                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-[#00C1A3] drop-shadow-sm">
-                                    DONDE SEA QUE ESTÉS
+                                    O COMPUTADORA
                                 </span>
                             </motion.h2>
                         </div>
@@ -120,27 +120,27 @@ export const DeviceCompatibility = () => {
                             transition={{ delay: 0.2 }}
                             className="text-slate-400 text-sm md:text-base lg:text-lg font-light leading-relaxed max-w-xl"
                         >
-                            Con Nedimi POS deja de preocuparte por los dispositivos que se tengan a la mano. Gestiona desde la comodidad de tu oficina en <span className="text-white font-medium">Computadora</span> o vende directamente en el pasillo desde tu <span className="text-white font-medium">Teléfono Celular</span>.
+                            No necesitas equipos caros ni instalaciones. Usa Nedimi POS desde tu <span className="text-white font-medium">Celular, Computadora o Tablet</span> y controla tu negocio desde <span className="text-white font-medium">cualquier lugar.</span>.
                         </motion.p>
 
                         {/* Feature Cards */}
                         <div className="grid gap-3 md:gap-4">
                             <FeatureItem
                                 icon={<Cpu size={22} />}
-                                title="Optimizado para cualquier dispositivo"
-                                desc="Interfaz adaptativa que vuela tanto en Windows, Mac, Android o iOS."
+                                title="FUNCIONA EN CUALQUIER DISPOSITIVO"
+                                desc="Úsalo en celular, computadora o tablet sin complicaciones."
                                 delay={0.3}
                             />
                             <FeatureItem
                                 icon={<ScanLine size={22} />}
-                                title="Escaneo Inteligente por Cámara"
-                                desc="Convierte la cámara de tu celular en un escáner de alto rendimiento. Lee códigos de barras y QR al instante."
+                                title="ESCANEA PRODUCTOS CON TU CELULAR"
+                                desc="Convierte tu cámara en lector de códigos. No necesitas comprar escáner."
                                 delay={0.4}
                             />
                             <FeatureItem
                                 icon={<CheckCircle2 size={22} />}
-                                title="Sincronización en la Nube"
-                                desc="Empieza una venta en la tablet y termínala en la computadora. Los datos fluyen contigo."
+                                title="TU INFORMACIÓN SIEMPRE GUARDADA"
+                                desc="Todo se guarda automáticamente. No pierdes datos aunque cambies de dispositivo."
                                 delay={0.5}
                             />
                         </div>
