@@ -32,7 +32,7 @@ export const BenefitsHero = () => {
         <section
             ref={containerRef}
             onMouseMove={handleMouseMove}
-            className="relative min-h-[70vh] lg:min-h-[85vh] flex flex-col items-center justify-center overflow-hidden bg-[#020617] px-6 py-20 md:py-24 group"
+            className="relative min-h-[70vh] lg:min-h-[85vh] flex flex-col items-center justify-center overflow-hidden bg-[#020617] px-6 py-10 md:py-10 group"
         >
             {/* 1. FONDO DINÁMICO */}
             <div className="absolute inset-0 z-0 pointer-events-none">
@@ -71,7 +71,7 @@ export const BenefitsHero = () => {
                 >
                     <Sparkles size={14} className="text-[#00C1A3] animate-pulse" />
                     <span className="text-[10px] md:text-xs font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-[#00C1A3]">
-                        Ventajas Competitivas
+                        TODO LO QUE NECESITAS PARA TU TIENDA
                     </span>
                 </motion.div>
 
@@ -81,11 +81,11 @@ export const BenefitsHero = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.1 }}
-                        className="text-[12vw] sm:text-7xl lg:text-[7rem] xl:text-[8.5rem] font-[1000] leading-[0.9] italic uppercase tracking-tighter text-white"
+                        className="text-[12vw] sm:text-5xl lg:text-[5rem] xl:text-[6.5rem] font-[1000] leading-[0.9] italic uppercase tracking-tighter text-white"
                     >
-                        MÁS QUE UN <br />
+                        NO ES SOLO UN SISTEMA <br />
                         <span className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-[#00C1A3] via-emerald-400 to-cyan-400 drop-shadow-sm pb-2">
-                            PUNTO DE VENTA
+                            ES CONTROL PARA TU NEGOCIO
                         </span>
                     </motion.h1>
                 </div>
@@ -97,7 +97,7 @@ export const BenefitsHero = () => {
                     transition={{ duration: 0.6, delay: 0.2 }}
                     className="mt-6 md:mt-8 text-slate-400 text-base sm:text-lg md:text-2xl max-w-2xl lg:max-w-3xl font-light leading-relaxed px-4"
                 >
-                    Diseñamos <span className="text-white font-medium">tecnología de precisión</span> para que te enfoques en lo que importa: hacer crecer tu patrimonio.
+                    Deja de trabajar a ciegas. Con Nedimi POS <span className="text-white font-medium">tienes control de tu dinero, tus productos, y tus ventas</span> en un solo lugar, de forma fácil y sin complicarte.
                 </motion.p>
 
                 {/* Línea de base decorativa */}
