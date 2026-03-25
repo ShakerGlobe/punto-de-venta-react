@@ -6,7 +6,8 @@ export const InfrastructureHome = () => {
     const stats = [
         { 
             label: "Sincronización", 
-            value: "Cloud", 
+            value: "TODO SE GUARDA AUTOMÁTICAMENTE", 
+            description: "No pierdes información aunque cambies de dispositivo.",
             icon: <Database size={32} />, 
             color: "from-[#00C1A3] to-emerald-500", 
             iconColor: "text-[#00C1A3]",
@@ -15,7 +16,8 @@ export const InfrastructureHome = () => {
         },
         { 
             label: "Disponibilidad", 
-            value: "24/7", 
+            value: "FUNCIONA TODO EL TIEMPO", 
+            description: "Accede a tu tienda cuando quieras, sin interrupciones.",
             icon: <Globe2 size={32} />, 
             color: "from-blue-500 to-cyan-400", 
             iconColor: "text-blue-400",
@@ -24,7 +26,8 @@ export const InfrastructureHome = () => {
         },
         { 
             label: "Respaldo", 
-            value: "Diario", 
+            value: "TUS DATOS SIEMPRE RESPALDADOS", 
+            description: "Tu información está protegida todos los días.",
             icon: <ShieldCheck size={32} />, 
             color: "from-purple-500 to-pink-500", 
             iconColor: "text-purple-400",
@@ -33,7 +36,8 @@ export const InfrastructureHome = () => {
         },
         { 
             label: "Reportes", 
-            value: "Excel", 
+            value: "EXPORTA TUS VENTAS FÁCILMENTE", 
+            description: "Descarga reportes en Excel cuando lo necesites.",
             icon: <FileSpreadsheet size={32} />, 
             color: "from-amber-400 to-orange-500", 
             iconColor: "text-amber-400",
@@ -61,17 +65,17 @@ export const InfrastructureHome = () => {
                         className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10"
                     >
                         <Activity size={14} className="text-[#00C1A3] animate-pulse" />
-                        <span className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-300">Sistemas de Alta Disponibilidad</span>
+                        <span className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-300">TU INFORMACIÓN SIEMPRE SEGURA</span>
                     </motion.div>
                     
                     <motion.h2
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        className="text-5xl md:text-8xl font-[1000] italic uppercase text-white tracking-tighter leading-none"
+                        className="text-4xl md:text-7xl font-[1000] italic uppercase text-white tracking-tighter leading-none"
                     >
-                        NÚCLEO <br />
+                        Tu sistema siempre<br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00C1A3] via-blue-400 to-purple-500 animate-gradient-x">
-                            TECNOLÓGICO
+                            funcionando Y protegido
                         </span>
                     </motion.h2>
                 </div>
@@ -93,22 +97,22 @@ export const InfrastructureHome = () => {
 
                             {/* Icon Container Centrado */}
                             <div className={`mb-8 p-6 rounded-[2rem] ${stat.bg} border border-white/10 group-hover:bg-white group-hover:border-transparent transition-all duration-500 shadow-2xl relative overflow-hidden`}>
-                                {/* Reflejo interno del icono */}
                                 <div className={`absolute inset-0 opacity-20 bg-gradient-to-br ${stat.color}`} />
-                                
                                 <div className={`relative z-10 ${stat.iconColor} group-hover:text-[#020617] group-hover:scale-110 transition-all duration-500`}>
                                     {stat.icon}
                                 </div>
                             </div>
-
+                            
                             {/* Texto Centrado */}
                             <div className="space-y-3 mt-auto">
                                 <p className="text-[11px] font-black uppercase tracking-[0.5em] text-slate-500 group-hover:text-white transition-colors duration-300">
                                     {stat.label}
                                 </p>
-                                <h3 className={`text-5xl lg:text-6xl font-[1000] italic uppercase tracking-tighter text-transparent bg-clip-text bg-gradient-to-r ${stat.color} drop-shadow-sm`}>
+                                {/* El mensaje principal de impacto (Value) se colocó como H3 para mayor jerarquía */}
+                                <h3 className={`text-xl lg:text-2xl font-[1000] italic uppercase tracking-tighter text-transparent bg-clip-text bg-gradient-to-r ${stat.color} drop-shadow-sm`}>
                                     {stat.value}
                                 </h3>
+                                <p className="text-[11px] text-slate-400 font-medium leading-relaxed">{stat.description}</p>
                             </div>
 
                             {/* Indicador de carga inferior */}
