@@ -97,11 +97,11 @@ export const HeroHome = ({ onOpenModal }: HeroProps) => {
                                 initial={{ opacity: 0, x: -30 }}
                                 animate={{ opacity: 1, x: 0 }}
                                 // Tamaño ajustado para mantener proporciones sin abrumar
-                                className="text-5xl sm:text-6xl lg:text-7xl xl:text-[6.5rem] font-[1000] leading-[0.95] italic uppercase tracking-tighter text-white"
+                                className="text-2xl sm:text-3xl lg:text-4xl xl:text-[4.0rem] font-[1000] leading-[0.95] italic uppercase tracking-tighter text-white"
                             >
-                                NEDIMI<br />
+                                CONTROL TOTAL DE TU TIENDA<br />
                                 <span className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-[#00C1A3] via-emerald-400 to-[#00C1A3] bg-[length:200%_auto] animate-gradient-x pb-1 lg:pb-2 drop-shadow-lg pr-4 overflow-visible">
-                                    POS
+                                    DESDE TU CELULAR
                                 </span>
                             </motion.h1>
                         </div>
@@ -114,7 +114,7 @@ export const HeroHome = ({ onOpenModal }: HeroProps) => {
                                 transition={{ delay: 0.2 }}
                                 className="text-slate-300 text-base sm:text-lg lg:text-xl xl:text-2xl max-w-xl leading-relaxed font-light px-2 lg:px-0"
                             >
-                                Gestión inteligente para tu comercio. Sincronización instantánea y rendimiento profesional de <span className="text-white italic font-medium underline decoration-[#00C1A3]/60 underline-offset-4">clase mundial</span>.
+                                Evita pérdidas, controla tu inventario y registra tus ventas fácilmente, sin instalar nada y sin pagar comisiones. <span className="text-white italic font-medium underline decoration-[#00C1A3]/60 underline-offset-4">Ideal para tiendas de abarrotes, misceláneas y negocios pequeños que quieren orden y control sin complicarse.</span>.
                             </motion.p>
 
                             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="w-full sm:w-auto px-4 lg:px-0">
@@ -123,7 +123,7 @@ export const HeroHome = ({ onOpenModal }: HeroProps) => {
                                     className="group relative w-full sm:w-auto px-8 py-4 lg:px-10 lg:py-5 bg-[#00C1A3] text-[#020617] font-black rounded-2xl lg:rounded-3xl overflow-hidden transition-all hover:scale-[1.02] active:scale-95 shadow-[0_15px_40px_rgba(0,193,163,0.3)] hover:shadow-[0_20px_50px_rgba(0,193,163,0.5)]"
                                 >
                                     <span className="relative z-10 flex items-center justify-center gap-2 lg:gap-3 text-sm lg:text-base italic uppercase tracking-widest">
-                                        Adquirir Sistema <ArrowRight size={18} className="group-hover:translate-x-2 transition-transform" />
+                                        Probar gratis Ahora <ArrowRight size={18} className="group-hover:translate-x-2 transition-transform" />
                                     </span>
                                     <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity" />
                                 </button>
