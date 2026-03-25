@@ -179,17 +179,17 @@ export const RegisterHome = () => {
                     >
                         <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#00C1A3]/10 border border-[#00C1A3]/20 rounded-full shadow-[0_0_15px_rgba(0,193,163,0.15)]">
                             <Sparkles size={14} className="text-[#00C1A3]" />
-                            <span className="text-[10px] font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-[#00C1A3]">Trial Activation</span>
+                            <span className="text-[10px] font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-[#00C1A3]">COMIENZA TU PRUEBA GRATIS</span>
                         </div>
 
-                        <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[5rem] font-[1000] text-white italic uppercase tracking-tighter leading-[0.9] md:leading-[0.85]">
-                            COMIENZA TU <br />
+                        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[4rem] font-[1000] text-white italic uppercase tracking-tighter leading-[0.9] md:leading-[0.85]">
+                            PRUÉBALO GRATIS Y TOMA EL CONTROL <br />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00C1A3] to-emerald-400 drop-shadow-sm">
-                                PRUEBA GRATIS
+                                DE TU TIENDA
                             </span>
                         </h1>
                         <p className="text-slate-400 text-base sm:text-lg md:text-xl font-light max-w-md mx-auto lg:mx-0">
-                            Activa tu licencia de evaluación y descubre por qué <span className="text-white font-medium">Nedimi POS</span> es la opción #1 para ingenierías comerciales.
+                            Empieza hoy sin compromiso. Configura tu tienda en minutos y descubre cómo puedes controlar tus ventas, inventario y dinero <span className="text-white font-medium">desde tu celular.</span>
                         </p>
                     </motion.div>
 
@@ -198,11 +198,47 @@ export const RegisterHome = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.2 }}
-                        className="flex flex-wrap justify-center lg:justify-start gap-4 lg:flex-col lg:gap-4"
+                        className="flex flex-wrap justify-center lg:justify-start gap-10 lg:flex-col lg:gap-8"
                     >
-                        <StatusItem label="Encryption" value="SSL+ Verified" />
-                        <StatusItem label="Database" value="Real-time Sync" />
-                        <StatusItem label="Access" value="Full Suite" />
+                        {/* ITEM: PRUEBA GRATIS */}
+                        <div className="flex flex-col items-center lg:items-start group">
+                            <span className="text-[13px] font-black text-slate-500 uppercase tracking-[0.3em] mb-1 group-hover:text-[#00C1A3] transition-colors">
+                                PRUEBA GRATIS
+                            </span>
+                            <span className="text-2xl md:text-4xl font-[1000] text-[#00C1A3] italic uppercase tracking-tighter leading-none">
+                                30 DÍAS
+                            </span>
+                        </div>
+
+                        {/* ITEM: PRECIO MES */}
+                        <div className="flex flex-col items-center lg:items-start group">
+                            <span className="text-[13px] font-black text-slate-500 uppercase tracking-[0.3em] mb-1 group-hover:text-[#00C1A3] transition-colors">
+                                PRECIO POR MES
+                            </span>
+                            <span className="text-2xl md:text-4xl font-[1000] text-[#00C1A3] italic uppercase tracking-tighter leading-none">
+                                $499 MXN
+                            </span>
+                        </div>
+
+                        {/* ITEM: PRECIO AÑO */}
+                        <div className="flex flex-col items-center lg:items-start group">
+                            <span className="text-[13px] font-black text-slate-500 uppercase tracking-[0.3em] mb-1 group-hover:text-[#00C1A3] transition-colors">
+                                PRECIO POR AÑO
+                            </span>
+                            <span className="text-2xl md:text-4xl font-[1000] text-[#00C1A3] italic uppercase tracking-tighter leading-none">
+                                $4,997 MXN
+                            </span>
+                        </div>
+
+                        {/* ITEM: SIN CONTRATOS */}
+                        <div className="flex flex-col items-center lg:items-start group">
+                            <span className="text-[13px] font-black text-slate-500 uppercase tracking-[0.3em] mb-1 group-hover:text-[#00C1A3] transition-colors">
+                                SIN CONTRATOS
+                            </span>
+                            <span className="text-2xl md:text-4xl font-[1000] text-[#00C1A3] italic uppercase tracking-tighter leading-none">
+                                CANCELA CUANDO QUIERAS
+                            </span>
+                        </div>
                     </motion.div>
                 </div>
 
