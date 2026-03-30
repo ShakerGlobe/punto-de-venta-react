@@ -1,10 +1,10 @@
 import { motion } from 'framer-motion';
-import { 
-    Database, 
-    Code2, 
-    Server, 
-    Smartphone, 
-    Cloud, 
+import {
+    Database,
+    Code2,
+    Server,
+    Smartphone,
+    Cloud,
     Terminal,
     Cpu,
     ShieldCheck
@@ -34,13 +34,13 @@ const TechModule = ({ icon, title, label, colorKey }: { icon: any, title: string
 export const TechStackHome = () => {
     return (
         <section className="w-full bg-[#020617] py-12 md:py-40 relative overflow-hidden flex flex-col items-center">
-            
+
             {/* Fondo de Grid */}
             <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: "linear-gradient(#4f46e5 1px, transparent 1px), linear-gradient(90deg, #4f46e5 1px, transparent 1px)", backgroundSize: "50px 50px" }} />
             <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-[#020617] via-transparent to-[#020617] z-0" />
 
             <div className="max-w-7xl mx-auto px-6 w-full relative z-10 flex flex-col items-center">
-                
+
                 <div className="text-center mb-20 max-w-3xl">
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
@@ -51,46 +51,46 @@ export const TechStackHome = () => {
                         Engineering Core
                     </motion.div>
                     <h2 className="text-5xl md:text-7xl font-[1000] text-white italic uppercase tracking-tighter leading-[0.9] mb-8">
-                        Arquitectura <br />
+                        Funciona <br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">
-                            Sin Dependencias.
+                            Sin Complicaciones.
                         </span>
                     </h2>
                     <p className="text-slate-400 text-lg font-light leading-relaxed">
-                        Nedimi POS utiliza una base tecnológica optimizada para la **máxima compatibilidad**. Al eliminar estructuras pesadas del lado del usuario, garantizamos una rapidez y estabilidad total.
+                        Nedimi POS está diseñado para que no tengas que comprar equipos caros ni batallar con instalaciones. Funciona súper rápido, para que tú solo te preocupes por vender.
                     </p>
                 </div>
 
                 {/* Grid de Tecnología */}
                 <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-                    <TechModule 
-                        icon={<Server size={20} />} 
-                        title="Backend PHP 8+" 
-                        label="Lógica de servidor robusta y segura."
+                    <TechModule
+                        icon={<Server size={20} />}
+                        title="Sistema Confiable"
+                        label="Tus datos e información siempre respaldados."
                         colorKey="blue"
                     />
-                    <TechModule 
-                        icon={<Database size={20} />} 
-                        title="SQL Relacional" 
-                        label="Integridad total en tus transacciones."
+                    <TechModule
+                        icon={<Database size={20} />}
+                        title="Cuentas Exactas"
+                        label="Ni un solo peso o producto perdido en tus registros."
                         colorKey="indigo"
                     />
-                    <TechModule 
-                        icon={<Code2 size={20} />} 
-                        title="Vanilla JS" 
-                        label="Interactividad instantánea y ligera."
+                    <TechModule
+                        icon={<Code2 size={20} />}
+                        title="Cobros al Instante"
+                        label="Registra ventas en segundos sin pérdidas de tiempo."
                         colorKey="amber"
                     />
-                    <TechModule 
-                        icon={<Smartphone size={20} />} 
-                        title="Universal Web" 
-                        label="Compatible con cualquier dispositivo (Computadora o celular)."
+                    <TechModule
+                        icon={<Smartphone size={20} />}
+                        title="Úsalo donde sea"
+                        label="Funciona en el celular o computadora que ya tienes."
                         colorKey="emerald"
                     />
                 </div>
 
                 {/* Bloque de Performance */}
-                <motion.div 
+                <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     className="w-full p-8 md:p-12 rounded-[3rem] bg-slate-900/60 border border-white/10 backdrop-blur-xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-12"
@@ -98,7 +98,7 @@ export const TechStackHome = () => {
                     <div className="max-w-md relative z-10">
                         <div className="flex items-center gap-3 text-[#00C1A3] mb-6">
                             <Cpu size={28} className="animate-pulse" />
-                            <span className="font-black italic uppercase tracking-widest text-xl">Low-Resource Engine</span>
+                            <span className="font-black italic uppercase tracking-widest text-xl">Optimizado para todos los dispositivos</span>
                         </div>
                         <h3 className="text-3xl font-bold text-white uppercase italic tracking-tighter mb-4">Eficiencia Energética</h3>
                         <p className="text-slate-400 text-sm leading-relaxed mb-6 font-light">
@@ -114,9 +114,9 @@ export const TechStackHome = () => {
                     <div className="relative w-48 h-48 md:w-64 md:h-64 flex items-center justify-center z-10">
                         <svg className="w-full h-full transform -rotate-90">
                             <circle cx="50%" cy="50%" r="40%" stroke="currentColor" strokeWidth="8" fill="transparent" className="text-slate-800" />
-                            <motion.circle 
-                                cx="50%" cy="50%" r="40%" stroke="currentColor" strokeWidth="8" fill="transparent" 
-                                className="text-[#00C1A3]" 
+                            <motion.circle
+                                cx="50%" cy="50%" r="40%" stroke="currentColor" strokeWidth="8" fill="transparent"
+                                className="text-[#00C1A3]"
                                 strokeDasharray="251.2"
                                 initial={{ strokeDashoffset: 251.2 }}
                                 whileInView={{ strokeDashoffset: 251.2 - (251.2 * 0.95) }}
