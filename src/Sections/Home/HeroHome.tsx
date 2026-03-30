@@ -114,7 +114,8 @@ export const HeroHome = ({ onOpenModal }: HeroProps) => {
                                 transition={{ delay: 0.2 }}
                                 className="text-slate-300 text-base sm:text-lg lg:text-xl xl:text-2xl max-w-xl leading-relaxed font-light px-2 lg:px-0"
                             >
-                                Evita pérdidas, controla tu inventario y registra tus ventas fácilmente, sin instalar nada y sin pagar comisiones. <span className="text-white italic font-medium underline decoration-[#00C1A3]/60 underline-offset-4">Ideal para tiendas de abarrotes, misceláneas y negocios pequeños que quieren orden y control sin complicarse.</span>.
+                                Controla tu inventario y registra ventas fácilmente: sin instalaciones ni comisiones.
+                                <span className="text-white italic font-medium underline decoration-[#00C1A3]/60 underline-offset-4"> Ideal para abarrotes y pequeños negocios que buscan orden sin complicaciones.</span>
                             </motion.p>
 
                             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="w-full sm:w-auto px-4 lg:px-0">
