@@ -147,14 +147,14 @@ export const BenefitsHome = () => {
     ];
 
     const stats = [
-        { label: "Dashboard", value: "Real-Time", icon: <Zap className="w-5 h-5" />, color: "from-[#00C1A3] to-emerald-500" },
-        { label: "Seguridad", value: "SSL 256", icon: <ShieldCheck className="w-5 h-5" />, color: "from-blue-500 to-cyan-400" },
-        { label: "Acceso", value: "Global", icon: <Lock className="w-5 h-5" />, color: "from-purple-500 to-pink-500" }
+        { label: "Tus cuentas", value: "Sin errores", icon: <Zap className="w-5 h-5" />, color: "from-[#00C1A3] to-emerald-500" },
+        { label: "Tu información", value: "Siempre segura", icon: <ShieldCheck className="w-5 h-5" />, color: "from-blue-500 to-cyan-400" },
+        { label: "Todo el control", value: "Desde tu celular", icon: <Lock className="w-5 h-5" />, color: "from-purple-500 to-pink-500" }
     ];
 
     return (
         <section id="benefits" className="py-24 md:py-40 bg-[#020617] relative overflow-hidden flex flex-col items-center">
-            
+
             {/* Background Glows Mejorados */}
             <div className="absolute top-0 -left-20 w-[600px] h-[600px] bg-[#00C1A3]/10 blur-[150px] rounded-full pointer-events-none" />
             <div className="absolute bottom-0 -right-20 w-[600px] h-[600px] bg-blue-500/10 blur-[150px] rounded-full pointer-events-none" />
@@ -163,7 +163,7 @@ export const BenefitsHome = () => {
 
                 {/* --- HEADER CENTRADO --- */}
                 <div className="text-center mb-24 md:mb-32 max-w-4xl" onMouseMove={handleParallax}>
-                    <motion.span 
+                    <motion.span
                         initial={{ opacity: 0, scale: 0.9 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         className="inline-block text-[#00C1A3] font-black uppercase tracking-[0.4em] text-[10px] md:text-xs bg-[#00C1A3]/10 px-8 py-3 rounded-full border border-[#00C1A3]/30 mb-8 shadow-[0_0_30px_rgba(0,193,163,0.2)]"
@@ -184,10 +184,10 @@ export const BenefitsHome = () => {
 
                 {/* --- COMPARATIVA DINÁMICA --- */}
                 <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-8 mb-40 relative items-center">
-                    
+
                     {/* Icono Central */}
                     <div className="hidden lg:flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30">
-                        <motion.div 
+                        <motion.div
                             animate={{ rotate: 360 }}
                             transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
                             className="w-24 h-24 bg-gradient-to-tr from-[#00C1A3] to-cyan-500 rounded-[2rem] flex items-center justify-center border-[10px] border-[#020617] shadow-[0_0_60px_rgba(0,193,163,0.4)]"
@@ -216,7 +216,7 @@ export const BenefitsHome = () => {
 
                     {/* Lado Nedimi */}
                     <motion.div
-                        style={{ x: isMobile ? 0 : useSpring(mouseX, { stiffness: 40, damping: 25 }), y: isMobile ? 0 : useSpring(mouseY, { stiffness: 40, damping: 25 }) }}
+                        style={{ x: isMobile ? 0 : springX, y: isMobile ? 0 : springY }}
                         className="p-10 md:p-14 rounded-[3rem] bg-gradient-to-br from-[#00C1A3]/20 via-slate-900 to-slate-900 border border-[#00C1A3]/40 shadow-[0_0_80px_rgba(0,193,163,0.15)] relative overflow-hidden"
                     >
                         <div className="flex items-center gap-4 mb-10">
