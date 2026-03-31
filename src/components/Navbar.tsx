@@ -22,7 +22,8 @@ export const Navbar = ({ onOpenModal }: NavbarProps) => {
         { name: 'Beneficios', path: '/beneficios' },
         { name: 'Tecnología', path: '/tecnologia' },
         { name: 'FAQ', path: '/preguntas' },
-        { name: 'Demo', path: '/demo' }
+        { name: 'Demo', path: '/demo' },
+        { name: 'Planes', path: '/Plans' }
     ];
 
     useEffect(() => {
@@ -51,8 +52,8 @@ export const Navbar = ({ onOpenModal }: NavbarProps) => {
             <header className={`fixed w-full z-[140] flex justify-center top-0 px-4 sm:px-6 pointer-events-none`}>
                 <nav
                     className={`w-full flex justify-between items-center transition-all duration-500 ease-in-out pointer-events-auto will-change-transform ${scrolled && !mobileMenuOpen
-                            ? 'max-w-6xl bg-slate-900/95 backdrop-blur-2xl border border-white/20 rounded-[3rem] shadow-[0_30px_60px_rgba(0,0,0,0.6)] py-3 px-6 sm:px-10 mt-4'
-                            : 'max-w-7xl bg-transparent py-8 sm:py-10 px-2 sm:px-4 border-transparent mt-0'
+                        ? 'max-w-6xl bg-slate-900/95 backdrop-blur-2xl border border-white/20 rounded-[3rem] shadow-[0_30px_60px_rgba(0,0,0,0.6)] py-3 px-6 sm:px-10 mt-4'
+                        : 'max-w-7xl bg-transparent py-8 sm:py-10 px-2 sm:px-4 border-transparent mt-0'
                         } ${mobileMenuOpen ? 'bg-transparent py-6 px-2' : ''}`}
                 >
                     {/* --- LOGO --- */}

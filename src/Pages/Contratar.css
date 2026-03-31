@@ -1,0 +1,78 @@
+.contratar {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 120px 20px;
+}
+
+.contratar-container {
+    max-width: 600px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+}
+
+.contratar-container h1 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+}
+
+.contratar-container p {
+    opacity: .7;
+    margin-bottom: 30px;
+}
+
+.contratar-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-login,
+.btn-register {
+    padding: 14px 25px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: .3s;
+}
+
+.btn-login {
+    background: #00f5c4;
+    color: #000;
+}
+
+.btn-register {
+    background: linear-gradient(90deg, #00f5c4, #00aaff);
+    color: white;
+}
+
+.btn-login:hover,
+.btn-register:hover {
+    transform: scale(1.05);
+}
+
+/* RESPONSIVE */
+
+@media(max-width:768px) {
+
+    .contratar-container {
+        padding: 30px 20px;
+    }
+
+    .contratar-container h1 {
+        font-size: 1.5rem;
+    }
+
+    .contratar-buttons {
+        flex-direction: column;
+    }
+
+}
