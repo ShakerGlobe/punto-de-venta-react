@@ -23,7 +23,7 @@ export const Navbar = ({ onOpenModal }: NavbarProps) => {
         { name: 'Tecnología', path: '/tecnologia' },
         { name: 'FAQ', path: '/preguntas' },
         { name: 'Demo', path: '/demo' },
-        { name: 'Planes', path: '/Plans' }
+        //{ name: 'Planes', path: '/Plans' }
     ];
 
     useEffect(() => {
