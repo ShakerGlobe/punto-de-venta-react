@@ -3,76 +3,179 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 120px 20px;
+    padding: 40px 20px;
+    background-color: #0d1117;
+    /* Fondo ultra oscuro */
 }
 
 .contratar-container {
-    max-width: 600px;
+    max-width: 500px;
     width: 100%;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 20px;
-    padding: 40px;
+    background: #161b22;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    padding: 50px 40px;
     text-align: center;
-    backdrop-filter: blur(10px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+}
+
+.brand-badge {
+    background: rgba(0, 245, 196, 0.1);
+    color: #00f5c4;
+    display: inline-block;
+    padding: 5px 15px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
 }
 
 .contratar-container h1 {
-    font-size: 2rem;
-    margin-bottom: 15px;
+    color: #ffffff;
+    font-size: 1.8rem;
+    margin-bottom: 12px;
+    font-weight: 700;
 }
 
 .contratar-container p {
-    opacity: .7;
-    margin-bottom: 30px;
+    color: #8b949e;
+    margin-bottom: 35px;
+    font-size: 1rem;
+    line-height: 1.5;
 }
 
 .contratar-buttons {
     display: flex;
-    gap: 20px;
-    justify-content: center;
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 15px;
 }
 
-.btn-login,
-.btn-register {
-    padding: 14px 25px;
-    border-radius: 10px;
+/* Botón Principal (Turquesa) */
+.btn-primary {
+    background: #00f5c4;
+    color: #0a0a0a;
+    padding: 16px;
+    border-radius: 12px;
     border: none;
     cursor: pointer;
+    font-weight: 700;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 245, 196, 0.2);
+}
+
+.btn-primary:hover {
+    background: #00d1a7;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 245, 196, 0.3);
+}
+
+/* Botón Secundario (Oscuro/Borde) */
+.btn-secondary {
+    background: transparent;
+    color: #ffffff;
+    padding: 16px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    cursor: pointer;
     font-weight: 600;
-    transition: .3s;
+    transition: all 0.3s;
 }
 
-.btn-login {
-    background: #00f5c4;
-    color: #000;
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: #ffffff;
 }
 
-.btn-register {
-    background: linear-gradient(90deg, #00f5c4, #00aaff);
+.btn-link {
+    background: none;
+    border: none;
+    color: #8b949e;
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin-top: 10px;
+    text-decoration: underline;
+}
+
+/* Input de Correo */
+.correo-box {
+    width: 100%;
+}
+
+.correo-box input {
+    width: 100%;
+    padding: 16px;
+    background: #0d1117;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
     color: white;
+    font-size: 1rem;
+    margin-bottom: 20px;
+    outline: none;
+    transition: border-color 0.3s;
 }
 
-.btn-login:hover,
-.btn-register:hover {
-    transform: scale(1.05);
+.correo-box input:focus {
+    border-color: #00f5c4;
+    box-shadow: 0 0 0 1px #00f5c4;
 }
 
-/* RESPONSIVE */
-
-@media(max-width:768px) {
-
+/* Responsive */
+@media(max-width:480px) {
     .contratar-container {
-        padding: 30px 20px;
+        padding: 40px 20px;
     }
 
     .contratar-container h1 {
         font-size: 1.5rem;
     }
+}
 
-    .contratar-buttons {
-        flex-direction: column;
+.input-group {
+    width: 100%;
+    margin-bottom: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Centrado para que combine con tu diseño */
+}
+
+.input-field {
+    width: 100%;
+    /* Tus estilos de input actuales... */
+    transition: border 0.3s ease;
+}
+
+.error-border {
+    border: 2px solid #ff4757 !important;
+    background: rgba(255, 71, 87, 0.05) !important;
+}
+
+.error-text {
+    color: #ff4757;
+    font-size: 14px;
+    margin-top: 10px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    animation: shake 0.4s ease-in-out;
+    /* Un pequeño "temblor" para llamar la atención */
+}
+
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
     }
 
+    25% {
+        transform: translateX(-5px);
+    }
+
+    75% {
+        transform: translateX(5px);
+    }
 }
