@@ -8,8 +8,8 @@ import BenefitsPage from './Pages/BenefitsPage';
 import FAQPage from './Pages/FAQPage';
 import TechnologicalPage from './Pages/TechnologicalPage';
 import RegisterPage from './Pages/RegisterPage';
-import DemoPage from './Pages/DemoPage'; // <--- AGREGADO
-import PlansPage from './Sections/Plans/Plans';
+import DemoPage from './Pages/DemoPage';
+import PlanesPage from './Pages/PlanesPage';
 import Contratar from "./Pages/Contratar";
 
 // --- COMPONENTES GLOBALES ---
@@ -20,7 +20,6 @@ import { DemoModal } from './components/DemoModal';
 import { ScrollToTop } from './components/ScrollToTop';
 import { WhatsAppButton } from './components/WhatsAppButton';
 import PrivacyNotice from './components/PrivacyNotice';
-import Plans from './Sections/Plans/Plans';
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -61,7 +60,7 @@ const App = () => {
                   <Route path="/privacidad" element={<PrivacyNotice />} />
                   <Route path="/register" element={<RegisterPage />} />
                   <Route path="/contratar" element={<Contratar />} />
-                  <Route path="/Plans" element={<Plans />} />
+                  <Route path="/Planes" element={<PlanesPage />} />
 
                   {/* RUTA DE LA DEMO AGREGADA */}
                   <Route path="/demo" element={<DemoPage />} />

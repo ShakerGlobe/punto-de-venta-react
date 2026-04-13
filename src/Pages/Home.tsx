@@ -8,7 +8,6 @@ import { WhyChoosePOS } from '../Sections/Home/WhyChoosePOS';
 import { DeviceCompatibility } from '../Sections/Home/DeviceCompatibility';
 import { SEO } from '../components/SEO'; // Importado OK
 import { BusinessSurvivalMeter } from '../Sections/Home/BusinessSurvivalMeter';
-import PricingHome from '../Sections/Home/PricingHome';
 
 const Home = ({ onOpenModal }: { onOpenModal: () => void }) => {
     return (
@@ -21,8 +20,6 @@ const Home = ({ onOpenModal }: { onOpenModal: () => void }) => {
 
             <main className="w-full">
                 <HeroHome onOpenModal={onOpenModal} />
-
-                <PricingHome />
 
                 <BusinessSurvivalMeter />
 

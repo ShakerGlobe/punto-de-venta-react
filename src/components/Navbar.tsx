@@ -21,9 +21,10 @@ export const Navbar = ({ onOpenModal }: NavbarProps) => {
         { name: 'Inicio', path: '/' },
         { name: 'Beneficios', path: '/beneficios' },
         { name: 'Tecnología', path: '/tecnologia' },
-        { name: 'FAQ', path: '/preguntas' },
         { name: 'Demo', path: '/demo' },
-        //{ name: 'Planes', path: '/Plans' }
+        { name: 'Planes', path: '/Planes' },
+        { name: 'FAQ', path: '/preguntas' },
+        
     ];
 
     useEffect(() => {
