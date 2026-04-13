@@ -23,7 +23,7 @@ export const RegisterHome = () => {
     const [status, setStatus] = useState({
         loading: false,
         message: '',
-        type: '' 
+        type: ''
     });
 
     const [showPassword, setShowPassword] = useState(false);
@@ -81,7 +81,7 @@ export const RegisterHome = () => {
         }
 
         setStatus({ loading: false, message: '', type: '' });
-        setShowModal(true); 
+        setShowModal(true);
     };
 
     // --- 3. CONEXIÓN A LA BASE DE DATOS ---
@@ -173,8 +173,7 @@ export const RegisterHome = () => {
                 <div className="flex flex-col gap-6 lg:gap-8 text-center lg:text-left items-center lg:items-start">
                     <motion.div
                         initial={{ opacity: 0, x: -30 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
+                        animate={{ opacity: 1, x: 0 }} // CORRECCIÓN: animate en lugar de whileInView
                         className="space-y-4 lg:space-y-6"
                     >
                         <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#00C1A3]/10 border border-[#00C1A3]/20 rounded-full shadow-[0_0_15px_rgba(0,193,163,0.15)]">
@@ -195,8 +194,7 @@ export const RegisterHome = () => {
 
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
+                        animate={{ opacity: 1, y: 0 }} // CORRECCIÓN: animate en lugar de whileInView
                         transition={{ delay: 0.2 }}
                         className="flex flex-wrap justify-center lg:justify-start gap-10 lg:flex-col lg:gap-8"
                     >
@@ -216,7 +214,7 @@ export const RegisterHome = () => {
                                 PRECIO POR MES
                             </span>
                             <span className="text-2xl md:text-4xl font-[1000] text-[#00C1A3] italic uppercase tracking-tighter leading-none">
-                                $499 MXN
+                                DESDE $199 MXN
                             </span>
                         </div>
 
@@ -226,7 +224,7 @@ export const RegisterHome = () => {
                                 PRECIO POR AÑO
                             </span>
                             <span className="text-2xl md:text-4xl font-[1000] text-[#00C1A3] italic uppercase tracking-tighter leading-none">
-                                $4,997 MXN
+                                DESDE $2,148 MXN
                             </span>
                         </div>
 
@@ -245,9 +243,8 @@ export const RegisterHome = () => {
                 {/* --- LADO DERECHO: FORMULARIO --- */}
                 <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5 }}
+                    animate={{ opacity: 1, scale: 1 }} // CORRECCIÓN: animate en lugar de whileInView
+                    transition={{ duration: 0.5, delay: 0.1 }}
                     className="bg-slate-900/60 backdrop-blur-3xl border border-white/10 p-6 sm:p-8 md:p-12 rounded-[2rem] md:rounded-[3rem] shadow-[0_30px_60px_rgba(0,0,0,0.5)] relative overflow-hidden w-full max-w-xl mx-auto lg:max-w-none group"
                 >
                     <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none rounded-[2rem] md:rounded-[3rem]" />
@@ -289,7 +286,7 @@ export const RegisterHome = () => {
                                 placeholder="nombre@empresa.com"
                                 required
                             />
-                            
+
                             {/* CAMPO DE CONTRASEÑA CON EL TOGGLE */}
                             <InputField
                                 icon={<Lock size={18} />}
@@ -325,8 +322,8 @@ export const RegisterHome = () => {
                                         animate={{ opacity: 1, height: 'auto', y: 0 }}
                                         exit={{ opacity: 0, height: 0 }}
                                         className={`p-3 rounded-xl flex items-center gap-3 text-xs sm:text-sm font-medium border overflow-hidden ${status.type === 'error'
-                                                ? 'bg-red-500/10 text-red-400 border-red-500/20'
-                                                : 'bg-amber-500/10 text-amber-400 border-amber-500/20'
+                                            ? 'bg-red-500/10 text-red-400 border-red-500/20'
+                                            : 'bg-amber-500/10 text-amber-400 border-amber-500/20'
                                             }`}
                                     >
                                         <AlertTriangle size={16} className="flex-shrink-0" />
@@ -353,6 +350,7 @@ export const RegisterHome = () => {
 
             {/* --- MODAL DE CONFIRMACIÓN ANIMADO --- */}
             <AnimatePresence>
+                {/* ... (el modal se queda igual) ... */}
                 {showModal && (
                     <motion.div
                         initial={{ opacity: 0 }}
