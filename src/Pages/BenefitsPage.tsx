@@ -4,6 +4,7 @@ import { RegisterCTA } from '../components/RegisterCTA';
 import { PageTransition } from '../components/PageTransition';
 // 1. Importas el componente SEO 
 import { SEO } from '../components/SEO';
+import { ScannerFeature } from '../Sections/benefits/ScannerFeature';
 
 const BenefitsPage = () => {
   return (
@@ -16,6 +17,7 @@ const BenefitsPage = () => {
 
       <div className="pt-24 pb-12">
         <BenefitsHero />
+        <ScannerFeature/>
         <BenefitsHome />
         <RegisterCTA/>
       </div>
