@@ -204,7 +204,7 @@ export const RegisterHome = () => {
                                 PRUEBA GRATIS
                             </span>
                             <span className="text-2xl md:text-4xl font-[1000] text-[#00C1A3] italic uppercase tracking-tighter leading-none">
-                                30 DÍAS
+                                15 DÍAS
                             </span>
                         </div>
 
