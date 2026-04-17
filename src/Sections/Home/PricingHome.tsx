@@ -21,7 +21,8 @@ const PricingHome = () => {
                 "Ventas e inventario ilimitado",
                 "Usa tu cel como escáner",
                 "Primer mes GRATIS",
-                "Soporte estándar"
+                "Soporte estándar",
+                "Capacitación Inicial"
             ],
             highlight: false
         },
@@ -37,7 +38,8 @@ const PricingHome = () => {
                 "Ventas e inventario ilimitado",
                 "Soporte Premium 24/7",
                 "Primer mes GRATIS",
-                "Reportes avanzados de ventas"
+                "Reportes avanzados de ventas",
+                "Capacitación Inicial"
             ],
             highlight: true
         },
@@ -53,7 +55,8 @@ const PricingHome = () => {
                 "Soporte Premium prioritario",
                 "Multisucursal incluido",
                 "Primer mes GRATIS",
-                "Exportación de datos a Excel"
+                "Exportación de datos a Excel",
+                "Capacitación Inicial"
             ],
             highlight: false
         }
