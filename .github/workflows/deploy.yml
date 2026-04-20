@@ -20,7 +20,7 @@ jobs:
 
       - name: 3. Instalar dependencias y Compilar Proyecto
         run: |
-          npm install
+          npm install --legacy-peer-deps # Agrega --legacy-peer-deps para evitar problemas de dependencias
           npm run build
 
       - name: 4. Subir archivos a HostGator vía FTP
