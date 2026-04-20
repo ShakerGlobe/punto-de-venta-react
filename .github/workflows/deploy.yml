@@ -1,0 +1,35 @@
+name: Desplegar React Vite en HostGator
+
+on:
+  push:
+    branches:
+      - main # Verifica si tu rama principal se llama main o master
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 1. Descargar el código del repositorio
+        uses: actions/checkout@v3
+
+      - name: 2. Configurar el entorno de Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: 3. Instalar dependencias y Compilar Proyecto
+        run: |
+          npm install
+          npm run build
+
+      - name: 4. Subir archivos a HostGator vía FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          # IMPORTANTE: Aquí indicamos que suba la carpeta 'dist' que crea Vite
+          local-dir: ./dist/ 
+          # Ruta en HostGator (ajusta si tu web está en una subcarpeta)
+          server-dir: /public_html/nedimipos
