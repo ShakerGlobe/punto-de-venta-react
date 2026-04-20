@@ -2,6 +2,9 @@ import { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 
+// --- NUEVO: Importamos la librería del Pixel ---
+import ReactPixel from 'react-facebook-pixel';
+
 // --- PÁGINAS ---
 import Home from './Pages/Home';
 import BenefitsPage from './Pages/BenefitsPage';
@@ -26,10 +29,27 @@ const App = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const location = useLocation();
 
+  // 1. Hook original de tu Loading Screen
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 3500);
     return () => clearTimeout(timer);
   }, []);
+
+  // --- NUEVO: 2. Hook para Inicializar el Pixel (Solo se ejecuta 1 vez al cargar la web) ---
+  useEffect(() => {
+    const options = {
+      autoConfig: true, 
+      debug: false, 
+    };
+    // Inicializamos con tu ID de Facebook
+    ReactPixel.init('3255045287990104', undefined, options);
+  }, []);
+
+  // --- NUEVO: 3. Hook para Rastrear las vistas de página (Se ejecuta cada que cambia la URL) ---
+  useEffect(() => {
+    // Esto avisará a Facebook cada vez que el usuario navegue a otra vista (ej. de / a /beneficios)
+    ReactPixel.pageView();
+  }, [location.pathname]); 
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
