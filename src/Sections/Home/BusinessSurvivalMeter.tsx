@@ -1,181 +1,148 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { 
-    Zap, 
-    ShieldAlert, 
+    Notebook, 
+    Smartphone, 
     TrendingDown, 
     TrendingUp, 
-    DollarSign,
-    Skull,
-    Notebook,
-    Eraser,
-    SearchX,
+    AlertCircle,
     CheckCircle2,
-    BarChart3,
-    Smartphone
+    Calculator,
+    Zap,
+    SearchX,
+    ClipboardCheck
 } from "lucide-react";
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 export const BusinessSurvivalMeter = () => {
-    const [isChaos, setIsChaos] = useState(true);
-
-    // Efecto de parpadeo aleatorio para el estado de Caos
-    const [glitch, setGlitch] = useState(false);
-    useEffect(() => {
-        if (!isChaos) return;
-        const interval = setInterval(() => {
-            setGlitch(true);
-            setTimeout(() => setGlitch(false), 150);
-        }, 3000);
-        return () => clearInterval(interval);
-    }, [isChaos]);
-
-    const navigate = useNavigate();
+    const [isModern, setIsModern] = useState(false);
 
     return (
-        <section className={`relative py-14 md:py-18 overflow-hidden transition-colors duration-700 ${isChaos ? 'bg-[#0a0000]' : 'bg-[#020617]'}`}>
+        <section className="relative py-20 bg-white overflow-hidden transition-colors duration-700">
             
-            {/* --- FONDO ATMOSFÉRICO --- */}
-            <div className="absolute inset-0 z-0">
+            {/* --- DESTELOS AZULES (Identidad visual de Nedimi) --- */}
+            <div className="absolute inset-0 pointer-events-none">
                 <AnimatePresence>
-                    {isChaos ? (
+                    {isModern ? (
                         <motion.div 
-                            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                            className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-red-900/20 via-transparent to-transparent animate-pulse"
+                            initial={{ opacity: 0 }} animate={{ opacity: 0.4 }} exit={{ opacity: 0 }}
+                            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-600 rounded-full blur-[120px]"
                         />
                     ) : (
                         <motion.div 
-                            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                            className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#00C1A3]/10 via-transparent to-transparent"
+                            initial={{ opacity: 0 }} animate={{ opacity: 0.15 }} exit={{ opacity: 0 }}
+                            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-slate-400 rounded-full blur-[120px]"
                         />
                     )}
                 </AnimatePresence>
             </div>
 
-            <div className="max-w-5xl mx-auto px-6 relative z-10 flex flex-col items-center">
+            <div className="max-w-6xl mx-auto px-6 relative z-10 flex flex-col items-center">
                 
-                {/* --- TÍTULO DE IMPACTO --- */}
-                <div className="text-center mb-10 overflow-visible max-w-3xl">
-                    <motion.div
-                        animate={isChaos ? { x: [-1, 1, -1] } : {}}
-                        transition={{ repeat: Infinity, duration: 0.1 }}
-                        className={`inline-flex items-center gap-2 px-5 py-1.5 rounded-full border mb-6 uppercase font-black tracking-[0.3em] text-[9px] ${isChaos ? 'bg-red-500/10 border-red-500/50 text-red-500' : 'bg-[#00C1A3]/10 border-[#00C1A3]/50 text-[#00C1A3]'}`}
-                    >
-                        {isChaos ? <ShieldAlert size={12} className="animate-bounce" /> : <CheckCircle2 size={12} />}
-                        {isChaos ? "TU NEGOCIO ESTÁ EN RIESGO" : "NEGOCIO BLINDADO Y SINCRONIZADO"}
-                    </motion.div>
+                {/* --- TÍTULO --- */}
+                <div className="text-center mb-16 max-w-3xl">
+                    <div className={`inline-flex items-center gap-2 px-4 py-1 rounded-full mb-6 uppercase font-black tracking-widest text-[10px] border transition-all ${
+                        isModern ? 'bg-blue-100 border-blue-200 text-blue-600' : 'bg-slate-100 border-slate-200 text-slate-500'
+                    }`}>
+                        {isModern ? <Zap size={12} fill="currentColor" /> : <AlertCircle size={12} />}
+                        {isModern ? "Tu negocio en el siglo XXI" : "¿Sigues en la era del papel?"}
+                    </div>
 
-                    <h2 className={`text-4xl md:text-7xl font-[1000] italic uppercase tracking-tighter leading-[0.85] overflow-visible ${isChaos ? 'text-white' : 'text-transparent bg-clip-text bg-gradient-to-r from-[#00C1A3] to-cyan-400'}`}>
-                        {isChaos ? (
-                            <span className={glitch ? 'opacity-50 blur-sm' : ''}>
-                                ¿Vas a dejar tu patrimonio <br />
-                                <span className="text-red-600 drop-shadow-[0_0_20px_rgba(220,38,38,0.8)]">en una libreta?</span>
-                            </span>
+                    <h2 className="text-4xl md:text-6xl font-[1000] uppercase tracking-tighter leading-[0.9] text-slate-950 italic">
+                        {isModern ? (
+                            <span>Todo bajo control <br /><span className="text-blue-600 underline">y sin estrés</span></span>
                         ) : (
-                            <span>Toma el control de tu tienda <br />desde hoy.</span>
+                            <span>El desorden te está <br /><span className="text-slate-400">quitando dinero</span></span>
                         )}
                     </h2>
                 </div>
 
-                {/* --- NÚCLEO INTERACTIVO --- */}
-                <div className="relative flex flex-col lg:flex-row items-center justify-center gap-8 mb-12">
-                    
-                    {/* El Reactor / Botón */}
-                    <div className="relative w-64 h-64 flex items-center justify-center">
-                        <motion.div 
-                            animate={{ rotate: 360 }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                            className={`absolute inset-0 rounded-full border-2 border-dashed ${isChaos ? 'border-red-900/40' : 'border-[#00C1A3]/30'}`}
-                        />
+                {/* --- INTERRUPTOR DE REALIDAD (El "Reactor" Simple) --- */}
+                <div className="flex flex-col items-center gap-10 mb-16">
+                    <div className="relative group">
+                        {/* Efecto de aura */}
+                        <div className={`absolute -inset-4 rounded-full blur-2xl transition-all duration-700 ${
+                            isModern ? 'bg-blue-500/20 opacity-100' : 'bg-slate-500/10 opacity-50'
+                        }`} />
                         
                         <button 
-                            onClick={() => setIsChaos(!isChaos)}
-                            className="group relative z-20 w-44 h-44 rounded-full flex flex-col items-center justify-center transition-all duration-500 hover:scale-105 active:scale-95 shadow-2xl"
+                            onClick={() => setIsModern(!isModern)}
+                            className={`relative z-20 w-32 h-32 md:w-40 md:h-40 rounded-full flex flex-col items-center justify-center transition-all duration-500 border-8 shadow-2xl active:scale-95 ${
+                                isModern ? 'bg-blue-600 border-white text-white' : 'bg-white border-slate-100 text-slate-400'
+                            }`}
                         >
-                            <div className={`absolute inset-0 rounded-full blur-[30px] transition-colors duration-700 ${isChaos ? 'bg-red-600/40' : 'bg-[#00C1A3]/30'}`} />
-                            <div className={`relative w-full h-full rounded-full border-4 flex flex-col items-center justify-center gap-1 backdrop-blur-xl transition-all duration-700 ${isChaos ? 'bg-red-950/40 border-red-500 shadow-[inset_0_0_20px_rgba(239,68,68,0.5)]' : 'bg-[#020617]/80 border-[#00C1A3] shadow-[inset_0_0_30px_rgba(0,193,163,0.3)]'}`}>
-                                {isChaos ? (
-                                    <>
-                                        <Skull size={32} className="text-red-500 animate-pulse" />
-                                        <span className="text-[10px] font-black text-red-500 tracking-[0.2em] uppercase">Peligro</span>
-                                        <span className="text-white font-black text-[11px] uppercase italic">DETENER CAOS</span>
-                                    </>
-                                ) : (
-                                    <>
-                                        <TrendingUp size={32} className="text-[#00C1A3]" />
-                                        <span className="text-[10px] font-black text-[#00C1A3] tracking-[0.2em] uppercase">Éxito</span>
-                                        <span className="text-white font-black text-[11px] uppercase italic">ACTIVO</span>
-                                    </>
-                                )}
-                            </div>
+                            {isModern ? <Smartphone size={48} className="animate-bounce" /> : <Notebook size={48} />}
+                            <span className="text-[10px] font-black uppercase mt-2 tracking-tighter">
+                                {isModern ? "¡Listo!" : "Cambiar"}
+                            </span>
                         </button>
                     </div>
-
-                    {/* LOGO DE NEDIMI AL LADO */}
-                    <div className="flex flex-col items-center lg:items-start">
-                        <div className="flex items-center gap-2">
-                            <span className={`text-3xl md:text-5xl font-[1000] italic tracking-tighter uppercase transition-colors duration-700 ${isChaos ? 'text-white/20' : 'text-white'}`}>
-                                Nedimi<span className={isChaos ? 'text-red-900/40' : 'text-[#00C1A3]'}>POS</span>
-                            </span>
-                            {!isChaos && (
-                                <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="w-3 h-3 bg-[#00C1A3] rounded-full shadow-[0_0_15px_#00C1A3]" />
-                            )}
-                        </div>
-                        <p className={`text-[10px] font-black uppercase tracking-[0.4em] transition-colors duration-700 ${isChaos ? 'text-red-900/50' : 'text-[#00C1A3]'}`}>
-                            {isChaos ? "SISTEMA DESCONECTADO" : "TECNOLOGÍA A TU FAVOR"}
-                        </p>
-                    </div>
-                </div>
-
-                {/* --- TARJETAS DE IMPACTO --- */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
-                    <PainCard 
-                        icon={isChaos ? <Notebook size={24}/> : <CheckCircle2 size={24}/>}
-                        title={isChaos ? "Cuentas en Papel" : "Tu tienda siempre contigo"}
-                        desc={isChaos ? "Libretas manchadas, hojas perdidas y errores matemáticos. Si el papel se pierde, tu dinero también." : "Accede a tu negocio desde tu celular en cualquier momento. Toda tu información segura, sin perder datos."}
-                        isChaos={isChaos}
-                    />
-                    <PainCard 
-                        icon={isChaos ? <Eraser size={24}/> : <BarChart3 size={24}/>}
-                        title={isChaos ? "Fugas Invisibles" : "Conoce exactamente cuánto ganas"}
-                        desc={isChaos ? "El 'robo hormiga' y los errores de cambio son invisibles a mano. Estás perdiendo dinero sin saberlo." : "Deja de adivinar. Ve tus ganancias por producto y toma mejores decisiones para tu negocio."}
-                        isChaos={isChaos}
-                    />
-                    <PainCard 
-                        icon={isChaos ? <SearchX size={24}/> : <Smartphone size={24}/>}
-                        title={isChaos ? "Sin Inventario" : "NUNCA TE QUEDES SIN PRODUCTO"}
-                        desc={isChaos ? "No sabes qué tienes ni qué te falta hasta que se acaba. Vendes a ciegas y pierdes clientes." : "Recibe alertas cuando algo se esté acabando y evita perder ventas por falta de inventario."}
-                        isChaos={isChaos}
-                    />
-                </div>
-
-                {/* --- CTA FINAL --- */}
-                <motion.div 
-                    initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
-                    className="mt-12 flex flex-col items-center gap-4"
-                >
-                    <p className={`text-[11px] font-black tracking-widest uppercase italic transition-colors duration-700 ${isChaos ? 'text-red-500/60' : 'text-slate-500'}`}>
-                        {isChaos ? "¿Vas a esperar a que tu negocio sea solo un recuerdo?" : "La era digital ya está aquí. Únete a ella 👇"}
+                    
+                    <p className="text-sm font-bold text-slate-400 uppercase tracking-widest animate-pulse">
+                        {isModern ? "Haz clic para volver al pasado" : "Haz clic para ver el futuro de tu tienda"}
                     </p>
-                    <button 
-                        onClick={() => navigate('/register')}
-                        className="px-10 py-4 bg-[#00C1A3] text-[#020617] font-[1000] italic uppercase tracking-widest rounded-xl shadow-[0_15px_40px_rgba(0,193,163,0.3)] hover:scale-105 transition-all active:scale-95"
+                </div>
+
+                {/* --- LAS TARJETAS DE REALIDAD --- */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
+                    <RealityCard 
+                        icon={isModern ? <Smartphone /> : <Notebook />}
+                        title={isModern ? "En tu Celular" : "En la libreta"}
+                        desc={isModern ? "Revisa tus ventas desde donde estés. Tu info está en la nube, segura y a la mano." : "Si se moja, se pierde o se la llevan, adiós a tus cuentas. Es un riesgo que no necesitas."}
+                        active={isModern}
+                    />
+                    <RealityCard 
+                        icon={isModern ? <TrendingUp /> : <TrendingDown />}
+                        title={isModern ? "Ganancia Real" : "Cuentas chuecas"}
+                        desc={isModern ? "Nedimi suma todo por ti. Sabes exactamente cuánto dinero entró y cuánto ganaste." : "Hacer cuentas a mano cansa y es fácil equivocarse. ¿Seguro que no te falta dinero en caja?"}
+                        active={isModern}
+                    />
+                    <RealityCard 
+                        icon={isModern ? <ClipboardCheck /> : <SearchX />}
+                        title={isModern ? "Stock Perfecto" : "¿Todavía hay?"}
+                        desc={isModern ? "Te avisamos cuando se acabe el refresco o las papas. No más clientes yéndose con las manos vacías." : "Te das cuenta que falta producto hasta que el cliente te lo pide. Así se pierden ventas."}
+                        active={isModern}
+                    />
+                </div>
+
+                {/* --- LLAMADO A LA ACCIÓN --- */}
+                <motion.div 
+                    className="mt-16 md:mt-20 text-center w-full px-2"
+                    initial={{ y: 20, opacity: 0 }}
+                    whileInView={{ y: 0, opacity: 1 }}
+                    viewport={{ once: true }}
+                >
+                    <Link 
+                        to="/register"
+                        className={`inline-block w-full sm:w-auto px-6 md:px-12 py-4 md:py-5 rounded-2xl font-black italic uppercase tracking-widest text-sm md:text-lg transition-all shadow-2xl active:scale-95 ${
+                            isModern 
+                            ? 'bg-blue-600 text-white shadow-blue-500/40 scale-100 sm:scale-110' 
+                            : 'bg-slate-900 text-white shadow-slate-900/20'
+                        }`}
                     >
-                        PROBAR GRATIS SIN COMPROMISO
-                    </button>
+                        {isModern ? "¡Quiero Nedimi POS ahora!" : "Dejar la libreta hoy mismo"}
+                    </Link>
                 </motion.div>
             </div>
         </section>
     );
 };
 
-// --- SUB-COMPONENTE DE TARJETA ---
-const PainCard = ({ icon, title, desc, isChaos }: any) => (
-    <div className={`p-6 rounded-[2rem] border transition-all duration-700 ${isChaos ? 'bg-red-500/5 border-red-500/10' : 'bg-white/5 border-[#00C1A3]/20 shadow-2xl shadow-[#00C1A3]/5'}`}>
-        <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-4 transition-colors ${isChaos ? 'bg-red-500/20 text-red-500' : 'bg-[#00C1A3]/20 text-[#00C1A3]'}`}>
-            {icon}
+const RealityCard = ({ icon, title, desc, active }: any) => (
+    <div className={`p-8 rounded-[2.5rem] border-2 transition-all duration-500 ${
+        active 
+        ? 'bg-blue-50 border-blue-100 shadow-xl shadow-blue-500/5' 
+        : 'bg-white border-slate-100'
+    }`}>
+        <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-colors shadow-sm ${
+            active ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-400'
+        }`}>
+            {React.cloneElement(icon, { size: 28 })}
         </div>
-        <h4 className={`text-lg font-black italic uppercase tracking-tight mb-2 transition-colors ${isChaos ? 'text-red-200/40' : 'text-white'}`}>{title}</h4>
-        <p className={`text-[12px] leading-relaxed font-light transition-colors ${isChaos ? 'text-slate-600' : 'text-slate-400'}`}>
+        <h4 className={`text-xl font-black italic uppercase tracking-tight mb-3 ${active ? 'text-blue-900' : 'text-slate-800'}`}>
+            {title}
+        </h4>
+        <p className={`text-sm leading-relaxed font-medium ${active ? 'text-blue-700/70' : 'text-slate-500'}`}>
             {desc}
         </p>
     </div>

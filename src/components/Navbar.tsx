@@ -24,7 +24,6 @@ export const Navbar = ({ onOpenModal }: NavbarProps) => {
         { name: 'Demo', path: '/demo' },
         { name: 'Planes', path: '/Planes' },
         { name: 'Preguntas Frecuentes', path: '/preguntas' },
-        
     ];
 
     useEffect(() => {
@@ -45,33 +44,32 @@ export const Navbar = ({ onOpenModal }: NavbarProps) => {
 
     return (
         <>
+            {/* Barra de progreso de lectura */}
             <motion.div
                 className="fixed top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#00C1A3] via-cyan-400 to-[#00C1A3] origin-left z-[150] shadow-[0_0_10px_#00C1A3]"
                 style={{ scaleX }}
             />
 
-            <header className={`fixed w-full z-[140] flex justify-center top-0 px-4 sm:px-6 pointer-events-none`}>
+            <header className="fixed w-full z-[140] flex justify-center top-0 px-4 sm:px-6 pointer-events-none">
                 <nav
-                    className={`w-full flex justify-between items-center transition-all duration-500 ease-in-out pointer-events-auto will-change-transform ${scrolled && !mobileMenuOpen
-                        ? 'max-w-6xl bg-slate-900/95 backdrop-blur-2xl border border-white/20 rounded-[3rem] shadow-[0_30px_60px_rgba(0,0,0,0.6)] py-3 px-6 sm:px-10 mt-4'
-                        : 'max-w-7xl bg-transparent py-8 sm:py-10 px-2 sm:px-4 border-transparent mt-0'
-                        } ${mobileMenuOpen ? 'bg-transparent py-6 px-2' : ''}`}
+                    className={`w-full flex justify-between items-center transition-all duration-500 ease-in-out pointer-events-auto will-change-transform 
+                    /* Clases de "píldora" fijas siempre */
+                    max-w-6xl bg-slate-900/95 backdrop-blur-2xl border border-white/20 rounded-[3rem] shadow-[0_30px_60px_rgba(0,0,0,0.6)] py-3 px-6 sm:px-10 mt-4 
+                    ${mobileMenuOpen ? 'bg-transparent shadow-none border-transparent mt-0' : ''}`}
                 >
-                    {/* --- LOGO --- */}
+                    {/* --- LOGO (Tamaño fijo estilo píldora) --- */}
                     <Link
                         to="/"
                         onClick={() => setMobileMenuOpen(false)}
                         className="group cursor-pointer flex items-center gap-2 relative z-20 shrink-0"
                     >
-                        <span className={`font-[1000] italic tracking-tighter text-white uppercase transition-all duration-300 ${scrolled ? 'text-xl sm:text-2xl' : 'text-2xl sm:text-3xl md:text-4xl'
-                            }`}>
+                        <span className="font-[1000] italic tracking-tighter text-white uppercase text-xl sm:text-2xl transition-all duration-300">
                             Nedimi<span className="text-[#00C1A3]">POS</span>
                         </span>
                     </Link>
 
                     {/* --- MENÚ DESKTOP --- */}
-                    <div className={`hidden lg:flex items-center transition-all duration-300 ${scrolled ? 'gap-1' : 'gap-2 bg-white/[0.03] border border-white/5 p-1.5 rounded-full shadow-inner'
-                        }`}>
+                    <div className="hidden lg:flex items-center gap-1">
                         {navLinks.map((link) => {
                             const isActive = location.pathname === link.path;
                             return (
@@ -96,29 +94,24 @@ export const Navbar = ({ onOpenModal }: NavbarProps) => {
 
                     {/* --- BOTONES DE ACCIÓN --- */}
                     <div className="flex items-center gap-3 relative z-20 shrink-0">
-                        {/* Botón Inicia Sesión (RESALTADO - Desktop) */}
                         <button
                             onClick={() => window.location.href = '/puntodeventa/'}
-                            className={`hidden sm:flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-amber-400 text-amber-950 font-[1000] rounded-full group transition-all duration-300 shadow-[0_10px_20px_rgba(245,158,11,0.2)] hover:shadow-[0_15px_30px_rgba(245,158,11,0.4)] active:scale-95 ${scrolled ? 'px-6 py-3 text-[10px]' : 'px-8 py-4 text-xs'
-                                }`}
+                            className="hidden sm:flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-amber-400 text-amber-950 font-[1000] rounded-full group transition-all duration-300 shadow-[0_10px_20px_rgba(245,158,11,0.2)] hover:shadow-[0_15px_30px_rgba(245,158,11,0.4)] active:scale-95 px-6 py-3 text-[10px]"
                         >
-                            <UserCircle size={scrolled ? 14 : 16} />
+                            <UserCircle size={14} />
                             <span className="tracking-widest uppercase italic leading-none">Inicia Sesión</span>
                         </button>
 
-                        {/* Botón Probar Gratis (Desktop) */}
                         <button
                             onClick={() => navigate('/register')}
-                            className={`hidden sm:flex items-center justify-center gap-2 bg-[#00C1A3] text-[#020617] font-[1000] rounded-full group transition-all duration-300 shadow-[0_10px_20px_rgba(0,193,163,0.2)] hover:shadow-[0_15px_30px_rgba(0,193,163,0.4)] active:scale-95 ${scrolled ? 'px-6 py-3 text-[10px]' : 'px-8 py-4 text-xs'
-                                }`}
+                            className="hidden sm:flex items-center justify-center gap-2 bg-[#00C1A3] text-[#020617] font-[1000] rounded-full group transition-all duration-300 shadow-[0_10px_20px_rgba(0,193,163,0.2)] hover:shadow-[0_15px_30px_rgba(0,193,163,0.4)] active:scale-95 px-6 py-3 text-[10px]"
                         >
-                            <Sparkles size={scrolled ? 14 : 16} className="group-hover:animate-pulse" />
+                            <Sparkles size={14} className="group-hover:animate-pulse" />
                             <span className="tracking-widest uppercase italic leading-none">Probar Gratis</span>
                         </button>
 
                         <button
-                            className={`lg:hidden rounded-full bg-white/5 border border-white/10 text-white flex items-center justify-center transition-all active:scale-90 hover:bg-white/10 backdrop-blur-md ${scrolled ? 'p-2.5' : 'p-4'
-                                }`}
+                            className="lg:hidden rounded-full bg-white/5 border border-white/10 text-white flex items-center justify-center transition-all active:scale-90 hover:bg-white/10 backdrop-blur-md p-2.5"
                             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                         >
                             <AnimatePresence mode="wait">
@@ -146,6 +139,7 @@ export const Navbar = ({ onOpenModal }: NavbarProps) => {
                         exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
                         className="fixed inset-0 bg-[#020617]/95 z-[130] flex flex-col justify-between overflow-y-auto"
                     >
+                        {/* Contenido del menú móvil idéntico al tuyo */}
                         <div className="flex flex-col gap-4 w-full px-8 pt-32 pb-10 relative z-10 mt-10">
                             {navLinks.map((link, i) => {
                                 const isActive = location.pathname === link.path;
@@ -157,8 +151,7 @@ export const Navbar = ({ onOpenModal }: NavbarProps) => {
                                         exit={{ opacity: 0, x: -20 }}
                                         transition={{ delay: i * 0.1 }}
                                         onClick={() => handleNavigation(link.path)}
-                                        className={`group flex items-center justify-between w-full text-left py-4 border-b border-white/5 ${isActive ? 'text-[#00C1A3]' : 'text-white'
-                                            }`}
+                                        className={`group flex items-center justify-between w-full text-left py-4 border-b border-white/5 ${isActive ? 'text-[#00C1A3]' : 'text-white'}`}
                                     >
                                         <span className="text-3xl sm:text-4xl font-[1000] uppercase tracking-tighter italic">
                                             {link.name}
@@ -169,18 +162,15 @@ export const Navbar = ({ onOpenModal }: NavbarProps) => {
                             })}
                         </div>
                         <div className="px-8 pb-12 w-full mt-auto flex flex-col gap-4">
-                            {/* Botón Inicia Sesión (RESALTADO - Móvil) */}
                             <button
                                 onClick={() => { window.location.href = '/puntodeventa/'; setMobileMenuOpen(false); }}
-                                className="w-full py-5 bg-gradient-to-r from-amber-500 to-amber-400 text-amber-950 shadow-[0_15px_30px_rgba(245,158,11,0.3)] font-[1000] italic uppercase tracking-widest text-lg rounded-2xl flex items-center justify-center gap-3 active:scale-95 transition-transform"
+                                className="w-full py-5 bg-gradient-to-r from-amber-500 to-amber-400 text-amber-950 shadow-[0_15px_30px_rgba(245,158,11,0.3)] font-[1000] italic uppercase tracking-widest text-lg rounded-2xl flex items-center justify-center gap-3"
                             >
                                 <UserCircle size={20} /> INICIA SESIÓN
                             </button>
-
-                            {/* Botón Probar Gratis (Móvil) */}
                             <button
                                 onClick={() => { navigate('/register'); setMobileMenuOpen(false); }}
-                                className="w-full py-5 bg-[#00C1A3] text-[#020617] font-[1000] italic uppercase tracking-widest text-lg rounded-2xl flex items-center justify-center gap-3 active:scale-95 transition-transform"
+                                className="w-full py-5 bg-[#00C1A3] text-[#020617] font-[1000] italic uppercase tracking-widest text-lg rounded-2xl flex items-center justify-center gap-3"
                             >
                                 <Sparkles size={20} /> PROBAR GRATIS
                             </button>

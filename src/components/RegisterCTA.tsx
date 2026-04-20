@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Rocket } from "lucide-react";
+import { Rocket, CheckCircle2 } from "lucide-react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -7,77 +7,82 @@ export const RegisterCTA = () => {
     const navigate = useNavigate();
 
     return (
-        <section className="relative py-24 overflow-hidden bg-[#020617] border-t border-white/5 flex flex-col items-center">
-            {/* 1. FONDO: Líneas de datos */}
-            <div className="absolute inset-0 z-0 pointer-events-none opacity-30">
-                {[...Array(6)].map((_, i) => (
-                    <motion.div
-                        key={i}
-                        initial={{ left: "-20%", opacity: 0 }}
-                        animate={{ left: "110%", opacity: [0, 0.3, 0.3, 0] }}
-                        transition={{ 
-                            duration: 10 + i, 
-                            repeat: Infinity, 
-                            delay: i * 2, 
-                            ease: "linear" 
-                        }}
-                        className="absolute h-[1px] bg-[#00C1A3]"
-                        style={{ top: `${20 + i * 15}%`, width: '100px' }}
-                    />
-                ))}
+        <section className="relative py-24 md:py-32 overflow-hidden bg-white flex flex-col items-center">
+            
+            {/* --- DESTELLOS AZULES (Identidad Nedimi) --- */}
+            <div className="absolute inset-0 pointer-events-none">
+                {/* Gran resplandor central */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-blue-600/10 rounded-full blur-[150px]" />
+                {/* Destello sutil lateral */}
+                <div className="absolute -right-20 top-0 w-96 h-96 bg-blue-400/10 rounded-full blur-[100px]" />
             </div>
 
             <div className="max-w-5xl mx-auto px-6 relative z-10 text-center flex flex-col items-center">
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="flex flex-col items-center gap-4"
+                    className="flex flex-col items-center"
                 >
-                    <h2 className="text-4xl md:text-6xl font-[1000] text-white italic uppercase tracking-tighter leading-[0.9] overflow-visible">
-                        <span className="block pr-10 -mr-10 overflow-visible">
-                            ¿LISTO PARA
-                        </span>
-                        <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#00C1A3] to-[#00E5FF] pr-20 -mr-20 overflow-visible">
-                            TOMAR EL CONTROL?
+                    {/* Badge de confianza */}
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 text-blue-600 text-[10px] font-black uppercase tracking-[0.3em] mb-8 shadow-sm border border-blue-100">
+                        <CheckCircle2 size={14} />
+                        Únete a la evolución
+                    </div>
+
+                    <h2 className="text-5xl md:text-8xl font-[1000] text-slate-950 italic uppercase tracking-tighter leading-[0.85] mb-8">
+                        ¿LISTO PARA <br />
+                        <span className="text-blue-600 underline decoration-blue-200 decoration-8 underline-offset-8">
+                            EL CONTROL?
                         </span>
                     </h2>
 
-                    <p className="text-slate-400 text-lg md:text-xl max-w-2xl font-light mt-2">
-                        Únete a los negocios que ya están evolucionando su gestión con <span className="text-white font-medium">Nedimi POS</span>.
+                    <p className="text-slate-500 text-xl md:text-2xl max-w-2xl font-medium mb-12 leading-relaxed">
+                        Deja atrás el desorden de la libreta. Prueba <span className="text-slate-900 font-black">Nedimi POS</span> hoy mismo y siente la paz de tener tu negocio en orden.
                     </p>
 
+                    {/* BOTÓN PRINCIPAL: EL "BOTONAZO" NEDIMI */}
                     <button 
                         onClick={() => navigate('/register')}
-                        className="group relative px-10 py-5 bg-[#00C1A3] text-[#020617] font-[1000] italic uppercase rounded-2xl overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-[0_20px_40px_rgba(0,193,163,0.3)] mt-4"
+                        className="group relative px-12 py-6 bg-blue-600 text-white font-[1000] italic uppercase rounded-[2rem] transition-all hover:scale-105 active:scale-95 shadow-[0_25px_50px_-12px_rgba(37,99,235,0.5)] mb-8 overflow-hidden"
                     >
-                        <span className="relative z-10 flex items-center justify-center gap-3 text-lg tracking-widest">
-                            EMPEZAR MI PRUEBA GRATIS <Rocket size={20} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                        <span className="relative z-10 flex items-center justify-center gap-4 text-xl tracking-widest">
+                            EMPEZAR MI PRUEBA GRATIS 
+                            <Rocket size={24} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                         </span>
-                        <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]" />
+                        {/* Brillo de barrido al pasar el mouse */}
+                        <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]" />
                     </button>
 
-                    <div className="flex flex-col items-center gap-3 mt-4">
-                        <div className="flex items-center gap-2 text-[10px] font-black text-slate-500 uppercase tracking-[0.3em]">
-                            <div className="w-1.5 h-1.5 rounded-full bg-[#00C1A3]" />
-                            Sin tarjetas de crédito · Activación instantánea
+                    <div className="flex flex-col items-center gap-6">
+                        <div className="flex items-center gap-4 text-xs font-black text-slate-400 uppercase tracking-widest">
+                            <span>Sin tarjetas</span>
+                            <div className="w-1 h-1 rounded-full bg-blue-200" />
+                            <span>Activación en 1 minuto</span>
                         </div>
 
-                        {/* MINI SECCIÓN DE LOGIN */}
-                        <p className="text-[11px] font-bold text-slate-400 uppercase tracking-widest">
-                            ¿Ya tienes una cuenta?{" "}
-                            <button 
-                                onClick={() => window.location.href = '/puntodeventa/'}
-                                className="text-[#00C1A3] hover:text-white transition-colors underline decoration-[#00C1A3]/30 underline-offset-4"
-                            >
-                                Inicia sesión
-                            </button>
-                        </p>
+                        {/* LOGIN SECTION */}
+                        <div className="bg-slate-50 px-6 py-3 rounded-2xl border border-slate-100">
+                            <p className="text-[12px] font-bold text-slate-500 uppercase tracking-widest">
+                                ¿Ya eres parte de Nedimi?{" "}
+                                <button 
+                                    onClick={() => window.location.href = '/puntodeventa/'}
+                                    className="text-blue-600 hover:text-blue-800 transition-colors font-black underline underline-offset-4 decoration-blue-200"
+                                >
+                                    Entra aquí
+                                </button>
+                            </p>
+                        </div>
                     </div>
                 </motion.div>
             </div>
 
-            <style dangerouslySetInnerHTML={{ __html: `@keyframes shimmer { 100% { transform: translateX(100%); } }` }} />
+            {/* Definición de la animación de brillo para el botón */}
+            <style dangerouslySetInnerHTML={{ __html: `
+                @keyframes shimmer { 
+                    100% { transform: translateX(100%); } 
+                }
+            ` }} />
         </section>
     );
 };

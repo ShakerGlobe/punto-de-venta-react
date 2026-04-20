@@ -1,12 +1,13 @@
 import { motion } from "framer-motion";
-import { CheckCircle2, LayoutDashboard, BarChart3, TrendingUp } from "lucide-react";
+import { CheckCircle2, LayoutDashboard, TrendingUp, Zap, DollarSign, Package } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export const DashboardPreview = () => {
     const features = [
-        "REVISA TU DINERO EN SEGUNDOS",
-        "SABES CUÁNDO TE ESTÁS QUEDANDO SIN PRODUCTO",
-        "REVISA TODAS TUS VENTAS CUANDO QUIERAS",
-        "CONTROLA LO QUE HACE CADA EMPLEADO"
+        "Checa cuánto dinero entró en segundos",
+        "Nedimi te avisa si te falta mercancía",
+        "Revisa tus ventas desde donde estés",
+        "Mira qué productos se venden más"
     ];
 
     const chartData = [
@@ -20,105 +21,116 @@ export const DashboardPreview = () => {
     ];
 
     return (
-        <section className="w-full bg-[#020617] px-6 pb-20 md:pb-32 lg:pb-40">
-            <div className="max-w-7xl mx-auto">
+        <section className="w-full bg-white px-6 pb-20 md:pb-32 lg:pb-40 relative overflow-hidden">
+            
+            {/* --- DESTELLOS AZULES INTENSOS --- */}
+            <div className="absolute inset-0 pointer-events-none">
+                <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-blue-600/20 rounded-full blur-[120px] -translate-x-1/2" />
+                <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-blue-400/15 rounded-full blur-[150px] translate-x-1/4" />
+            </div>
+
+            <div className="max-w-7xl mx-auto relative z-10">
                 <motion.div
                     initial={{ opacity: 0, y: 40 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-100px" }}
                     transition={{ duration: 0.7 }}
-                    className="relative rounded-[2rem] md:rounded-[3rem] lg:rounded-[4rem] overflow-hidden bg-slate-900/40 border border-[#00C1A3]/20 p-8 md:p-16 lg:p-24 backdrop-blur-xl shadow-[0_20px_80px_rgba(0,193,163,0.07)]"
+                    // El contenedor principal ahora es una "card" clara muy premium
+                    className="relative rounded-[3rem] md:rounded-[4rem] overflow-hidden bg-slate-50 border border-slate-200 p-8 md:p-16 lg:p-20 shadow-[0_40px_100px_-20px_rgba(0,102,255,0.1)]"
                 >
-                    {/* Brillo de fondo */}
-                    <div className="absolute top-0 right-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-[#00C1A3]/10 blur-[120px] rounded-full pointer-events-none translate-x-1/3 -translate-y-1/3" />
-
-                    <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center relative z-10">
+                    <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
                         
-                        {/* LADO IZQUIERDO */}
+                        {/* LADO IZQUIERDO: TEXTO INFORMAL */}
                         <div className="order-2 lg:order-1">
                             <motion.div
                                 initial={{ opacity: 0, x: -30 }}
                                 whileInView={{ opacity: 1, x: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.5, delay: 0.2 }}
-                                className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/10 border border-blue-500/30 rounded-full backdrop-blur-md mb-6"
+                                className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-full shadow-lg shadow-blue-600/20 mb-8"
                             >
-                                <LayoutDashboard size={14} className="text-blue-400" />
-                                <span className="text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] text-blue-400">
-                                    CONTROL TOTAL DE TU NEGOCIO
+                                <LayoutDashboard size={14} />
+                                <span className="text-[10px] sm:text-xs font-black uppercase tracking-[0.2em]">
+                                    Control total de tu negocio
                                 </span>
                             </motion.div>
 
-                            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-[1000] italic uppercase text-white mb-6 md:mb-8 leading-[0.9] tracking-tighter">
-                                Ve todo lo que pasa en tu Tienda <br />
-                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00C1A3] to-blue-400">
-                                    En Tiempo Real.
+                            <h2 className="text-4xl md:text-6xl font-[1000] italic uppercase text-slate-950 mb-6 leading-[0.9] tracking-tighter">
+                                Echa un ojo a <br />tu tienda en <br />
+                                <span className="text-blue-600 underline decoration-blue-200 decoration-8 underline-offset-8">
+                                    Tiempo Real.
                                 </span>
                             </h2>
-                            <p className="text-slate-400 text-sm md:text-base lg:text-lg mb-8 md:mb-10 font-light max-w-lg">
-                                 Revisa tus ventas, tu dinero y tu inventario en segundos.
-                                 Toma decisiones rápidas sin depender de libretas o cálculos manuales.
+                            
+                            <p className="text-slate-500 text-lg mb-10 font-medium max-w-lg leading-relaxed">
+                                 Ya no tienes que andar sumando papelitos. Con Nedimi ves tus ganancias y lo que tienes en estante al instante, sin complicaciones.
                             </p>
 
-                            <div className="grid gap-3">
+                            {/* Features con Checkmarks Nedimi */}
+                            <div className="grid gap-4 mb-10">
                                 {features.map((item, i) => (
-                                    <div key={i} className="flex items-center gap-4 bg-white/5 p-4 rounded-2xl border border-white/5">
-                                        <CheckCircle2 size={18} className="text-[#00C1A3]" />
-                                        <span className="text-xs md:text-sm font-bold uppercase tracking-widest text-slate-200">{item}</span>
+                                    <div key={i} className="flex items-center gap-4 bg-white p-4 rounded-2xl border border-slate-100 shadow-sm transition-transform hover:scale-105">
+                                        <div className="bg-blue-50 p-1 rounded-full">
+                                            <CheckCircle2 size={20} className="text-blue-600" />
+                                        </div>
+                                        <span className="text-xs md:text-sm font-black uppercase tracking-tight text-slate-700">{item}</span>
                                     </div>
                                 ))}
                             </div>
+
+                            <Link to="/register" className="inline-block text-blue-600 font-black italic uppercase tracking-widest border-b-2 border-blue-600 pb-1 hover:text-blue-800 transition-colors">
+                                ¡Quiero empezar ya! →
+                            </Link>
                         </div>
 
-                        {/* LADO DERECHO: MINI DASHBOARD CON BARRAS CORREGIDAS */}
+                        {/* LADO DERECHO: EL DASHBOARD (MODO OSCURO PARA CONTRASTE) */}
                         <motion.div
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
+                            initial={{ opacity: 0, scale: 0.95, rotate: 2 }}
+                            whileInView={{ opacity: 1, scale: 1, rotate: 2 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.6, delay: 0.4 }}
-                            className="order-1 lg:order-2 relative w-full aspect-[4/3] bg-[#0f172a] rounded-[2rem] border border-slate-700/50 p-6 sm:p-8 flex flex-col group"
+                            // El dashboard oscuro sobre el fondo claro se ve increíble
+                            className="order-1 lg:order-2 relative w-full aspect-[4/3] bg-slate-950 rounded-[2.5rem] border-[12px] border-slate-900 shadow-[0_60px_100px_-20px_rgba(0,0,0,0.4)] p-6 sm:p-8 flex flex-col overflow-hidden"
                         >
-                            {/* Cabecera macOS */}
-                            <div className="flex items-center justify-between mb-8 border-b border-slate-800 pb-4">
+                            {/* Brillo interno del dashboard */}
+                            <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-br from-blue-600/10 to-transparent pointer-events-none" />
+
+                            <div className="flex items-center justify-between mb-8 border-b border-white/10 pb-6">
                                 <div className="flex gap-2">
-                                    <div className="w-2.5 h-2.5 rounded-full bg-red-500" />
-                                    <div className="w-2.5 h-2.5 rounded-full bg-amber-500" />
-                                    <div className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
+                                    <div className="w-2.5 h-2.5 rounded-full bg-slate-800" />
+                                    <div className="w-2.5 h-2.5 rounded-full bg-slate-800" />
+                                    <div className="w-2.5 h-2.5 rounded-full bg-slate-800" />
                                 </div>
-                                <div className="h-2 w-16 bg-slate-800 rounded-full" />
+                                <div className="flex gap-4">
+                                    <Package size={18} className="text-slate-600" />
+                                    <DollarSign size={18} className="text-slate-600" />
+                                </div>
                             </div>
 
-                            <div className="flex justify-between items-end mb-8">
+                            <div className="flex justify-between items-end mb-10">
                                 <div className="space-y-1">
-                                    <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">Ventas Semanales</span>
-                                    <h3 className="text-3xl font-[1000] text-white tracking-tighter">$124,500</h3>
+                                    <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">Ventas del día</span>
+                                    <h3 className="text-4xl font-[1000] text-white tracking-tighter">$8,420.00</h3>
                                 </div>
-                                <div className="text-emerald-400 bg-emerald-400/10 px-2 py-1 rounded-lg flex items-center gap-1 text-[10px] font-bold">
-                                    <TrendingUp size={12} /> +14%
+                                <div className="text-blue-400 bg-blue-400/10 px-3 py-1.5 rounded-full flex items-center gap-2 text-[10px] font-black italic">
+                                    <TrendingUp size={14} /> +25% HOY
                                 </div>
                             </div>
 
-                            {/* CONTENEDOR DE GRÁFICO */}
-                            <div className="flex items-end justify-between gap-2 md:gap-4 flex-1 relative min-h-[160px] pt-4">
-                                {/* Líneas de fondo */}
-                                <div className="absolute inset-0 flex flex-col justify-between pointer-events-none opacity-10">
-                                    <div className="w-full border-t border-slate-600" />
-                                    <div className="w-full border-t border-slate-600" />
-                                    <div className="w-full border-t border-slate-600" />
-                                </div>
-
+                            {/* GRÁFICO DE BARRAS NEDIMI */}
+                            <div className="flex items-end justify-between gap-2 md:gap-4 flex-1 relative min-h-[140px] pt-4">
                                 {chartData.map((data, i) => (
-                                    <div key={i} className="flex-1 flex flex-col items-center gap-2 z-10 h-full justify-end">
-                                        <div className="w-full bg-slate-800/40 rounded-t-md relative flex items-end h-full overflow-hidden">
+                                    <div key={i} className="flex-1 flex flex-col items-center gap-3 z-10 h-full justify-end">
+                                        <div className="w-full bg-white/5 rounded-t-xl relative flex items-end h-full overflow-hidden">
                                             <motion.div
                                                 initial={{ height: 0 }}
                                                 whileInView={{ height: `${data.height}%` }}
-                                                viewport={{ once: true, amount: 0.1 }}
-                                                transition={{ duration: 1, delay: 0.3 + (i * 0.1), ease: "easeOut" }}
-                                                className="w-full bg-gradient-to-t from-[#00C1A3] to-emerald-400 rounded-t-md relative shadow-[0_0_15px_rgba(0,193,163,0.3)]"
+                                                viewport={{ once: true }}
+                                                transition={{ duration: 1.2, delay: 0.5 + (i * 0.1), ease: [0.16, 1, 0.3, 1] }}
+                                                className="w-full bg-gradient-to-t from-blue-600 to-blue-400 rounded-t-xl shadow-[0_0_20px_rgba(37,99,235,0.4)]"
                                             />
                                         </div>
-                                        <span className="text-[9px] font-bold text-slate-500 uppercase">{data.label}</span>
+                                        <span className="text-[10px] font-black text-slate-600 uppercase tracking-tighter">{data.label}</span>
                                     </div>
                                 ))}
                             </div>

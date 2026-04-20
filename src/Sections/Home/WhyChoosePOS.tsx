@@ -9,99 +9,104 @@ export const WhyChoosePOS = () => {
         offset: ["start end", "end start"]
     });
 
-    // Parallax muy sutil para el fondo
-    const yBg = useTransform(scrollYProgress, [0, 1], [0, 150]);
+    // Parallax sutil para los destellos azules del fondo
+    const yBg = useTransform(scrollYProgress, [0, 1], [0, 100]);
 
     const reasons = [
         {
             title: "DEJA DE EQUIVOCARTE AL COBRAR",
-            desc: "Olvídate de cuentas mal hechas o precios incorrectos. Todo se calcula automáticamente.",
+            desc: "Olvídate de cuentas mal hechas o precios incorrectos. Nedimi calcula todo por ti.",
             icon: <Zap size={24} />,
-            color: "text-emerald-400",
-            bgHover: "group-hover:bg-emerald-500/[0.03]",
-            borderHover: "group-hover:border-emerald-500/30",
-            glow: "bg-emerald-500/20"
+            color: "text-blue-600",
+            bgHover: "group-hover:bg-blue-50",
+            borderHover: "group-hover:border-blue-200",
+            glow: "bg-blue-400/30" // Glow sutil en hover
         },
         {
             title: "CONOCE EXACTAMENTE QUÉ TIENES",
-            desc: "Deja de “creer” que hay producto. Ve en tiempo real qué tienes y qué te falta.",
+            desc: "Deja de “creer” que hay mercancía. Mira en tu celular qué tienes y qué te urge surtir.",
             icon: <Database size={24} />,
-            color: "text-cyan-400",
-            bgHover: "group-hover:bg-cyan-500/[0.03]",
-            borderHover: "group-hover:border-cyan-500/30",
-            glow: "bg-cyan-500/20"
+            color: "text-blue-600",
+            bgHover: "group-hover:bg-blue-50",
+            borderHover: "group-hover:border-blue-200",
+            glow: "bg-blue-400/30"
         },
         {
             title: "ENTIENDE TU NEGOCIO EN SEGUNDOS",
-            desc: "Mira cuánto vendes, qué ganas y qué productos te dejan más dinero.",
+            desc: "Mira cuánto vendiste en el día y qué productos son los que más dinero te dejan.",
             icon: <BarChart3 size={24} />,
-            color: "text-purple-400",
-            bgHover: "group-hover:bg-purple-500/[0.03]",
-            borderHover: "group-hover:border-purple-500/30",
-            glow: "bg-purple-500/20"
+            color: "text-blue-600",
+            bgHover: "group-hover:bg-blue-50",
+            borderHover: "group-hover:border-blue-200",
+            glow: "bg-blue-400/30"
         },
         {
             title: "EVITA PÉRDIDAS Y ROBO HORMIGA",
-            desc: "Controla lo que entra y sale. Detecta faltantes y protege tu dinero.",
+            desc: "Controla lo que entra y sale de tu caja. Protege cada peso de tu esfuerzo.",
             icon: <ShieldCheck size={24} />,
-            color: "text-blue-400",
-            bgHover: "group-hover:bg-blue-500/[0.03]",
-            borderHover: "group-hover:border-blue-500/30",
-            glow: "bg-blue-500/20"
+            color: "text-blue-600",
+            bgHover: "group-hover:bg-blue-50",
+            borderHover: "group-hover:border-blue-200",
+            glow: "bg-blue-400/30"
         },
         {
             title: "ATIENDE MÁS RÁPIDO A TUS CLIENTES",
-            desc: "Registra ventas en segundos y evita filas en tu tienda.",
+            desc: "Registra ventas volando y evita que se te junte la fila en la tienda.",
             icon: <Clock size={24} />,
-            color: "text-amber-400",
-            bgHover: "group-hover:bg-amber-500/[0.03]",
-            borderHover: "group-hover:border-amber-500/30",
-            glow: "bg-amber-500/20"
+            color: "text-blue-600",
+            bgHover: "group-hover:bg-blue-50",
+            borderHover: "group-hover:border-blue-200",
+            glow: "bg-blue-400/30"
         },
         {
-            title: "CRECE SIN COMPLICARTE",
-            desc: "Empieza con una tienda y administra todo fácilmente desde un solo lugar.",
+            title: "CRECE SIN COMPLICARTE LA VIDA",
+            desc: "Administra todo desde un solo lugar. Es tan fácil que no querrás soltarlo.",
             icon: <TrendingUp size={24} />,
-            color: "text-[#00C1A3]",
-            bgHover: "group-hover:bg-[#00C1A3]/[0.03]",
-            borderHover: "group-hover:border-[#00C1A3]/30",
-            glow: "bg-[#00C1A3]/20"
+            color: "text-blue-600",
+            bgHover: "group-hover:bg-blue-50",
+            borderHover: "group-hover:border-blue-200",
+            glow: "bg-blue-400/30"
         }
     ];
 
     return (
-        <section ref={containerRef} className="relative py-20 md:py-32 lg:py-40 bg-[#020617] overflow-hidden">
-            {/* FONDO DINÁMICO */}
+        <section ref={containerRef} className="relative py-20 md:py-32 lg:py-40 bg-white overflow-hidden">
+            
+            {/* --- DESTELLOS AZULES DINÁMICOS (Intensificados) --- */}
             <div className="absolute inset-0 pointer-events-none z-0">
-                <div className="absolute inset-0 bg-[radial-gradient(#ffffff05_1px,transparent_1px)] [background-size:60px_60px] opacity-30 [mask-image:linear-gradient(to_bottom,transparent,black_20%,black_80%,transparent)]" />
+                {/* Destello Superior Derecho: Ahora usa blue-600 con más opacidad */}
                 <motion.div
                     style={{ y: yBg }}
-                    className="absolute top-0 right-0 w-[400px] lg:w-[800px] h-[400px] lg:h-[800px] bg-[#00C1A3]/5 blur-[100px] lg:blur-[160px] rounded-full"
+                    className="absolute top-[10%] right-[-15%] w-[600px] lg:w-[1000px] h-[600px] lg:h-[1000px] bg-blue-600/25 blur-[120px] lg:blur-[180px] rounded-full"
+                />
+                {/* Destello Inferior Izquierdo: Ahora usa blue-500 con más opacidad */}
+                <motion.div
+                    style={{ y: -yBg }}
+                    className="absolute bottom-[10%] left-[-15%] w-[500px] lg:w-[800px] h-[500px] lg:h-[800px] bg-blue-500/25 blur-[100px] lg:blur-[160px] rounded-full"
                 />
             </div>
 
             <div className="max-w-7xl mx-auto px-6 relative z-10">
-                {/* --- LAYOUT ASIMÉTRICO (Grid dividido) --- */}
-                <div className="grid lg:grid-cols-[1fr_2fr] gap-12 lg:gap-20 items-start">
+                <div className="grid lg:grid-cols-[1fr_2fr] gap-16 lg:gap-20 items-start">
 
-                    {/* CABECERA (Pegajosa en Desktop) */}
-                    <div className="lg:sticky lg:top-32 space-y-6 md:space-y-8 text-center lg:text-left">
+                    {/* --- CABECERA IZQUIERDA (Sticky) --- */}
+                    <div className="lg:sticky lg:top-32 space-y-8 text-center lg:text-left">
                         <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, margin: "-50px" }}
+                            initial={{ opacity: 0, x: -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
                         >
-                            <div className="inline-flex items-center gap-2 px-4 py-1.5 md:px-5 md:py-2 rounded-full bg-[#00C1A3]/10 border border-[#00C1A3]/20 shadow-[0_0_15px_rgba(0,193,163,0.15)] mb-6 md:mb-8">
-                                <CheckCircle2 size={14} className="text-[#00C1A3] animate-pulse" />
-                                <span className="text-[#00C1A3] font-black uppercase tracking-[0.2em] sm:tracking-[0.3em] text-[9px] md:text-[10px]">
-                                    SOLUCIONA LOS PROBLEMAS DE TU TIENDA
+                            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 border border-blue-100 mb-8 shadow-sm">
+                                <CheckCircle2 size={14} className="text-blue-600" />
+                                <span className="text-blue-600 font-black uppercase tracking-widest text-[10px]">
+                                    Razones para elegirnos
                                 </span>
                             </div>
 
-                            <h2 className="text-4xl sm:text-5xl md:text-6xl font-[1000] text-white italic uppercase tracking-tighter leading-[0.9] md:leading-[0.95]">
-                                Si no tienes control <br className="hidden lg:block" />
-                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00C1A3] via-emerald-400 to-cyan-400 drop-shadow-sm pb-2">
-                                    Estás perdiendo dinero
+                            <h2 className="text-5xl md:text-6xl font-[1000] text-slate-950 italic uppercase tracking-tighter leading-[0.85]">
+                                Si no tienes <br /> el control, <br />
+                                <span className="text-blue-600 underline decoration-blue-200 decoration-8">
+                                    estás perdiendo dinero
                                 </span>
                             </h2>
                         </motion.div>
@@ -111,52 +116,45 @@ export const WhyChoosePOS = () => {
                             whileInView={{ opacity: 1 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.2 }}
-                            className="text-slate-400 text-base md:text-lg font-light leading-relaxed max-w-xl mx-auto lg:mx-0"
+                            className="text-slate-500 text-lg md:text-xl font-medium leading-relaxed max-w-xl mx-auto lg:mx-0"
                         >
-                            Si hoy llevas tu tienda con libreta o de memoria, es normal que pierdas dinero sin darte cuenta.
-                            Nedimi POS te ayuda a tener control total de tus productos, ventas y dinero en segundos.
+                            Llevar tu tienda de memoria o en papel es cansado y riesgoso. 
+                            Nedimi POS te da la tranquilidad de saber que cada peso está en su lugar.
                         </motion.p>
                     </div>
 
-                    {/* TARJETAS DE BENEFICIOS (Staggering Flow) */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 w-full">
+                    {/* --- TARJETAS DE BENEFICIOS (Derecha) --- */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full">
                         {reasons.map((reason, i) => (
                             <motion.div
                                 key={i}
-                                initial={{ opacity: 0, y: 40 }}
+                                initial={{ opacity: 0, y: 30 }}
                                 whileInView={{ opacity: 1, y: 0 }}
-                                transition={{
-                                    delay: 0.1 + (i * 0.1), // Efecto cascada
-                                    type: "spring",
-                                    stiffness: 100,
-                                    damping: 20
-                                }}
-                                viewport={{ once: true, margin: "-50px" }}
-                                className={`group relative p-6 md:p-8 rounded-[1.5rem] md:rounded-[2rem] bg-slate-900/60 backdrop-blur-xl border border-white/5 overflow-hidden transition-all duration-500 ${reason.borderHover} ${reason.bgHover} hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)] cursor-default`}
+                                transition={{ delay: i * 0.1 }}
+                                viewport={{ once: true }}
+                                className={`group relative p-8 rounded-[2.5rem] bg-white border border-slate-100 transition-all duration-500 ${reason.borderHover} ${reason.bgHover} hover:-translate-y-2 hover:shadow-2xl shadow-slate-200/50 cursor-default overflow-hidden`}
                             >
-                                {/* Brillo interno en hover */}
-                                <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-
-                                {/* Glow radial dinámico (Optimizado) */}
-                                <div className={`absolute -top-12 -right-12 w-32 h-32 rounded-full blur-[40px] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none ${reason.glow}`} />
-
                                 <div className="relative z-10 flex flex-col h-full">
-                                    {/* Icono con animación sutil */}
-                                    <div className={`mb-6 p-3 md:p-4 w-fit rounded-xl md:rounded-2xl bg-white/[0.03] border border-white/10 group-hover:scale-110 group-hover:rotate-3 group-hover:bg-white/10 transition-all duration-300 shadow-inner ${reason.color}`}>
+                                    {/* Icono con fondo azul sutil */}
+                                    <div className={`mb-6 p-4 w-fit rounded-2xl bg-blue-50 border border-blue-100 group-hover:scale-110 group-hover:bg-white transition-all duration-300 ${reason.color}`}>
                                         {reason.icon}
                                     </div>
 
-                                    <h3 className="text-lg md:text-xl font-bold text-white mb-3 md:mb-4 uppercase italic tracking-tight group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-slate-300 transition-colors duration-300">
+                                    <h3 className="text-xl font-black text-slate-900 mb-4 uppercase italic tracking-tight leading-tight">
                                         {reason.title}
                                     </h3>
 
-                                    <p className="text-slate-400 text-xs md:text-sm leading-relaxed font-light mt-auto group-hover:text-slate-300 transition-colors duration-300">
+                                    <p className="text-slate-500 text-sm leading-relaxed font-medium">
                                         {reason.desc}
                                     </p>
                                 </div>
+                                
+                                {/* Brillo sutil en la esquina al hacer hover */}
+                                <div className={`absolute top-0 right-0 w-24 h-24 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10 ${reason.glow}`} />
                             </motion.div>
                         ))}
                     </div>
+
                 </div>
             </div>
         </section>

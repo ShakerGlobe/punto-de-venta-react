@@ -1,124 +1,75 @@
 @import "tailwindcss";
 
 @theme {
-    /* Identidad visual de Nedimi POS unificada */
-    --color-nedimi-dark: #020617;
-    /* Cambiado a nuestro tono Slate 950 oficial */
-    --color-nedimi-accent: #00C1A3;
-    --color-nedimi-text: #ffffff;
+  --color-brand-blue: #0066ff;
+  --glow-opacity: 0.12;
 }
 
-:root {
-    background-color: var(--color-nedimi-dark);
-    color: var(--color-nedimi-text);
-    color-scheme: dark;
-    scroll-behavior: smooth;
-}
-
-/* --- RESET Y FLUJO BASE --- */
-html,
-body {
-    margin: 0;
-    padding: 0;
-    background-color: var(--color-nedimi-dark);
-    width: 100%;
-    min-height: 100vh;
-
-    /* Prevenir scroll horizontal indeseado de forma limpia y estándar */
-    overflow-x: hidden;
-
-    /* Tipografía optimizada para pantallas de alta resolución */
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
-}
-
-#root {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
+@layer base {
+  body {
+    @apply bg-slate-50 text-slate-900 antialiased overflow-x-hidden min-h-screen;
     position: relative;
-    /* Nota: Se eliminó 'overflow: clip' porque rompe los menús pegajosos (sticky) 
-       y las sombras (glows) que salen de los bordes. */
+  }
+
+  /* Destellos azules de fondo (Globales) */
+  body::before, body::after {
+    content: '';
+    position: fixed;
+    width: 50vw;
+    height: 50vw;
+    background: radial-gradient(circle, var(--color-brand-blue) 0%, transparent 70%);
+    opacity: var(--glow-opacity);
+    filter: blur(120px);
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  body::before { top: -10%; left: -10%; }
+  body::after { bottom: -10%; right: -10%; }
 }
 
-/* --- UTILIDADES GLOBALES --- */
-section {
-    /* Para que los enlaces ancla (#id) no queden ocultos debajo de la Navbar flotante */
-    scroll-margin-top: 6rem;
+@layer components {
+  /* Animación de flotado constante */
+  .animate-float {
+    animation: floating 6s ease-in-out infinite;
+  }
+
+  @keyframes floating {
+    0%, 100% { transform: translateY(0) rotate(-3deg); }
+    50% { transform: translateY(-25px) rotate(-1deg); }
+  }
+
+  .btn-main {
+    @apply px-8 py-4 bg-blue-600 text-white font-black rounded-2xl 
+           hover:bg-blue-700 transition-all hover:scale-105 active:scale-95
+           shadow-xl shadow-blue-500/20 text-center uppercase tracking-tight;
+  }
 }
 
-* {
-    box-sizing: border-box;
-    /* Elimina el recuadro gris nativo al tocar botones en móviles táctiles */
-    -webkit-tap-highlight-color: transparent;
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px); /* Sube 20px */
+  }
 }
 
-/* Detalle Premium: Selección de texto con los colores de la marca */
-::selection {
-    background-color: rgba(0, 193, 163, 0.3);
-    /* #00C1A3 con transparencia */
-    color: #ffffff;
+@keyframes shadow-swell {
+  0%, 100% {
+    transform: scaleX(1);
+    opacity: 0.2;
+  }
+  50% {
+    transform: scaleX(0.8); /* Se encoge cuando la imagen sube */
+    opacity: 0.1; /* Se aclara cuando la imagen sube */
+  }
 }
 
-::-moz-selection {
-    background-color: rgba(0, 193, 163, 0.3);
-    color: #ffffff;
+.animate-float {
+  animation: float 6s ease-in-out infinite;
 }
 
-/* --- SCROLLBAR PREMIUM --- */
-::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-}
-
-::-webkit-scrollbar-track {
-    background: #020617;
-    /* Mismo color del fondo para que se mezcle */
-}
-
-::-webkit-scrollbar-thumb {
-    background: #1e293b;
-    /* Slate 800 */
-    border-radius: 10px;
-    border: 2px solid #020617;
-    /* Crea un efecto de padding dentro del track */
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #00C1A3;
-    /* Color de marca al interactuar */
-}
-
-/* --- PREVENCIÓN DE BUGS EN MÓVILES --- */
-/* iOS Safari hace zoom automático si la letra de un input es menor a 16px. Esto lo previene. */
-@media (max-width: 640px) {
-
-    input[type="text"],
-    input[type="email"],
-    input[type="password"],
-    input[type="number"],
-    textarea,
-    select {
-        font-size: 16px !important;
-    }
-}
-
-/* --- ACCESIBILIDAD --- */
-/* Apaga animaciones pesadas si el usuario tiene activado el "movimiento reducido" en su SO */
-@media (prefers-reduced-motion: reduce) {
-    html:focus-within {
-        scroll-behavior: auto;
-    }
-
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-    }
+.animate-shadow-swell {
+  animation: shadow-swell 6s ease-in-out infinite;
 }

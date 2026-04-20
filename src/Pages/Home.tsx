@@ -1,4 +1,3 @@
-import { HeroHome } from '../Sections/Home/HeroHome';
 import { BusinessMarquee } from '../Sections/Home/BusinessMarquee';
 import { InfrastructureHome } from '../Sections/Home/InfraestructureHome';
 import { DashboardPreview } from '../Sections/Home/DashboardPreview';
@@ -7,7 +6,8 @@ import { PageTransition } from '../components/PageTransition';
 import { WhyChoosePOS } from '../Sections/Home/WhyChoosePOS';
 import { DeviceCompatibility } from '../Sections/Home/DeviceCompatibility';
 import { SEO } from '../components/SEO'; // Importado OK
-import { BusinessSurvivalMeter } from '../Sections/Home/BusinessSurvivalMeter';
+import HeroHome from '../Sections/Home/HeroHome';
+import { BusinessSurvivalMeter } from '../Sections/Home/BusinessSurvivalMeter'
 
 const Home = ({ onOpenModal }: { onOpenModal: () => void }) => {
     return (
@@ -19,11 +19,11 @@ const Home = ({ onOpenModal }: { onOpenModal: () => void }) => {
             />
 
             <main className="w-full">
-                <HeroHome onOpenModal={onOpenModal} />
+                <HeroHome/>
 
-                <BusinessSurvivalMeter />
+                <BusinessSurvivalMeter/>
 
-                <BusinessMarquee />
+                {/*<BusinessMarquee />*/}
 
                 <WhyChoosePOS />
 
