@@ -23,7 +23,7 @@ jobs:
           npm install --legacy-peer-deps # Agrega --legacy-peer-deps para evitar problemas de dependencias
           npm run build
 
-      - - name: 4. Subir archivos a HostGator vía FTP
+      - name: 4. Subir archivos a HostGator vía FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.FTP_SERVER }}

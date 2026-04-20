@@ -214,7 +214,7 @@ export const RegisterHome = () => {
                                 PRECIO POR MES
                             </span>
                             <span className="text-2xl md:text-4xl font-[1000] text-[#00C1A3] italic uppercase tracking-tighter leading-none">
-                                DESDE $199 MXNn
+                                DESDE $199 MXN
                             </span>
                         </div>
 
