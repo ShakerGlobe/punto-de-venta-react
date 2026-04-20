@@ -23,12 +23,11 @@ jobs:
           npm install --legacy-peer-deps # Agrega --legacy-peer-deps para evitar problemas de dependencias
           npm run build
 
-      - name: 4. Subir archivos a HostGator vía FTP
+      - - name: 4. Subir archivos a HostGator vía FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./dist/ 
-          server-dir: /public_html/nedimipos/ # Ajusta esta ruta según tu configuración en HostGator
-          git-ftp-args: --insecure # Agrega esta línea para evitar problemas con certificados SSL en algunos servidores FTP 
+          server-dir: / # <-- ESTE ES EL CAMBIO CLAVE
