@@ -11,12 +11,12 @@ jobs:
 
     steps:
       - name: 1. Descargar el código del repositorio
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4 # <-- Actualizado a v4
 
       - name: 2. Configurar el entorno de Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4 # <-- Actualizado a v4
         with:
-          node-version: 18
+          node-version: 20 # <-- Actualizado para evitar advertencias de GitHub
 
       - name: 3. Instalar dependencias y Compilar Proyecto
         run: |
@@ -29,7 +29,6 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          # IMPORTANTE: Aquí indicamos que suba la carpeta 'dist' que crea Vite
           local-dir: ./dist/ 
-          # Ruta en HostGator (ajusta si tu web está en una subcarpeta)
-          server-dir: /public_html/nedimipos
+          server-dir: /public_html/puntodeventa/ # Ajusta esta ruta según tu configuración en HostGator
+          git-ftp-args: --insecure # Agrega esta línea para evitar problemas con certificados SSL en algunos servidores FTP 
