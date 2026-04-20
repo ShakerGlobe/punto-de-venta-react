@@ -23,7 +23,7 @@ export const Navbar = ({ onOpenModal }: NavbarProps) => {
         { name: 'Tecnología', path: '/tecnologia' },
         { name: 'Demo', path: '/demo' },
         { name: 'Planes', path: '/Planes' },
-        { name: 'FAQq', path: '/preguntas' },
+        { name: 'FAQ', path: '/preguntas' },
         
     ];
 
