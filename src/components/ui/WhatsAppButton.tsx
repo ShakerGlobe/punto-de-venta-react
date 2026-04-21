@@ -8,7 +8,7 @@ export const WhatsAppButton = () => {
 
     // Número y mensaje actualizados
     const phoneNumber = "525534618549";
-    const message = "Hola, quiero probar el sistema para mi tienda";
+    const message = "Hola, quiero mi prueba gratis";
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
     // Mostrar el tooltip después de 6 segundos

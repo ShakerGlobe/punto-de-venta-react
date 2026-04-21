@@ -17,7 +17,7 @@ export const BusinessSurvivalMeter = () => {
     const [isModern, setIsModern] = useState(false);
 
     return (
-        <section className="relative py-10 bg-white overflow-hidden transition-colors duration-700">
+        <section className="relative py-5 bg-white overflow-hidden transition-colors duration-700">
             
             {/* --- DESTELLOS VERDES REFORZADOS (Ahora mucho más visibles) --- */}
             <div className="absolute inset-0 pointer-events-none">

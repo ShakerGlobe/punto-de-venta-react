@@ -6,7 +6,7 @@ import { Package, ShoppingCart, Sparkles } from 'lucide-react';
 const HeroHome: React.FC = () => {
   return (
     // Fondo blanco puro
-    <section className="relative overflow-hidden bg-white pt-20 pb-28 md:pt-32 md:pb-40">
+    <section className="relative overflow-hidden bg-white pt-20 pb-14 md:pt-32 md:pb-40">
       
       {/* --- DESTELLOS VERDES (Visibilidad corregida) --- */}
       <div className="absolute top-[-5%] right-[-5%] w-[400px] h-[400px] md:w-[700px] md:h-[700px] pointer-events-none z-0">

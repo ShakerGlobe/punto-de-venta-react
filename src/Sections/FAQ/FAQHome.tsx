@@ -40,7 +40,7 @@ export const FAQHome = () => {
 
     // Configuración de WhatsApp
     const WHATSAPP_NUMBER = "525534618549";
-    const WHATSAPP_MESSAGE = encodeURIComponent("Hola, quiero probar el sistema para mi tienda");
+    const WHATSAPP_MESSAGE = encodeURIComponent("Hola, quiero mi prueba gratis");
     const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`;
 
     return (

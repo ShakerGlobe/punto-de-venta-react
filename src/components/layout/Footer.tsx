@@ -117,7 +117,7 @@ export const Footer = () => {
                             </li>
                             <li>
                                 <a 
-                                    href="https://wa.me/525534618549?text=Hola,%20quiero%20probar%20el%20sistema%20para%20mi%20tienda" 
+                                    href="https://wa.me/525534618549?text=Hola,%20quiero%20mi%20prueba%20gratis" 
                                     target="_blank" 
                                     rel="noopener noreferrer" 
                                     className="flex items-center gap-3 p-3 mt-1 rounded-2xl bg-[#25D366] text-white hover:bg-[#1EBE5C] hover:shadow-md transition-all active:scale-[0.98] group"
