@@ -97,7 +97,7 @@ const HeroHome: React.FC = () => {
               <div className="aspect-[4/3] bg-slate-100 rounded-[2rem] shadow-inner border-[12px] border-white overflow-hidden relative transform lg:rotate-[-2deg] transition-transform duration-500 hover:rotate-0 shadow-xl">
                 <div className="absolute inset-0 bg-gradient-to-tr from-blue-600/10 to-transparent z-10"></div>
                 <img 
-                  src="/images/NEDIMI POS-02.png" 
+                  src="/images/nedimi-pos-01.png" 
                   alt="Terminal Punto de Venta Moderna" 
                   className="w-full h-full object-cover grayscale-[15%] group-hover:grayscale-0 transition-all duration-500 scale-105"
                 />
