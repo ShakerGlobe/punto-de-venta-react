@@ -44,7 +44,7 @@ export const FAQHome = () => {
     const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`;
 
     return (
-        <section id="faq" className="py-20 md:py-32 bg-white relative overflow-hidden scroll-mt-20">
+        <section id="faq" className="py-10 md:py-16 bg-white relative overflow-hidden scroll-mt-20">
             
             {/* --- DESTELLOS VERDES REFORZADOS (Más visibles) --- */}
             <div className="absolute inset-0 pointer-events-none z-0">

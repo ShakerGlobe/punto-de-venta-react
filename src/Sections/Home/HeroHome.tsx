@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Package, ShoppingCart, CheckCircle2 } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Package, ShoppingCart, Sparkles } from 'lucide-react';
 
 const HeroHome: React.FC = () => {
   return (
@@ -27,14 +28,25 @@ const HeroHome: React.FC = () => {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00C1A3] opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00C1A3]"></span>
               </span>
-              ✨ !Vende más fácil y rápido¡
+              <Sparkles size={16} className="mr-2 fill-current" /> !Vende más fácil y rápido¡
             </div>
             
-            <h1 className="text-5xl md:text-6xl xl:text-7xl font-extrabold text-slate-950 leading-[1.1] tracking-tighter mb-8">
-              Control total de tu tienda, <span className="text-[#00C1A3]">desde tu celular.</span>
-            </h1>
+            {/* EL NUEVO TÍTULO REQUERIDO */}
+            <div className="space-y-4 w-full">
+                <motion.h1
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.1 }}
+                    className="text-4xl md:text-6xl xl:text-7xl font-black leading-[1.1] italic uppercase tracking-tighter text-slate-950"
+                >
+                    PODER REAL PARA <br />
+                    <span className="text-[#00C1A3] underline decoration-emerald-100 decoration-8 underline-offset-4">
+                        TU NEGOCIO
+                    </span>
+                </motion.h1>
+            </div>
             
-            <p className="text-xl text-slate-700 mb-12 max-w-2xl leading-relaxed font-medium">
+            <p className="text-xl text-slate-700 mt-8 mb-12 max-w-2xl leading-relaxed font-medium">
               Controla tu inventario y registra ventas fácilmente: sin instalaciones ni comisiones. Ideal para abarrotes y pequeños negocios que buscan orden sin complicaciones.
             </p>
 
@@ -103,7 +115,7 @@ const HeroHome: React.FC = () => {
                 <img 
                   src="/images/nedimi-pos-01.png" 
                   alt="Terminal Punto de Venta Moderna" 
-                  className="w-full h-full object-cover grayscale-[15%] group-hover:grayscale-0 transition-all duration-500 scale-105"
+                  className="w-full h-full object-cover transition-all duration-500 scale-105"
                 />
               </div>
 

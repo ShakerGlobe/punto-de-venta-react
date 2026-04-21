@@ -4,7 +4,7 @@ import { Smartphone, Zap, XCircle, CheckCircle2, Barcode } from "lucide-react";
 
 export const ScannerFeature = () => {
     return (
-        <section className="relative py-24 bg-white overflow-hidden">
+        <section className="relative py-12 bg-white overflow-hidden">
             
             {/* --- DESTELLOS VERDES (Identidad Nedimi - Más visibles) --- */}
             <div className="absolute inset-0 pointer-events-none">

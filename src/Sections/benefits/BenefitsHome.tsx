@@ -42,7 +42,7 @@ export const BenefitsHome = () => {
     ];
 
     return (
-        <section id="benefits" className="py-20 md:py-32 bg-white relative flex flex-col items-center">
+        <section id="benefits" className="py-10 md:py-16 bg-white relative flex flex-col items-center">
             
             {/* --- DESTELLOS VERDES NEDIMI --- */}
             <div className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden">
