@@ -2,61 +2,74 @@ import { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 
-// --- NUEVO: Importamos la librería del Pixel ---
+// --- LIBRERÍAS DE TRACKING ---
 import ReactPixel from 'react-facebook-pixel';
 
 // --- PÁGINAS ---
-import Home from './Pages/Home';
-import BenefitsPage from './Pages/BenefitsPage';
-import FAQPage from './Pages/FAQPage';
-import TechnologicalPage from './Pages/TechnologicalPage';
-import RegisterPage from './Pages/RegisterPage';
-import DemoPage from './Pages/DemoPage';
-import PlanesPage from './Pages/PlanesPage';
-import Contratar from "./Pages/Contratar";
+import Home from './pages/Home';
+import BenefitsPage from './pages/BenefitsPage';
+import FAQPage from './pages/FAQPage';
+import TechnologicalPage from './pages/TechnologicalPage';
+import RegisterPage from './pages/RegisterPage';
+import DemoPage from './pages/DemoPage';
+import PlanesPage from './pages/PlanesPage';
+import Contratar from "./pages/Contratar";
 
-// --- COMPONENTES GLOBALES ---
-import { Navbar } from './components/Navbar';
-import { Footer } from './components/Footer';
-import { LoadingScreen } from './components/LoadingScreen';
-import { DemoModal } from './components/DemoModal';
-import { ScrollToTop } from './components/ScrollToTop';
-import { WhatsAppButton } from './components/WhatsAppButton';
-import PrivacyNotice from './components/PrivacyNotice';
+// --- COMPONENTES ARQUITECTURA NUEVA ---
+// Layout
+import { Navbar } from './components/layout/Navbar';
+import { Footer } from './components/layout/Footer';
+
+// UI
+import { LoadingScreen } from './components/ui/LoadingScreen';
+import { DemoModal } from './components/ui/DemoModal';
+import { WhatsAppButton } from './components/ui/WhatsAppButton';
+import PrivacyNotice from './components/ui/PrivacyNotice'; // Asumiendo que va aquí
+
+// Utils
+import { ScrollToTop } from './components/utils/ScrollToTop';
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const location = useLocation();
 
-  // 1. Hook original de tu Loading Screen
+  // --- 1. Pantalla de Carga ---
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 3500);
     return () => clearTimeout(timer);
   }, []);
 
-  // --- NUEVO: 2. Hook para Inicializar el Pixel (Solo se ejecuta 1 vez al cargar la web) ---
+  // --- 2. Inicializar Facebook Pixel de Forma Segura ---
   useEffect(() => {
-    const options = {
-      autoConfig: true, 
-      debug: false, 
-    };
-    // Inicializamos con tu ID de Facebook
-    ReactPixel.init('3255045287990104', undefined, options);
+    try {
+      ReactPixel.init('3255045287990104', undefined, {
+        autoConfig: true,
+        debug: false, // Cambiar a true solo en desarrollo si necesitas ver los eventos
+      });
+    } catch (error) {
+      console.warn("Facebook Pixel fue bloqueado por el navegador o un AdBlocker.", error);
+    }
   }, []);
 
-  // --- NUEVO: 3. Hook para Rastrear las vistas de página (Se ejecuta cada que cambia la URL) ---
+  // --- 3. Rastrear vistas de página ---
   useEffect(() => {
-    // Esto avisará a Facebook cada vez que el usuario navegue a otra vista (ej. de / a /beneficios)
-    ReactPixel.pageView();
-  }, [location.pathname]); 
+    try {
+      ReactPixel.pageView();
+    } catch (error) {
+      // Silenciamos el error si el pixel está bloqueado
+    }
+  }, [location.pathname]);
 
+  // --- Funciones del Modal ---
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
   return (
-    <div className="min-h-screen bg-[#020617] text-white">
+    // Contenedor principal sin forzar fondos oscuros, heredando de index.css
+    <div className="min-h-screen flex flex-col w-full relative bg-slate-50 text-slate-900">
       <ScrollToTop />
+
       <AnimatePresence mode="wait">
         {isLoading ? (
           <LoadingScreen key="loading" />
@@ -66,11 +79,15 @@ const App = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.6, ease: "easeInOut" }}
-            className="min-h-screen flex flex-col relative w-full"
+            // Curva de aceleración Apple-Style (Rápida y suave)
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            className="flex flex-col flex-grow relative w-full"
           >
+            {/* NAVBAR GLOBAL */}
             <Navbar onOpenModal={openModal} />
-            <main className="flex-grow w-full relative z-10">
+
+            {/* CONTENEDOR DE RUTAS (MAIN) */}
+            <main className="flex-grow w-full relative z-10 flex flex-col">
               <AnimatePresence mode="wait">
                 <Routes location={location} key={location.pathname}>
                   <Route path="/" element={<Home onOpenModal={openModal} />} />
@@ -80,16 +97,18 @@ const App = () => {
                   <Route path="/privacidad" element={<PrivacyNotice />} />
                   <Route path="/register" element={<RegisterPage />} />
                   <Route path="/contratar" element={<Contratar />} />
-                  <Route path="/Planes" element={<PlanesPage />} />
-
-                  {/* RUTA DE LA DEMO AGREGADA */}
+                  <Route path="/planes" element={<PlanesPage />} />
                   <Route path="/demo" element={<DemoPage />} />
 
+                  {/* Redirección Catch-All */}
                   <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
               </AnimatePresence>
             </main>
-            <Footer onOpenModal={openModal} />
+
+            {/* FOOTER Y WIDGETS GLOBALES */}
+            {/* Se quitó 'onOpenModal' del Footer porque ya lo eliminamos de su estructura interna */}
+            <Footer />
             <WhatsAppButton />
             <DemoModal isOpen={isModalOpen} onClose={closeModal} />
           </motion.div>

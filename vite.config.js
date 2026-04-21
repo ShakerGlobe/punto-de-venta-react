@@ -1,8 +1,8 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite' // <--- Plugin de v4
 
-// https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
-  base: './', // <--- ESTA LÍNEA ES LA QUE ARREGLA LA PANTALLA EN BLANCO
+  plugins: [react(), tailwindcss()],
+  base: './',
 })

@@ -1,10 +1,10 @@
 import { DeviceShowcaseHome } from '../Sections/technological/DeviceShowcaseHome';
 import { ReportsHome } from '../Sections/technological/ReportsHome';
 import { TechnologyHero } from '../Sections/technological/TechnologyHero';
-import { RegisterCTA } from '../components/RegisterCTA';
-import { PageTransition } from '../components/PageTransition';
+import { RegisterCTA } from '../components/common/RegisterCTA';
+import { PageTransition } from '../components/layout/PageTransition';
 // 1. Importas el componente SEO
-import { SEO } from '../components/SEO';
+import { SEO } from '../components/utils/SEO';
 import { TechStackHome } from '../Sections/technological/TechStackHome';
 
 const TechnologicalPage = () => {
@@ -20,7 +20,7 @@ const TechnologicalPage = () => {
         <TechnologyHero />
         <DeviceShowcaseHome />
         <ReportsHome />
-        <TechStackHome/>
+        <TechStackHome />
       </div>
     </PageTransition>
   );

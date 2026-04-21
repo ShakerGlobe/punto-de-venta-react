@@ -1,11 +1,11 @@
 import { BusinessMarquee } from '../Sections/Home/BusinessMarquee';
 import { InfrastructureHome } from '../Sections/Home/InfraestructureHome';
 import { DashboardPreview } from '../Sections/Home/DashboardPreview';
-import { RegisterCTA } from '../components/RegisterCTA';
-import { PageTransition } from '../components/PageTransition';
+import { RegisterCTA } from '../components/common/RegisterCTA';
+import { PageTransition } from '../components/layout/PageTransition';
 import { WhyChoosePOS } from '../Sections/Home/WhyChoosePOS';
 import { DeviceCompatibility } from '../Sections/Home/DeviceCompatibility';
-import { SEO } from '../components/SEO'; // Importado OK
+import { SEO } from '../components/utils/SEO'; // Importado OK
 import HeroHome from '../Sections/Home/HeroHome';
 import { BusinessSurvivalMeter } from '../Sections/Home/BusinessSurvivalMeter'
 
@@ -19,9 +19,9 @@ const Home = ({ onOpenModal }: { onOpenModal: () => void }) => {
             />
 
             <main className="w-full">
-                <HeroHome/>
+                <HeroHome />
 
-                <BusinessSurvivalMeter/>
+                <BusinessSurvivalMeter />
 
                 {/*<BusinessMarquee />*/}
 

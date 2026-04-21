@@ -1,23 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
+import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
-import { BrowserRouter } from 'react-router-dom'; // El Router ahora vive aquí
+
+import App from './App';
 import './index.css';
 
 const rootElement = document.getElementById('root');
 
 if (!rootElement) {
-  throw new Error("No se encontró el elemento root. Revisa tu index.html");
+  throw new Error("❌ Error Crítico: No se encontró el contenedor '#root' en el archivo index.html.");
 }
 
-// En TypeScript, le garantizamos a React que rootElement es un HTMLElement válido
-ReactDOM.createRoot(rootElement as HTMLElement).render(
+// Renderizado de la aplicación
+ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
+    {/* HelmetProvider gestiona las etiquetas <head> dinámicas para el SEO */}
     <HelmetProvider>
+      {/* BrowserRouter habilita el enrutamiento sin recargar la página */}
       <BrowserRouter>
         <App />
       </BrowserRouter>
     </HelmetProvider>
-  </React.StrictMode>,
+  </React.StrictMode>
 );

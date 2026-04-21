@@ -1,6 +1,6 @@
 // 1. Importas el componente SEO 
-import { PageTransition } from '../components/PageTransition';
-import { SEO } from '../components/SEO';
+import { PageTransition } from '../components/layout/PageTransition';
+import { SEO } from '../components/utils/SEO';
 import PricingHome from '../Sections/Home/PricingHome';
 
 const PlanesPage = () => {

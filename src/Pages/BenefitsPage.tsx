@@ -1,9 +1,9 @@
 import { BenefitsHero } from '../Sections/benefits/BenefitsHero';
 import { BenefitsHome } from '../Sections/benefits/BenefitsHome';
-import { RegisterCTA } from '../components/RegisterCTA';
-import { PageTransition } from '../components/PageTransition';
+import { RegisterCTA } from '../components/common/RegisterCTA';
+import { PageTransition } from '../components/layout/PageTransition';
 // 1. Importas el componente SEO 
-import { SEO } from '../components/SEO';
+import { SEO } from '../components/utils/SEO';
 import { ScannerFeature } from '../Sections/benefits/ScannerFeature';
 
 const BenefitsPage = () => {
@@ -17,9 +17,9 @@ const BenefitsPage = () => {
 
       <div className="pt-24 pb-12">
         <BenefitsHero />
-        <ScannerFeature/>
+        <ScannerFeature />
         <BenefitsHome />
-        <RegisterCTA/>
+        <RegisterCTA />
       </div>
     </PageTransition>
   );

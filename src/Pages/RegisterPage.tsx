@@ -1,6 +1,6 @@
 import { RegisterHome } from "../Sections/register/RegisterHome";
-import { PageTransition } from "../components/PageTransition";
-import { SEO } from "../components/SEO"; // 1. Importar
+import { PageTransition } from "../components/layout/PageTransition";
+import { SEO } from "../components/utils/SEO"; // 1. Importar
 
 const RegisterPage = () => {
   return (

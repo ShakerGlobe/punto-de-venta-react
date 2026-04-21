@@ -1,8 +1,8 @@
 import { FAQHero } from '../Sections/FAQ/FAQHero';
 import { FAQHome } from '../Sections/FAQ/FAQHome';
-import { RegisterCTA } from '../components/RegisterCTA';
-import { PageTransition } from '../components/PageTransition';
-import { SEO } from '../components/SEO'; // <--- Importado OK
+import { RegisterCTA } from '../components/common/RegisterCTA';
+import { PageTransition } from '../components/layout/PageTransition';
+import { SEO } from '../components/utils/SEO'; // <--- Importado OK
 
 const TechnologicalPage = () => {
   return (
