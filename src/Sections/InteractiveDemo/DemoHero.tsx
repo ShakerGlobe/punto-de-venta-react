@@ -1,11 +1,11 @@
-import React, { useState } from "react"; // Añadimos useState
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
     Home as HomeIcon, ShoppingCart, Package, Users,
-    BarChart3, ChevronRight, LogOut, Cpu, MousePointer2, ChevronDown
+    BarChart3, ChevronRight, LogOut, Sparkles, ChevronDown
 } from "lucide-react";
 
-export const DemoHero = ({ children, activePage, setActivePage, isDarkMode }) => {
+export const DemoHero = ({ children, activePage, setActivePage }) => {
     // ESTADOS PARA DESPLEGAR SUBMENÚS
     const [openMenus, setOpenMenus] = useState({
         catalogo: false,
@@ -16,7 +16,7 @@ export const DemoHero = ({ children, activePage, setActivePage, isDarkMode }) =>
         setOpenMenus(prev => ({ ...prev, [menu]: !prev[menu] }));
     };
 
-    // Estructura de menú con subsecciones
+    // Estructura de menú simplificada
     const menuItems = [
         { id: 'inicio', name: 'Inicio', icon: <HomeIcon size={18} /> },
         { id: 'ventas', name: 'Ventas', icon: <Package size={18} /> },
@@ -46,49 +46,92 @@ export const DemoHero = ({ children, activePage, setActivePage, isDarkMode }) =>
         },
     ];
 
-    const containerStyle = isDarkMode
-        ? "bg-[#050335]/40 border-white/10 shadow-[0_0_50px_-12px_rgba(0,193,163,0.15)]"
-        : "bg-white border-slate-200 shadow-2xl";
-
-    const sidebarStyle = isDarkMode
-        ? "bg-[#050335]/60 border-white/5"
-        : "bg-slate-50 border-slate-200";
-
     return (
-        <section className="relative min-h-screen bg-[#020617] overflow-hidden flex flex-col items-center">
-            {/* ... Fondo Vivo (Se mantiene igual) ... */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none">
-                <div className="absolute top-24 left-1/4 w-[500px] h-[500px] bg-[#00C1A3]/10 rounded-full blur-[120px] animate-pulse" />
-                <div className="absolute bottom-24 right-1/4 w-[500px] h-[500px] bg-indigo-500/10 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '2s' }} />
+        <section className="relative min-h-screen bg-white overflow-hidden flex flex-col items-center">
+            
+            {/* 1. FONDO LIMPIO CON DESTELLOS AZULES */}
+            <div className="absolute inset-0 z-0 pointer-events-none">
+                <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(#e2e8f0_1.5px,transparent_1.5px)] [background-size:60px_60px] opacity-40" />
+                <div className="absolute top-24 left-1/4 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[120px]" />
+                <div className="absolute bottom-24 right-1/4 w-[500px] h-[500px] bg-blue-400/10 rounded-full blur-[120px]" />
             </div>
 
-            {/* BLOQUE 1: HERO (Se mantiene igual) */}
-            <motion.div className="min-h-[100vh] w-full flex flex-col items-center justify-center text-center relative z-10 px-4">
-                {/* ... Contenido del Hero ... */}
-                <motion.div className="flex items-center gap-3 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-8 shadow-xl">
-                    <div className="w-6 h-6 rounded-full bg-[#00C1A3] flex items-center justify-center">
-                        <Cpu size={12} className="text-[#050335]" />
+            {/* BLOQUE 1: HERO (Dos columnas para texto e imagen) */}
+            <div className="max-w-7xl mx-auto w-full relative z-10 px-6 pt-32 pb-20">
+                <div className="flex flex-col lg:flex-row items-center gap-12">
+                    
+                    {/* COLUMNA IZQUIERDA: TEXTO */}
+                    <div className="w-full lg:w-3/5 text-center lg:text-left">
+                        <motion.div 
+                            initial={{ opacity: 0, y: -20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="inline-flex items-center gap-2 px-5 py-2 bg-blue-50 border border-blue-100 rounded-full mb-8 shadow-sm"
+                        >
+                            <Sparkles size={14} className="text-blue-600 fill-blue-600" />
+                            <span className="text-[10px] md:text-xs font-black uppercase tracking-[0.3em] text-blue-600">
+                                Prueba el futuro de tu tienda
+                            </span>
+                        </motion.div>
+
+                        <motion.h1 
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.1 }}
+                            className="text-5xl md:text-7xl xl:text-8xl font-[1000] italic uppercase text-slate-950 tracking-tighter leading-[0.85] mb-8"
+                        >
+                            DEMO <br />
+                            <span className="text-blue-600 underline decoration-blue-100 decoration-8 underline-offset-8">
+                                INTERACTIVA
+                            </span>
+                        </motion.h1>
+
+                        <motion.p 
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.2 }}
+                            className="text-slate-500 text-lg md:text-xl font-medium max-w-xl mx-auto lg:mx-0 leading-relaxed"
+                        >
+                            No te lo imagines, úsalo. Explora cómo Nedimi POS toma el control de tu negocio de forma fácil, rápida y sin complicaciones.
+                        </motion.p>
                     </div>
-                    <span className="text-[#00C1A3] text-[10px] font-black tracking-[0.3em] uppercase">Powered by Nedimi Engine</span>
-                </motion.div>
-                <motion.h2 className="text-7xl md:text-9xl font-black italic text-white uppercase tracking-tighter leading-[0.85]">
-                    Demo <br /> <span className="text-[#00C1A3]">Interactiva</span>
-                </motion.h2>
-                <motion.p className="text-slate-500 text-sm md:text-base mt-10 tracking-[0.4em] uppercase font-bold max-w-2xl">
-                    Toma el control total de tu negocio
-                </motion.p>
-            </motion.div>
 
-            {/* BLOQUE 2: FRAME DEL SOFTWARE */}
-            <div id="software-demo" className="container mx-auto px-4 pb-40 max-w-[95%] lg:max-w-[1440px] relative z-10 pt-20">
-                <motion.div className={`relative flex flex-col md:flex-row h-[850px] backdrop-blur-3xl border rounded-[3.5rem] overflow-hidden ${containerStyle}`}>
+                    {/* COLUMNA DERECHA: ESPACIO PARA TU IMAGEN */}
+                    <div className="w-full lg:w-2/5 flex justify-center items-center relative">
+                        <motion.div 
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ delay: 0.3 }}
+                            className="relative w-full max-w-[450px] aspect-square flex items-center justify-center"
+                        >
+                            {/* AQUÍ PONES TU IMAGEN */}
+                            <img 
+                                src="/images/punto-de-venta-1.jpeg" 
+                                alt="Demo Visual" 
+                                className="w-full h-full object-contain drop-shadow-2xl"
+                            />
+                            
+                            {/* Destello decorativo detrás de la imagen */}
+                            <div className="absolute inset-0 bg-blue-600/5 blur-3xl -z-10 rounded-full" />
+                        </motion.div>
+                    </div>
+                </div>
+            </div>
 
-                    {/* SIDEBAR ACTUALIZADO */}
-                    <aside className={`w-full md:w-[320px] border-r p-8 flex flex-col justify-between transition-all ${sidebarStyle}`}>
+            {/* BLOQUE 2: FRAME DEL SOFTWARE (MÁS OSCURO PARA CONTRASTE) */}
+            <div id="software-demo" className="container mx-auto px-4 pb-40 max-w-[95%] lg:max-w-[1440px] relative z-10">
+                <motion.div 
+                    initial={{ opacity: 0, y: 40 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="relative flex flex-col md:flex-row h-[850px] bg-slate-950 border-[12px] border-slate-900 rounded-[3.5rem] overflow-hidden shadow-[0_60px_100px_-20px_rgba(0,0,0,0.5)]"
+                >
+                    {/* SIDEBAR OSCURO PREMIUM */}
+                    <aside className="w-full md:w-[320px] bg-slate-900 border-r border-white/5 p-8 flex flex-col justify-between transition-all">
                         <div className="overflow-y-auto custom-scrollbar pr-2">
-                            <div className="flex items-center gap-4 text-[#00C1A3] font-black italic text-3xl mb-12 tracking-tighter px-2">
-                                <div className="w-10 h-10 rounded-xl bg-[#00C1A3] flex items-center justify-center text-[#050335] not-italic shadow-[0_0_15px_rgba(0,193,163,0.3)]">N</div>
-                                <span className="uppercase leading-none text-2xl">NEDIMI<br /><span className="text-[9px] tracking-[0.5em] text-white/40 not-italic">SOFTWARE</span></span>
+                            {/* Logo Nedimi en Sidebar */}
+                            <div className="flex items-center gap-4 text-white font-[1000] italic text-3xl mb-12 tracking-tighter px-2">
+                                <div className="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white not-italic shadow-[0_0_20px_rgba(37,99,235,0.4)]">N</div>
+                                <span className="uppercase leading-none text-2xl">NEDIMI<br /><span className="text-[9px] tracking-[0.5em] text-blue-400 not-italic">SOFTWARE</span></span>
                             </div>
 
                             <nav className="space-y-2">
@@ -97,13 +140,13 @@ export const DemoHero = ({ children, activePage, setActivePage, isDarkMode }) =>
                                         <button
                                             onClick={() => item.hasSub ? toggleSubMenu(item.id) : setActivePage(item.id)}
                                             className={`w-full flex items-center justify-between px-5 py-4 rounded-2xl text-sm transition-all duration-300 ${activePage.startsWith(item.id)
-                                                ? 'bg-[#00C1A3] text-[#050335] font-black'
+                                                ? 'bg-blue-600 text-white font-black shadow-lg shadow-blue-600/20'
                                                 : 'text-slate-400 hover:bg-white/5'
                                                 }`}
                                         >
                                             <div className="flex items-center gap-4">
-                                                {item.icon}
-                                                <span className="tracking-wide">{item.name}</span>
+                                                {React.cloneElement(item.icon, { className: activePage.startsWith(item.id) ? "text-white" : "text-blue-500/60" })}
+                                                <span className="tracking-wide uppercase italic text-[13px]">{item.name}</span>
                                             </div>
                                             {item.hasSub ? (
                                                 <ChevronDown size={16} className={`transition-transform duration-300 ${openMenus[item.id] ? 'rotate-180' : ''}`} />
@@ -112,20 +155,20 @@ export const DemoHero = ({ children, activePage, setActivePage, isDarkMode }) =>
                                             )}
                                         </button>
 
-                                        {/* RENDERIZADO DE SUB-ITEMS */}
+                                        {/* SUB-ITEMS */}
                                         <AnimatePresence>
                                             {item.hasSub && openMenus[item.id] && (
                                                 <motion.div
                                                     initial={{ height: 0, opacity: 0 }}
                                                     animate={{ height: 'auto', opacity: 1 }}
                                                     exit={{ height: 0, opacity: 0 }}
-                                                    className="overflow-hidden ml-11 flex flex-col border-l border-white/10 mt-1"
+                                                    className="overflow-hidden ml-11 flex flex-col border-l border-white/5 mt-1"
                                                 >
                                                     {item.subItems.map(sub => (
                                                         <button
                                                             key={sub.id}
                                                             onClick={() => setActivePage(sub.id)}
-                                                            className={`py-3 px-4 text-xs text-left transition-colors hover:text-[#00C1A3] ${activePage === sub.id ? 'text-[#00C1A3] font-bold' : 'text-slate-500'
+                                                            className={`py-3 px-4 text-[11px] font-bold uppercase tracking-widest text-left transition-colors hover:text-blue-400 ${activePage === sub.id ? 'text-blue-400' : 'text-slate-500'
                                                                 }`}
                                                         >
                                                             • {sub.name}
@@ -139,16 +182,16 @@ export const DemoHero = ({ children, activePage, setActivePage, isDarkMode }) =>
                             </nav>
                         </div>
 
-                        <button className="w-full flex items-center gap-4 px-6 py-4 text-red-500/70 font-bold text-[10px] uppercase tracking-widest hover:text-red-500 hover:bg-red-500/10 rounded-2xl transition-all mt-6">
+                        <button className="w-full flex items-center gap-4 px-6 py-4 text-red-400/70 font-black text-[10px] uppercase tracking-widest hover:text-red-400 hover:bg-red-400/10 rounded-2xl transition-all mt-6">
                             <LogOut size={16} /> Finalizar Sesión
                         </button>
                     </aside>
 
-                    {/* CONTENIDO PRINCIPAL (Se mantiene igual) */}
-                    <main className="flex-1 overflow-y-auto p-8 md:p-14 custom-scrollbar">
+                    {/* CONTENIDO PRINCIPAL (Lienzo blanco para la demo) */}
+                    <main className="flex-1 overflow-y-auto bg-white p-8 md:p-14 custom-scrollbar">
                         <AnimatePresence mode="wait">
                             <motion.div
-                                key={activePage + isDarkMode}
+                                key={activePage}
                                 initial={{ opacity: 0, y: 10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -10 }}
