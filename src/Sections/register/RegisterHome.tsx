@@ -28,12 +28,11 @@ export const RegisterHome = () => {
 
     const [showPassword, setShowPassword] = useState(false);
 
-    // --- ESTADOS DEL MODAL DE CONFIRMACIÓN ---
+    // --- ESTADOS DEL MODAL ---
     const [showModal, setShowModal] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isCompleted, setIsCompleted] = useState(false);
 
-    // --- EFECTOS DE UX ---
     useEffect(() => {
         const checkMobile = () => setIsMobile(window.innerWidth < 1024);
         checkMobile();
@@ -41,21 +40,8 @@ export const RegisterHome = () => {
         return () => window.removeEventListener('resize', checkMobile);
     }, []);
 
-    useEffect(() => {
-        if (showModal) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = 'unset';
-        }
-        return () => { document.body.style.overflow = 'unset'; };
-    }, [showModal]);
-
-    // --- 2. MANEJADORES DE EVENTOS Y VALIDACIÓN ---
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        });
+        setFormData({ ...formData, [e.target.name]: e.target.value });
         if (status.type === 'error' || status.type === 'warning') {
             setStatus({ loading: false, message: '', type: '' });
         }
@@ -63,74 +49,36 @@ export const RegisterHome = () => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-
         if (!formData.nombre.trim() || !formData.empresa.trim() || !formData.email.trim() || !formData.password.trim()) {
-            setStatus({ loading: false, message: 'Por favor, completa todos los campos.', type: 'warning' });
+            setStatus({ loading: false, message: 'Completa todos los campos.', type: 'warning' });
             return;
         }
-
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(formData.email)) {
-            setStatus({ loading: false, message: 'Ingresa un correo electrónico válido.', type: 'warning' });
-            return;
-        }
-
-        if (formData.password.length < 6) {
-            setStatus({ loading: false, message: 'La contraseña debe tener al menos 6 caracteres.', type: 'warning' });
-            return;
-        }
-
-        setStatus({ loading: false, message: '', type: '' });
         setShowModal(true);
     };
 
-    // --- 3. CONEXIÓN A LA BASE DE DATOS ---
     const handleAccept = async () => {
         setIsSubmitting(true);
         setStatus({ loading: true, message: '', type: '' });
-
         try {
             const response = await fetch('/api/registro.php', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
             });
-
-            if (!response.ok) {
-                throw new Error(`Error del servidor: ${response.status}`);
-            }
-
             const data = await response.json();
-
             if (data.success) {
                 setIsCompleted(true);
                 setFormData({ nombre: '', empresa: '', email: '', password: '' });
-
-                // Ya no redirigimos al sistema. Cerramos el modal tras 4 segundos.
-                setTimeout(() => {
-                    setShowModal(false);
-                    setIsCompleted(false);
-                }, 4000);
+                setTimeout(() => setShowModal(false), 4000);
             } else {
                 setShowModal(false);
-                setStatus({ loading: false, message: data.error || 'No se pudo crear la cuenta.', type: 'error' });
+                setStatus({ loading: false, message: data.error || 'Error al crear cuenta.', type: 'error' });
             }
         } catch (error) {
-            console.error('Error en el registro:', error);
             setShowModal(false);
-            setStatus({ loading: false, message: 'Hubo un problema de conexión. Inténtalo de nuevo.', type: 'error' });
+            setStatus({ loading: false, message: 'Error de conexión.', type: 'error' });
         } finally {
             setIsSubmitting(false);
-        }
-    };
-
-    const handleCancel = () => {
-        if (!isSubmitting) {
-            setShowModal(false);
-            setIsCompleted(false);
         }
     };
 
@@ -143,293 +91,138 @@ export const RegisterHome = () => {
     const handleMouseMove = (e: React.MouseEvent) => {
         if (!containerRef.current || isMobile) return;
         const rect = containerRef.current.getBoundingClientRect();
-        mouseX.set((e.clientX - rect.left - rect.width / 2) / 20);
-        mouseY.set((e.clientY - rect.top - rect.height / 2) / 20);
+        mouseX.set((e.clientX - rect.left - rect.width / 2) / 25);
+        mouseY.set((e.clientY - rect.top - rect.height / 2) / 25);
     };
 
     return (
         <section
             ref={containerRef}
             onMouseMove={handleMouseMove}
-            className="relative min-h-[90vh] lg:min-h-screen flex items-center justify-center overflow-hidden bg-[#020617] px-6 py-16 md:py-24"
+            className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white px-6 py-20"
         >
-            {/* FONDO ANIMADO */}
+            {/* FONDO LIMPIO CON DESTELLOS AZULES */}
             <div className="absolute inset-0 z-0 pointer-events-none">
-                <div className="absolute inset-0 bg-[radial-gradient(#ffffff05_1px,transparent_1px)] [background-size:80px_80px] opacity-40 [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,#000_40%,transparent_100%)]" />
-
-                {!isMobile && (
-                    <motion.div style={{ x: springX, y: springY }} className="absolute inset-0">
-                        {[...Array(8)].map((_, i) => (
-                            <DataLine key={i} index={i} total={8} />
-                        ))}
-                    </motion.div>
-                )}
-
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] lg:w-[600px] h-[400px] lg:h-[600px] bg-gradient-to-tr from-[#00C1A3]/10 to-emerald-500/5 blur-[120px] lg:blur-[150px] rounded-full" />
+                <div className="absolute inset-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:60px_60px] opacity-40" />
+                <motion.div style={{ x: springX, y: springY }} className="absolute inset-0">
+                    {[...Array(6)].map((_, i) => (
+                        <DataLine key={i} index={i} total={6} />
+                    ))}
+                </motion.div>
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] lg:w-[900px] h-[600px] bg-blue-600/5 rounded-full blur-[140px]" />
             </div>
 
-            <div className="max-w-6xl w-full grid lg:grid-cols-2 gap-12 lg:gap-16 items-center relative z-10">
-                {/* --- LADO IZQUIERDO: TEXTOS --- */}
-                <div className="flex flex-col gap-6 lg:gap-8 text-center lg:text-left items-center lg:items-start">
-                    <motion.div
-                        initial={{ opacity: 0, x: -30 }}
-                        animate={{ opacity: 1, x: 0 }} // CORRECCIÓN: animate en lugar de whileInView
-                        className="space-y-4 lg:space-y-6"
-                    >
-                        <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#00C1A3]/10 border border-[#00C1A3]/20 rounded-full shadow-[0_0_15px_rgba(0,193,163,0.15)]">
-                            <Sparkles size={14} className="text-[#00C1A3]" />
-                            <span className="text-[10px] font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-[#00C1A3]">COMIENZA TU PRUEBA GRATIS</span>
+            <div className="max-w-7xl w-full grid lg:grid-cols-2 gap-16 items-center relative z-10">
+                
+                {/* --- LADO IZQUIERDO: CONTENIDO --- */}
+                <div className="flex flex-col gap-10 text-center lg:text-left items-center lg:items-start">
+                    <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} className="space-y-6">
+                        <div className="inline-flex items-center gap-2 px-5 py-2 bg-blue-50 border border-blue-100 rounded-full shadow-sm">
+                            <Sparkles size={14} className="text-blue-600" />
+                            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-600">Comienza tu prueba gratis</span>
                         </div>
 
-                        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[4rem] font-[1000] text-white italic uppercase tracking-tighter leading-[0.9] md:leading-[0.85]">
-                            PRUÉBALO GRATIS Y TOMA EL CONTROL <br />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00C1A3] to-emerald-400 drop-shadow-sm">
-                                DE TU TIENDA
-                            </span>
+                        <h1 className="text-5xl md:text-7xl font-[1000] text-slate-950 italic uppercase tracking-tighter leading-[0.85]">
+                            PRUÉBALO GRATIS Y <br />
+                            <span className="text-blue-600 underline decoration-blue-100 decoration-8 underline-offset-8">TOMA EL CONTROL</span>
                         </h1>
-                        <p className="text-slate-400 text-base sm:text-lg md:text-xl font-light max-w-md mx-auto lg:mx-0">
-                            Empieza hoy sin compromiso. Configura tu tienda en minutos y descubre cómo puedes controlar tus ventas, inventario y dinero <span className="text-white font-medium">desde tu celular.</span>
+                        <p className="text-slate-500 text-lg md:text-xl font-medium max-w-md">
+                            Descubre cómo puedes controlar tus ventas e inventario <span className="text-slate-950 font-bold">desde tu celular</span>. Sin compromisos.
                         </p>
                     </motion.div>
 
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }} // CORRECCIÓN: animate en lugar de whileInView
-                        transition={{ delay: 0.2 }}
-                        className="flex flex-wrap justify-center lg:justify-start gap-10 lg:flex-col lg:gap-8"
-                    >
-                        {/* ITEM: PRUEBA GRATIS */}
-                        <div className="flex flex-col items-center lg:items-start group">
-                            <span className="text-[13px] font-black text-slate-500 uppercase tracking-[0.3em] mb-1 group-hover:text-[#00C1A3] transition-colors">
-                                PRUEBA GRATIS
-                            </span>
-                            <span className="text-2xl md:text-4xl font-[1000] text-[#00C1A3] italic uppercase tracking-tighter leading-none">
-                                15 DÍAS
-                            </span>
+                    {/* STATS DE CONFIANZA */}
+                    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }} className="grid grid-cols-2 gap-8">
+                        <div className="flex flex-col gap-1">
+                            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Prueba Gratis</span>
+                            <span className="text-3xl font-[1000] text-blue-600 italic uppercase">15 Días</span>
                         </div>
-
-                        {/* ITEM: PRECIO MES */}
-                        <div className="flex flex-col items-center lg:items-start group">
-                            <span className="text-[13px] font-black text-slate-500 uppercase tracking-[0.3em] mb-1 group-hover:text-[#00C1A3] transition-colors">
-                                PRECIO POR MES
-                            </span>
-                            <span className="text-2xl md:text-4xl font-[1000] text-[#00C1A3] italic uppercase tracking-tighter leading-none">
-                                DESDE $199 MXN
-                            </span>
-                        </div>
-
-                        {/* ITEM: PRECIO AÑO */}
-                        <div className="flex flex-col items-center lg:items-start group">
-                            <span className="text-[13px] font-black text-slate-500 uppercase tracking-[0.3em] mb-1 group-hover:text-[#00C1A3] transition-colors">
-                                PRECIO POR AÑO
-                            </span>
-                            <span className="text-2xl md:text-4xl font-[1000] text-[#00C1A3] italic uppercase tracking-tighter leading-none">
-                                DESDE $2,148 MXN
-                            </span>
-                        </div>
-
-                        {/* ITEM: SIN CONTRATOS */}
-                        <div className="flex flex-col items-center lg:items-start group">
-                            <span className="text-[13px] font-black text-slate-500 uppercase tracking-[0.3em] mb-1 group-hover:text-[#00C1A3] transition-colors">
-                                SIN CONTRATOS
-                            </span>
-                            <span className="text-2xl md:text-4xl font-[1000] text-[#00C1A3] italic uppercase tracking-tighter leading-none">
-                                CANCELA CUANDO QUIERAS
-                            </span>
+                        <div className="flex flex-col gap-1">
+                            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Inversión</span>
+                            <span className="text-3xl font-[1000] text-blue-600 italic uppercase">Desde $199</span>
                         </div>
                     </motion.div>
                 </div>
 
                 {/* --- LADO DERECHO: FORMULARIO --- */}
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }} // CORRECCIÓN: animate en lugar de whileInView
-                    transition={{ duration: 0.5, delay: 0.1 }}
-                    className="bg-slate-900/60 backdrop-blur-3xl border border-white/10 p-6 sm:p-8 md:p-12 rounded-[2rem] md:rounded-[3rem] shadow-[0_30px_60px_rgba(0,0,0,0.5)] relative overflow-hidden w-full max-w-xl mx-auto lg:max-w-none group"
-                >
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none rounded-[2rem] md:rounded-[3rem]" />
-
-                    <div className="relative z-10 space-y-6 md:space-y-8">
-                        <div className="text-center sm:text-left">
-                            <h2 className="text-2xl sm:text-3xl font-black text-white uppercase italic tracking-tighter">Crear Cuenta</h2>
-                            <p className="text-[#00C1A3] text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.2em] mt-1.5 italic">Protocolo de Despliegue v2.0</p>
-                        </div>
-
-                        <form className="space-y-4 md:space-y-5" onSubmit={handleSubmit}>
-                            <div className="grid sm:grid-cols-2 gap-4 md:gap-5">
-                                <InputField
-                                    icon={<User size={18} />}
-                                    label="Nombre"
-                                    name="nombre"
-                                    value={formData.nombre}
-                                    onChange={handleChange}
-                                    placeholder="Tu nombre"
-                                    required
-                                />
-                                <InputField
-                                    icon={<Building2 size={18} />}
-                                    label="Empresa"
-                                    name="empresa"
-                                    value={formData.empresa}
-                                    onChange={handleChange}
-                                    placeholder="Tu negocio"
-                                    required
-                                />
+                <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="relative">
+                    <div className="bg-white border border-slate-100 p-8 md:p-12 rounded-[3rem] shadow-[0_40px_100px_-20px_rgba(0,102,255,0.12)] relative overflow-hidden group">
+                        
+                        <div className="relative z-10 space-y-8">
+                            <div className="text-center lg:text-left">
+                                <h2 className="text-3xl font-black text-slate-950 uppercase italic tracking-tighter">Crea tu cuenta</h2>
+                                <p className="text-blue-600 text-[10px] font-bold uppercase tracking-[0.2em] mt-2">Activación instantánea</p>
                             </div>
-                            <InputField
-                                icon={<Mail size={18} />}
-                                label="Email Corporativo"
-                                name="email"
-                                type="email"
-                                value={formData.email}
-                                onChange={handleChange}
-                                placeholder="nombre@empresa.com"
-                                required
-                            />
 
-                            {/* CAMPO DE CONTRASEÑA CON EL TOGGLE */}
-                            <InputField
-                                icon={<Lock size={18} />}
-                                label="Contraseña (Mín. 6 caracteres)"
-                                name="password"
-                                type={showPassword ? "text" : "password"}
-                                value={formData.password}
-                                onChange={handleChange}
-                                placeholder="••••••••"
-                                required
-                                isPassword={true}
-                                showPassword={showPassword}
-                                onTogglePassword={() => setShowPassword(!showPassword)}
-                            />
-
-                            <div className="bg-amber-500/5 border-l-2 border-amber-500/40 p-3 md:p-4 space-y-1.5 md:space-y-2 rounded-r-xl">
-                                <div className="flex items-center gap-2">
-                                    <KeyRound size={14} className="text-amber-500" />
-                                    <span className="text-[9px] sm:text-[10px] font-black text-amber-500 uppercase tracking-widest italic">
-                                        Security Notice
-                                    </span>
+                            <form className="space-y-5" onSubmit={handleSubmit}>
+                                <div className="grid sm:grid-cols-2 gap-5">
+                                    <InputField icon={<User size={18} />} label="Nombre" name="nombre" value={formData.nombre} onChange={handleChange} placeholder="Tu nombre" required />
+                                    <InputField icon={<Building2 size={18} />} label="Nombre de tu Tienda" name="empresa" value={formData.empresa} onChange={handleChange} placeholder="Ej. Abarrotes Mary" required />
                                 </div>
-                                <p className="text-[10px] sm:text-[11px] text-slate-400 font-medium leading-relaxed uppercase italic">
-                                    La contraseña que definas será tu <span className="text-amber-200">llave de acceso única</span> para la terminal demo. <span className="text-white">Asegúrate de guardarla.</span>
-                                </p>
-                            </div>
+                                <InputField icon={<Mail size={18} />} label="Correo Electrónico" name="email" type="email" value={formData.email} onChange={handleChange} placeholder="ejemplo@gmail.com" required />
+                                <InputField icon={<Lock size={18} />} label="Contraseña" name="password" type={showPassword ? "text" : "password"} value={formData.password} onChange={handleChange} placeholder="••••••••" required isPassword showPassword={showPassword} onTogglePassword={() => setShowPassword(!showPassword)} />
 
-                            {/* --- MENSAJES DE ERROR VISUALES --- */}
-                            <AnimatePresence>
-                                {status.message && (status.type === 'error' || status.type === 'warning') && (
-                                    <motion.div
-                                        initial={{ opacity: 0, height: 0, y: -10 }}
-                                        animate={{ opacity: 1, height: 'auto', y: 0 }}
-                                        exit={{ opacity: 0, height: 0 }}
-                                        className={`p-3 rounded-xl flex items-center gap-3 text-xs sm:text-sm font-medium border overflow-hidden ${status.type === 'error'
-                                            ? 'bg-red-500/10 text-red-400 border-red-500/20'
-                                            : 'bg-amber-500/10 text-amber-400 border-amber-500/20'
-                                            }`}
+                                {/* AVISO DE SEGURIDAD AZUL */}
+                                <div className="bg-blue-50 border-l-4 border-blue-600 p-4 rounded-r-2xl">
+                                    <p className="text-[11px] text-slate-600 font-bold uppercase italic leading-snug">
+                                        Esta contraseña será tu <span className="text-blue-600">llave maestra</span> para entrar al sistema. Guárdala bien.
+                                    </p>
+                                </div>
+
+                                <AnimatePresence>
+                                    {status.message && (
+                                        <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className={`p-3 rounded-xl flex items-center gap-3 text-sm font-bold border ${status.type === 'error' ? 'bg-red-50 text-red-600 border-red-100' : 'bg-amber-50 text-amber-600 border-amber-100'}`}>
+                                            <AlertTriangle size={16} /> <span>{status.message}</span>
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
+
+                                <div className="pt-4">
+                                    {/* BOTÓN: COLOR AZUL, DISEÑO ORIGINAL MANTENIDO */}
+                                    <button
+                                        type="submit"
+                                        className="w-full group/btn relative py-5 bg-blue-600 text-white font-[1000] italic uppercase rounded-2xl overflow-hidden transition-all hover:scale-[1.02] active:scale-95 shadow-xl shadow-blue-600/30"
                                     >
-                                        <AlertTriangle size={16} className="flex-shrink-0" />
-                                        <span>{status.message}</span>
-                                    </motion.div>
-                                )}
-                            </AnimatePresence>
-
-                            <div className="pt-2 md:pt-4">
-                                <button
-                                    type="submit"
-                                    className="w-full group/btn relative py-4 md:py-5 bg-gradient-to-r from-[#00C1A3] to-emerald-400 text-[#020617] font-[1000] italic uppercase rounded-xl md:rounded-2xl overflow-hidden transition-all hover:scale-[1.02] active:scale-95 shadow-[0_15px_30px_rgba(0,193,163,0.3)] focus:outline-none focus:ring-4 focus:ring-[#00C1A3]/50"
-                                >
-                                    <span className="relative z-10 flex items-center justify-center gap-2 md:gap-3 text-base md:text-lg tracking-widest leading-none">
-                                        SOLICITAR ACCESO <ArrowRight size={18} className="group-hover/btn:translate-x-2 transition-transform" />
-                                    </span>
-                                    <div className="absolute inset-0 bg-white opacity-0 group-hover/btn:opacity-20 transition-opacity" />
-                                </button>
-                            </div>
-                        </form>
+                                        <span className="relative z-10 flex items-center justify-center gap-3 text-lg tracking-widest">
+                                            SOLICITAR ACCESO <ArrowRight size={20} className="group-hover/btn:translate-x-2 transition-transform" />
+                                        </span>
+                                        <div className="absolute inset-0 bg-white opacity-0 group-hover/btn:opacity-10 transition-opacity" />
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </motion.div>
             </div>
 
-            {/* --- MODAL DE CONFIRMACIÓN ANIMADO --- */}
+            {/* --- MODAL DE ÉXITO --- */}
             <AnimatePresence>
-                {/* ... (el modal se queda igual) ... */}
                 {showModal && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-[100] flex items-center justify-center bg-[#020617]/90 backdrop-blur-md p-4"
-                    >
-                        <motion.div
-                            initial={{ scale: 0.9, opacity: 0, y: 20 }}
-                            animate={{ scale: 1, opacity: 1, y: 0 }}
-                            exit={{ scale: 0.9, opacity: 0, y: 20 }}
-                            transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                            className="bg-slate-900 border border-white/10 p-6 sm:p-8 md:p-10 rounded-[2rem] shadow-[0_30px_60px_rgba(0,0,0,0.8)] max-w-md w-full relative overflow-hidden"
-                        >
-                            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[250px] h-[250px] bg-[#00C1A3]/20 blur-[80px] rounded-full pointer-events-none" />
-
-                            <div className="relative z-10 text-center space-y-6">
-                                <AnimatePresence mode="wait">
-                                    {!isCompleted ? (
-                                        <motion.div
-                                            key="step1"
-                                            initial={{ opacity: 0, x: 20 }}
-                                            animate={{ opacity: 1, x: 0 }}
-                                            exit={{ opacity: 0, x: -20 }}
-                                            className="space-y-6"
-                                        >
-                                            <div className="w-16 h-16 bg-[#00C1A3]/10 text-[#00C1A3] rounded-full flex items-center justify-center mx-auto border border-[#00C1A3]/30 shadow-inner">
-                                                <User size={32} />
-                                            </div>
-                                            <div>
-                                                <h3 className="text-xl sm:text-2xl font-[1000] text-white italic uppercase tracking-tight">Confirmar Registro</h3>
-                                                <p className="text-slate-400 font-light text-sm sm:text-base mt-2">¿Estás seguro de que deseas crear la cuenta para <strong className="text-white">{formData.empresa}</strong>?</p>
-                                            </div>
-
-                                            <div className="flex flex-col-reverse sm:flex-row items-center gap-3 pt-4">
-                                                <button
-                                                    onClick={handleCancel}
-                                                    disabled={isSubmitting}
-                                                    className="w-full sm:flex-1 py-3.5 px-4 bg-white/5 hover:bg-white/10 text-slate-300 font-bold rounded-xl transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
-                                                >
-                                                    <X size={18} /> Cancelar
-                                                </button>
-                                                <button
-                                                    onClick={handleAccept}
-                                                    disabled={isSubmitting}
-                                                    className="w-full sm:flex-1 py-3.5 px-4 bg-[#00C1A3] text-[#020617] font-black italic uppercase tracking-wider rounded-xl hover:scale-105 active:scale-95 transition-all shadow-[0_10px_20px_rgba(0,193,163,0.3)] flex items-center justify-center gap-2 disabled:opacity-80 disabled:hover:scale-100"
-                                                >
-                                                    {isSubmitting ? (
-                                                        <><Loader2 size={18} className="animate-spin" /> Procesando</>
-                                                    ) : (
-                                                        <>Aceptar <ArrowRight size={18} /></>
-                                                    )}
-                                                </button>
-                                            </div>
-                                        </motion.div>
-                                    ) : (
-                                        <motion.div
-                                            key="step2"
-                                            initial={{ opacity: 0, scale: 0.8 }}
-                                            animate={{ opacity: 1, scale: 1 }}
-                                            className="space-y-6 py-6"
-                                        >
-                                            <motion.div
-                                                animate={{ rotate: [0, 10, -10, 0], scale: [1, 1.1, 1] }}
-                                                transition={{ duration: 0.6, ease: "easeInOut" }}
-                                                className="w-20 h-20 bg-[#00C1A3]/20 text-[#00C1A3] rounded-full flex items-center justify-center mx-auto border-2 border-[#00C1A3] shadow-[0_0_30px_rgba(0,193,163,0.3)]"
-                                            >
-                                                <CheckCircle2 size={40} />
-                                            </motion.div>
-                                            <div>
-                                                <h3 className="text-2xl sm:text-3xl font-[1000] text-white italic uppercase tracking-tighter">¡Registro Exitoso!</h3>
-                                                <p className="text-[#00C1A3] font-bold tracking-widest uppercase text-xs mt-3 animate-pulse">
-                                                    Por favor, revisa tu bandeja de entrada para activar tu cuenta.
-                                                </p>
-                                            </div>
-                                        </motion.div>
-                                    )}
-                                </AnimatePresence>
-                            </div>
+                    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4">
+                        <motion.div initial={{ scale: 0.9, y: 20 }} animate={{ scale: 1, y: 0 }} className="bg-white p-10 rounded-[3rem] shadow-2xl max-w-md w-full text-center space-y-6 border border-slate-100">
+                            {!isCompleted ? (
+                                <>
+                                    <div className="w-16 h-16 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mx-auto shadow-inner">
+                                        <User size={32} />
+                                    </div>
+                                    <h3 className="text-3xl font-[1000] text-slate-950 italic uppercase">¿Todo listo?</h3>
+                                    <p className="text-slate-500 font-medium">Crearemos la cuenta para <strong className="text-slate-900">{formData.empresa}</strong></p>
+                                    <div className="flex gap-4 pt-4">
+                                        <button onClick={() => setShowModal(false)} className="flex-1 py-4 bg-slate-100 text-slate-600 font-bold rounded-2xl">Cancelar</button>
+                                        <button onClick={handleAccept} className="flex-1 py-4 bg-blue-600 text-white font-black italic uppercase rounded-2xl shadow-lg shadow-blue-600/20">
+                                            {isSubmitting ? <Loader2 className="animate-spin mx-auto" /> : "¡Sí, vamos!"}
+                                        </button>
+                                    </div>
+                                </>
+                            ) : (
+                                <div className="py-6">
+                                    <div className="w-20 h-20 bg-blue-600 text-white rounded-full flex items-center justify-center mx-auto shadow-2xl animate-bounce">
+                                        <CheckCircle2 size={40} />
+                                    </div>
+                                    <h3 className="text-3xl font-[1000] text-slate-950 italic uppercase mt-6">¡Éxito total!</h3>
+                                    <p className="text-blue-600 font-black uppercase tracking-widest text-xs mt-4">Revisa tu correo para activar tu cuenta.</p>
+                                </div>
+                            )}
                         </motion.div>
                     </motion.div>
                 )}
@@ -438,72 +231,35 @@ export const RegisterHome = () => {
     );
 };
 
-// --- Sub-componentes auxiliares ---
+// --- SUB-COMPONENTES ---
 
 const DataLine = ({ index, total }: { index: number, total: number }) => {
-    const laneHeight = 10 + (index * (80 / (total - 1)));
+    const laneHeight = 15 + (index * (70 / (total - 1)));
     return (
         <motion.div
             initial={{ left: "-20%", opacity: 0 }}
-            animate={{ left: "110%", opacity: [0, 0.3, 0.3, 0] }}
-            transition={{ duration: 10 + index, repeat: Infinity, delay: index * 1.5, ease: "linear" }}
-            className="absolute h-[1px] bg-gradient-to-r from-transparent via-[#00C1A3] to-transparent will-change-transform"
-            style={{ top: `${laneHeight}%`, width: `${100 + index * 50}px` }}
-        >
-            <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-1 bg-[#00C1A3] rounded-full shadow-[0_0_10px_#00C1A3]" />
-        </motion.div>
+            animate={{ left: "110%", opacity: [0, 0.2, 0.2, 0] }}
+            transition={{ duration: 12 + index, repeat: Infinity, delay: index * 2, ease: "linear" }}
+            className="absolute h-[1px] bg-gradient-to-r from-transparent via-blue-400 to-transparent"
+            style={{ top: `${laneHeight}%`, width: `${150 + index * 50}px` }}
+        />
     );
 };
 
-interface InputFieldProps {
-    icon: React.ReactNode;
-    label: string;
-    placeholder: string;
-    type?: string;
-    name: string;
-    value: string;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    required?: boolean;
-    isPassword?: boolean;
-    showPassword?: boolean;
-    onTogglePassword?: () => void;
-}
-
-const InputField = ({ icon, label, placeholder, type = "text", name, value, onChange, required, isPassword, showPassword, onTogglePassword }: InputFieldProps) => (
-    <div className="space-y-1.5 group">
-        <label className="text-[9px] sm:text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-2 group-focus-within:text-[#00C1A3] transition-colors">
-            {label}
-        </label>
+const InputField = ({ icon, label, placeholder, type = "text", name, value, onChange, required, isPassword, showPassword, onTogglePassword }: any) => (
+    <div className="space-y-2 group">
+        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2 group-focus-within:text-blue-600 transition-colors">{label}</label>
         <div className="relative">
-            <div className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-[#00C1A3] transition-colors">
-                {icon}
-            </div>
+            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-600 transition-colors">{icon}</div>
             <input
-                type={type}
-                name={name}
-                value={value}
-                onChange={onChange}
-                required={required}
-                placeholder={placeholder}
-                className={`w-full bg-white/5 border border-white/10 rounded-xl sm:rounded-2xl py-3.5 sm:py-4 pl-10 sm:pl-12 ${isPassword ? 'pr-12' : 'pr-4'} text-white placeholder:text-slate-600 outline-none focus:border-[#00C1A3]/50 focus:bg-white/[0.05] focus:ring-2 focus:ring-[#00C1A3]/20 transition-all text-xs sm:text-sm font-medium`}
+                type={type} name={name} value={value} onChange={onChange} required={required} placeholder={placeholder}
+                className={`w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 pl-12 ${isPassword ? 'pr-12' : 'pr-4'} text-slate-900 placeholder:text-slate-300 outline-none focus:border-blue-600/50 focus:bg-white focus:ring-4 focus:ring-blue-600/5 transition-all text-sm font-bold`}
             />
             {isPassword && (
-                <button
-                    type="button"
-                    onClick={onTogglePassword}
-                    className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 text-slate-500 hover:text-[#00C1A3] transition-colors focus:outline-none"
-                >
+                <button type="button" onClick={onTogglePassword} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-blue-600 transition-colors">
                     {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
             )}
         </div>
-    </div>
-);
-
-const StatusItem = ({ label, value }: { label: string, value: string }) => (
-    <div className="flex items-center gap-2 sm:gap-3 bg-white/5 px-3 py-1.5 rounded-full border border-white/5 lg:bg-transparent lg:border-transparent lg:px-0 lg:py-0 transition-colors hover:bg-white/10">
-        <div className="w-1.5 h-1.5 rounded-full bg-[#00C1A3] animate-pulse shadow-[0_0_5px_#00C1A3]" />
-        <span className="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest">{label}:</span>
-        <span className="text-[9px] sm:text-[10px] font-black text-white uppercase italic">{value}</span>
     </div>
 );
