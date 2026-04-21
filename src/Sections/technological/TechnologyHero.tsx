@@ -31,7 +31,7 @@ export const TechnologyHero = () => {
         <section
             ref={containerRef}
             onMouseMove={handleMouseMove}
-            className="relative min-h-[80vh] flex items-center justify-center overflow-hidden bg-white px-6 py-20 group"
+            className="relative min-h-[80vh] flex items-center justify-center overflow-hidden bg-white px-6 py-10 group"
         >
             {/* 1. FONDO LIMPIO CON DESTELLOS VERDES */}
             <div className="absolute inset-0 z-0 pointer-events-none">
