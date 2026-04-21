@@ -95,7 +95,7 @@ export const RegisterHome = () => {
         <section
             ref={containerRef}
             onMouseMove={handleMouseMove}
-            className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white px-4 md:px-6 py-20"
+            className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white px-4 md:px-6 py-10"
         >
             {/* --- FONDO CON DESTELLOS VERDES REFORZADOS --- */}
             <div className="absolute inset-0 z-0 pointer-events-none">
