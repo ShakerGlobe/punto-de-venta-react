@@ -103,7 +103,6 @@ export const DemoHero = ({ children, activePage, setActivePage }) => {
                             transition={{ delay: 0.3 }}
                             className="relative w-full max-w-[450px] aspect-square flex items-center justify-center"
                         >
-                            {/* AQUÍ PONES TU IMAGEN */}
                             <img 
                                 src="/images/punto-de-venta-1.jpeg" 
                                 alt="Demo Visual" 
