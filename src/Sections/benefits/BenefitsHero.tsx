@@ -113,7 +113,7 @@ export const BenefitsHero = () => {
                         >
                             <div className="relative aspect-square rounded-[3rem] bg-slate-50 border-8 border-white shadow-2xl flex items-center justify-center overflow-hidden">
                                 <img 
-                                    src="/images/nedimi-pos-02.png" 
+                                    src="/images/nedimi-pos-01.png" 
                                     alt="Control de Inventario Nedimi" 
                                     className="w-full h-full object-contain p-4"
                                 />

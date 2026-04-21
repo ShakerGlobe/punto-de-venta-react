@@ -103,7 +103,7 @@ export const DemoHero = ({ children, activePage, setActivePage }) => {
                         >
                             {/* IMAGEN DE DEMO / MOCKUP */}
                             <img 
-                                src="/images/punto-de-venta-1.jpeg" 
+                                src="/images/nedimipos.webp" 
                                 alt="Nedimi Software Preview" 
                                 className="w-full h-full object-contain drop-shadow-[0_35px_60px_rgba(0,193,163,0.2)] rounded-[3rem]"
                             />

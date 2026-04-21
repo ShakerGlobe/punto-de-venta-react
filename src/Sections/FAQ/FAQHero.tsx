@@ -114,7 +114,7 @@ export const FAQHero = () => {
                         >
                             <div className="relative aspect-square rounded-[3rem] bg-slate-50 border-8 border-white shadow-2xl flex items-center justify-center overflow-hidden">
                                 <img 
-                                    src="/images/nedimi-pos-04.png" 
+                                    src="/images/nedimi-pos-01.png"  
                                     alt="Soporte Nedimi" 
                                     className="w-full h-full object-contain p-8"
                                 />

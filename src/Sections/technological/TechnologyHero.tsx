@@ -115,7 +115,7 @@ export const TechnologyHero = () => {
                         >
                             {/* Imagen de Hardware suministrada */}
                             <img 
-                                src="/images/nedimi-pos-03.webp" 
+                                src="/images/nedimi-pos-01.png" 
                                 alt="Hardware Nedimi POS" 
                                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                             />
