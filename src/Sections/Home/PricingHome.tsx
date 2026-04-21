@@ -19,7 +19,7 @@ export const PricingHome = () => {
                 "1 Usuario",
                 "Ventas e inventario ilimitado",
                 "Usa tu cel como escáner",
-                "Primer mes GRATIS",
+                "15 días GRATIS",
                 "Capacitación Inicial"
             ],
             highlight: false
@@ -35,7 +35,7 @@ export const PricingHome = () => {
                 "Hasta 3 Usuarios",
                 "Ventas e inventario ilimitado",
                 "Soporte Premium 24/7",
-                "Primer mes GRATIS",
+                "15 días GRATIS",
                 "Reportes avanzados"
             ],
             highlight: true // Este será el bloque azul
@@ -51,7 +51,7 @@ export const PricingHome = () => {
                 "Hasta 5 Usuarios",
                 "Soporte prioritario",
                 "Multisucursal incluido",
-                "Primer mes GRATIS",
+                "15 días GRATIS",
                 "Exportar datos a Excel"
             ],
             highlight: false
