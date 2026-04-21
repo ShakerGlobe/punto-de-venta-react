@@ -35,19 +35,19 @@ export const WhatsAppButton = () => {
 
                         <button
                             onClick={() => setShowTooltip(false)}
-                            className="absolute top-3 right-3 text-slate-400 hover:text-blue-600 bg-slate-50 p-1.5 rounded-full transition-colors"
+                            className="absolute top-3 right-3 text-slate-400 hover:text-[#00C1A3] bg-slate-50 p-1.5 rounded-full transition-colors"
                         >
                             <X size={14} />
                         </button>
 
                         <div className="flex items-center gap-3 mb-3">
-                            <div className="relative flex items-center justify-center w-10 h-10 rounded-full bg-blue-50 border border-blue-100 p-1.5">
+                            <div className="relative flex items-center justify-center w-10 h-10 rounded-full bg-emerald-50 border border-emerald-100 p-1.5">
                                 <img
                                     src="/images/nedimi-pos-04.png"
                                     alt="Nedimi Soporte"
                                     className="w-full h-full object-contain"
                                 />
-                                <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-white rounded-full" />
+                                <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 border-2 border-white rounded-full" />
                             </div>
                             <div className="flex flex-col">
                                 <span className="text-[13px] text-slate-900 font-black italic uppercase tracking-tight">Equipo Nedimi</span>
@@ -57,13 +57,13 @@ export const WhatsAppButton = () => {
 
                         <p className="text-slate-600 text-[13px] leading-relaxed font-medium italic">
                             ¡Hola! ¿Te gustaría ver cómo funciona el sistema en tu tienda? <br />
-                            <span className="text-blue-600 font-black uppercase text-[11px] tracking-wider mt-2 block">Chatea con nosotros</span>
+                            <span className="text-[#00C1A3] font-black uppercase text-[11px] tracking-wider mt-2 block">Chatea con nosotros</span>
                         </p>
                     </motion.div>
                 )}
             </AnimatePresence>
 
-            {/* --- BOTÓN DE WHATSAPP (Solo Icono de WhatsApp) --- */}
+            {/* --- BOTÓN DE WHATSAPP (Versión Verde Nedimi) --- */}
             <motion.a
                 href={whatsappUrl}
                 target="_blank"
@@ -73,15 +73,14 @@ export const WhatsAppButton = () => {
                 transition={{ type: "spring", stiffness: 260, damping: 20, delay: 0.5 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setShowTooltip(false)}
-                // Estructura de expansión inteligente
-                className="pointer-events-auto relative group flex items-center h-14 md:h-16 bg-blue-600 shadow-2xl shadow-blue-600/30 text-white rounded-full overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] max-w-[180px] md:max-w-[64px] md:hover:max-w-[280px]"
+                className="pointer-events-auto relative group flex items-center h-14 md:h-16 bg-[#00C1A3] shadow-2xl shadow-[#00C1A3]/30 text-white rounded-full overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] max-w-[180px] md:max-w-[64px] md:hover:max-w-[280px]"
             >
-                {/* ICONO DE WHATSAPP (Ancla fija a la izquierda) */}
+                {/* ICONO DE WHATSAPP */}
                 <div className="flex items-center justify-center w-14 md:w-16 shrink-0 h-full relative z-10">
                     <FaWhatsapp className="w-7 h-7 md:w-8 md:h-8 drop-shadow-md" />
 
-                    {/* Notificación roja (Punto de atención) */}
-                    <span className="absolute top-3.5 right-3.5 md:top-4 md:right-4 w-3.5 h-3.5 bg-red-500 border-2 border-blue-600 rounded-full z-20 flex items-center justify-center md:group-hover:opacity-0 transition-opacity duration-300">
+                    {/* Notificación roja */}
+                    <span className="absolute top-3.5 right-3.5 md:top-4 md:right-4 w-3.5 h-3.5 bg-red-500 border-2 border-[#00C1A3] rounded-full z-20 flex items-center justify-center md:group-hover:opacity-0 transition-opacity duration-300">
                         <span className="w-full h-full bg-red-500 rounded-full animate-ping opacity-60 absolute" />
                     </span>
                 </div>
@@ -89,7 +88,7 @@ export const WhatsAppButton = () => {
                 {/* TEXTO EXPANDIBLE */}
                 <div className="flex items-center whitespace-nowrap overflow-hidden">
                     
-                    {/* Móvil: Texto corto siempre visible */}
+                    {/* Móvil: Texto corto */}
                     <div className="flex md:hidden items-center pr-6">
                         <span className="font-black italic uppercase text-xs tracking-widest">¿Hablamos?</span>
                     </div>

@@ -43,7 +43,7 @@ export const Navbar = ({ onOpenModal }: NavbarProps) => {
 
     return (
         <>
-            {/* --- HEADER CONTENEDOR (Efecto Glass sutil al scroll) --- */}
+            {/* --- HEADER CONTENEDOR --- */}
             <header
                 className={`fixed w-full top-0 z-[140] transition-all duration-300 ${scrolled
                     ? 'bg-white/80 backdrop-blur-md border-b border-slate-200/50 py-3'
@@ -52,7 +52,7 @@ export const Navbar = ({ onOpenModal }: NavbarProps) => {
             >
                 <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 flex items-center justify-between">
 
-                    {/* 1. BRANDING (Identidad de Marca) */}
+                    {/* 1. BRANDING (Identidad en Verde) */}
                     <Link
                         to="/"
                         onClick={() => setMobileMenuOpen(false)}
@@ -67,15 +67,15 @@ export const Navbar = ({ onOpenModal }: NavbarProps) => {
                         </div>
                         <div className="flex flex-col -space-y-1">
                             <span className="text-xl lg:text-2xl font-black text-slate-900 tracking-tighter">
-                                Nedimi<span className="text-blue-600">POS</span>
+                                Nedimi<span className="text-[#00C1A3]">POS</span>
                             </span>
-                            <span className="text-[10px] font-bold text-blue-600/60 tracking-[0.2em] uppercase ml-0.5">
+                            <span className="text-[10px] font-bold text-[#00C1A3]/60 tracking-[0.2em] uppercase ml-0.5">
                                 Punto de Venta
                             </span>
                         </div>
                     </Link>
 
-                    {/* 2. NAVIGATION (Menu Centrado Orgánico) */}
+                    {/* 2. NAVIGATION (Tabs en Verde) */}
                     <nav
                         className="hidden lg:flex items-center bg-slate-100/50 p-1.5 rounded-2xl border border-slate-200/40"
                         onMouseLeave={() => setHoveredTab(null)}
@@ -92,21 +92,21 @@ export const Navbar = ({ onOpenModal }: NavbarProps) => {
                                     className="relative flex items-center gap-2 px-5 py-2.5 rounded-xl text-[14px] font-bold transition-colors z-10"
                                 >
                                     {isActive && !isHovered && (
-                                        <div className="absolute inset-0 bg-white rounded-xl shadow-sm shadow-blue-900/5 ring-1 ring-slate-200/50 -z-10" />
+                                        <div className="absolute inset-0 bg-white rounded-xl shadow-sm shadow-emerald-900/5 ring-1 ring-slate-200/50 -z-10" />
                                     )}
 
                                     {isHovered && (
                                         <motion.div
                                             layoutId="hover-pill"
-                                            className="absolute inset-0 bg-white/80 rounded-xl shadow-sm shadow-blue-900/5 ring-1 ring-slate-200/50 -z-10"
+                                            className="absolute inset-0 bg-white/80 rounded-xl shadow-sm shadow-emerald-900/5 ring-1 ring-slate-200/50 -z-10"
                                             transition={{ type: "spring", bounce: 0.2, duration: 0.5 }}
                                         />
                                     )}
 
-                                    <span className={`transition-colors duration-200 ${isActive || isHovered ? 'text-blue-600' : 'text-slate-400'}`}>
+                                    <span className={`transition-colors duration-200 ${isActive || isHovered ? 'text-[#00C1A3]' : 'text-slate-400'}`}>
                                         {link.icon}
                                     </span>
-                                    <span className={`transition-colors duration-200 ${isActive || isHovered ? 'text-blue-700' : 'text-slate-500'}`}>
+                                    <span className={`transition-colors duration-200 ${isActive || isHovered ? 'text-[#00a88e]' : 'text-slate-500'}`}>
                                         {link.name}
                                     </span>
                                 </button>
@@ -114,13 +114,12 @@ export const Navbar = ({ onOpenModal }: NavbarProps) => {
                         })}
                     </nav>
 
-                    {/* 3. ACTIONS (Conversión Directa) */}
+                    {/* 3. ACTIONS (Conversión en Verde) */}
                     <div className="flex items-center gap-3 lg:gap-4">
 
-                        {/* --- EL BOTÓN INGRESAR AHORA TIENE BLUR Y ESTRUCTURA --- */}
                         <button
                             onClick={() => window.location.href = '/puntodeventa/'}
-                            className="hidden sm:flex items-center gap-2 text-sm font-bold text-slate-600 bg-slate-100/50 backdrop-blur-md border border-slate-200/50 hover:bg-white hover:text-blue-600 hover:shadow-sm transition-all px-4 py-2.5 rounded-xl"
+                            className="hidden sm:flex items-center gap-2 text-sm font-bold text-slate-600 bg-slate-100/50 backdrop-blur-md border border-slate-200/50 hover:bg-white hover:text-[#00C1A3] hover:shadow-sm transition-all px-4 py-2.5 rounded-xl"
                         >
                             <UserCircle size={18} />
                             Ingresar
@@ -128,7 +127,7 @@ export const Navbar = ({ onOpenModal }: NavbarProps) => {
 
                         <button
                             onClick={() => navigate('/register')}
-                            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold px-6 py-3 rounded-2xl transition-all shadow-lg shadow-blue-600/20 active:scale-95 group"
+                            className="flex items-center gap-2 bg-[#00C1A3] hover:bg-[#00a88e] text-white text-sm font-bold px-6 py-3 rounded-2xl transition-all shadow-lg shadow-[#00C1A3]/20 active:scale-95 group"
                         >
                             <span className="hidden sm:inline">Probar Gratis</span>
                             <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
@@ -171,11 +170,11 @@ export const Navbar = ({ onOpenModal }: NavbarProps) => {
                                         <button
                                             key={link.path}
                                             onClick={() => handleNavigation(link.path)}
-                                            className={`flex items-center justify-between w-full p-4 rounded-2xl transition-all ${isActive ? 'bg-blue-50 text-blue-600' : 'hover:bg-slate-50 text-slate-700'
+                                            className={`flex items-center justify-between w-full p-4 rounded-2xl transition-all ${isActive ? 'bg-emerald-50 text-[#00C1A3]' : 'hover:bg-slate-50 text-slate-700'
                                                 }`}
                                         >
                                             <div className="flex items-center gap-4">
-                                                <div className={`${isActive ? 'text-blue-600' : 'text-slate-400'}`}>
+                                                <div className={`${isActive ? 'text-[#00C1A3]' : 'text-slate-400'}`}>
                                                     {link.icon}
                                                 </div>
                                                 <span className="text-lg font-bold">{link.name}</span>
@@ -196,7 +195,7 @@ export const Navbar = ({ onOpenModal }: NavbarProps) => {
                                 </button>
                                 <button
                                     onClick={() => { navigate('/register'); setMobileMenuOpen(false); }}
-                                    className="flex items-center justify-center p-4 rounded-2xl bg-blue-600 text-white gap-3 shadow-lg shadow-blue-600/20 font-bold active:scale-95 transition-transform"
+                                    className="flex items-center justify-center p-4 rounded-2xl bg-[#00C1A3] text-white gap-3 shadow-lg shadow-[#00C1A3]/20 font-bold active:scale-95 transition-transform"
                                 >
                                     <span>Empezar a Probar Gratis</span>
                                     <ArrowRight size={20} />
