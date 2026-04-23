@@ -79,11 +79,11 @@ export const TechnologyHero = () => {
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.6, delay: 0.1 }}
-                                className="text-5xl md:text-7xl xl:text-8xl font-black leading-[1.1] italic uppercase tracking-tighter text-slate-950"
-                            >
-                                PODER REAL PARA <br />
+                                className="text-5xl md:text-6xl xl:text-7xl font-black leading-[1.1] italic uppercase tracking-tighter text-slate-950"
+                                >
+                                    PODER REAL <br />
                                 <span className="text-[#00C1A3] underline decoration-emerald-100 decoration-8 underline-offset-4">
-                                    TU NEGOCIO
+                                    PARA TU NEGOCIO
                                 </span>
                             </motion.h1>
                         </div>

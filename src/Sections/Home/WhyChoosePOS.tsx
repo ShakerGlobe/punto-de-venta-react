@@ -70,7 +70,7 @@ export const WhyChoosePOS = () => {
     ];
 
     return (
-        <section ref={containerRef} className="relative py-10 md:py-14 lg:py-16 bg-white overflow-hidden">
+        <section ref={containerRef} className="relative py-15 md:py-16 lg:py-20 bg-white overflow-hidden">
             
             {/* --- DESTELLOS VERDES REFORZADOS --- */}
             <div className="absolute inset-0 pointer-events-none z-0">
