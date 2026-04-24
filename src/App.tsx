@@ -7,13 +7,13 @@ import ReactPixel from 'react-facebook-pixel';
 
 // --- PÁGINAS ---
 import Home from './Pages/Home';
-import BenefitsPage from './pages/BenefitsPage';
-import FAQPage from './pages/FAQPage';
-import TechnologicalPage from './pages/TechnologicalPage';
-import RegisterPage from './pages/RegisterPage';
-import DemoPage from './pages/DemoPage';
-import PlanesPage from './pages/PlanesPage';
-import Contratar from "./pages/Contratar";
+import BenefitsPage from './Pages/BenefitsPage';
+import FAQPage from './Pages/FAQPage';
+import TechnologicalPage from './Pages/TechnologicalPage';
+import RegisterPage from './Pages/RegisterPage';
+import DemoPage from './Pages/DemoPage';
+import PlanesPage from './Pages/PlanesPage';
+import Contratar from "./Pages/Contratar";
 
 // --- COMPONENTES ARQUITECTURA NUEVA ---
 // Layout
