@@ -47,7 +47,7 @@ export const RegisterCTA = () => {
                         className="group relative px-10 md:px-16 py-6 md:py-8 bg-[#00C1A3] text-white font-[1000] italic uppercase rounded-[2.5rem] transition-all hover:scale-105 active:scale-95 shadow-[0_30px_60px_-12px_rgba(0,193,163,0.5)] mb-10 overflow-hidden"
                     >
                         <span className="relative z-10 flex items-center justify-center gap-4 text-lg md:text-2xl tracking-widest">
-                            EMPEZAR MI PRUEBA GRATIS 
+                            EMPEZAR MI DEMO GRATIS 
                             <Rocket size={28} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                         </span>
                         {/* Brillo de barrido */}

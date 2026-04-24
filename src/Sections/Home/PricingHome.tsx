@@ -221,7 +221,7 @@ export const PricingHome = () => {
                         onClick={() => navigate('/register')}
                         className="group flex items-center gap-4 px-8 md:px-12 py-5 md:py-6 bg-[#00C1A3] text-white font-[1000] italic uppercase rounded-2xl shadow-[0_20px_50px_-10px_rgba(0,193,163,0.5)] hover:scale-105 transition-all active:scale-95"
                     >
-                        <span className="text-lg md:text-xl tracking-widest">Empezar Mes Gratis</span>
+                        <span className="text-lg md:text-xl tracking-widest">Empezar Mi Demo Gratis</span>
                         <ArrowRight size={24} className="group-hover:translate-x-2 transition-transform" />
                     </button>
                     <p className="mt-8 text-slate-400 font-medium text-base italic">
