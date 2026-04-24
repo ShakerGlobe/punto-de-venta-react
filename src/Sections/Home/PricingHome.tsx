@@ -1,23 +1,29 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Check, Star, Zap, Rocket, ShieldCheck, ArrowRight } from 'lucide-react';
+import { Check, Star, Zap, Rocket, ShieldCheck, ArrowRight, X, UserCheck, UserPlus } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 export const PricingHome = () => {
     const navigate = useNavigate();
     const [isAnnual, setIsAnnual] = useState(false);
 
+    // --- ESTADOS Y VARIABLES PARA STRIPE ---
+    const [showModal, setShowModal] = useState(false);
+    const [selectedPlanInfo, setSelectedPlanInfo] = useState<{ id: string, name: string } | null>(null);
+    const POS_LOGIN_URL = 'https://nedimipos.com/puntodeventa/index.php'; 
+
     // Configuración de WhatsApp para Plan Corporativo
     const phoneNumber = "525534618549";
     const message = "Hola, quiero saber más sobre el plan corporativo";
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
-    const plans = [
+const plans = [
         {
+            id: "plan_inicial", 
             title: "Plan Inicial",
-            priceMonthly: "199",
-            priceAnnual: "179",
-            annualTotal: "2,148",
+            priceMonthly: "197",
+            priceAnnual: "167", // Equivalente de 1997 / 12
+            annualTotal: "1,997",
             description: "Ideal para empezar a dejar la libreta.",
             icon: <Zap size={24} />,
             features: [
@@ -30,10 +36,11 @@ export const PricingHome = () => {
             highlight: false
         },
         {
+            id: "plan_esencial", 
             title: "Plan Esencial",
-            priceMonthly: "499",
-            priceAnnual: "449",
-            annualTotal: "5,388",
+            priceMonthly: "497",
+            priceAnnual: "417", // Equivalente de 4997 / 12
+            annualTotal: "4,997",
             description: "Para negocios que ya están creciendo.",
             icon: <Star size={24} />,
             features: [
@@ -46,8 +53,8 @@ export const PricingHome = () => {
             highlight: true
         },
         {
-            title: "Plan Corporativo", // Corregido
-            isEnterprise: true, // Flag para lógica especial
+            title: "Plan Corporativo", 
+            isEnterprise: true, 
             description: "Control total para multisucursales.",
             icon: <Rocket size={24} />,
             features: [
@@ -60,6 +67,24 @@ export const PricingHome = () => {
             highlight: false
         }
     ];
+
+    // --- FUNCIONES PARA EL MANEJO DEL MODAL STRIPE ---
+    const handleSelectPlan = (planId: string, planName: string) => {
+        const finalPlanId = isAnnual ? `${planId}_anual` : `${planId}_mensual`;
+        setSelectedPlanInfo({ id: finalPlanId, name: planName });
+        setShowModal(true);
+    };
+
+    const handleTengoCuenta = () => {
+        if (selectedPlanInfo) {
+            window.location.href = `${POS_LOGIN_URL}?checkout_plan=${selectedPlanInfo.id}`;
+        }
+    };
+
+    const handleCrearCuenta = () => {
+        navigate('/register');
+        setShowModal(false);
+    };
 
     return (
         <section className="bg-white w-full py-20 md:py-32 overflow-hidden relative" id="precios">
@@ -202,7 +227,7 @@ export const PricingHome = () => {
                                 </a>
                             ) : (
                                 <button
-                                    onClick={() => navigate('/register')}
+                                    onClick={() => handleSelectPlan(plan.id!, plan.title)}
                                     className={`w-full py-5 rounded-2xl font-black italic uppercase tracking-widest text-sm transition-all active:scale-95 ${
                                         plan.highlight
                                         ? 'bg-white text-[#00C1A3] shadow-xl hover:bg-slate-50'
@@ -229,6 +254,67 @@ export const PricingHome = () => {
                     </p>
                 </div>
             </div>
+
+            {/* --- MODAL DE AUTENTICACIÓN --- */}
+            <AnimatePresence>
+                {showModal && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+                        <motion.div 
+                            initial={{ opacity: 0 }} 
+                            animate={{ opacity: 1 }} 
+                            exit={{ opacity: 0 }} 
+                            className="absolute inset-0 bg-slate-950/60 backdrop-blur-sm"
+                            onClick={() => setShowModal(false)}
+                        />
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                            className="relative bg-white rounded-[2rem] p-8 max-w-md w-full shadow-2xl z-10 overflow-hidden"
+                        >
+                            <button 
+                                onClick={() => setShowModal(false)}
+                                className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-600 bg-slate-50 rounded-full transition-colors"
+                            >
+                                <X size={20} />
+                            </button>
+
+                            <div className="text-center mb-8 mt-2">
+                                <h3 className="text-2xl font-[1000] italic uppercase text-slate-900 mb-2">
+                                    ¡Casi listo!
+                                </h3>
+                                <p className="text-slate-500 font-medium">
+                                    Has seleccionado el <span className="font-[1000] text-[#00C1A3]">{selectedPlanInfo?.name} {isAnnual ? '(Anual)' : '(Mensual)'}</span>. Para continuar con el pago, necesitamos saber si ya eres parte de Nedimi.
+                                </p>
+                            </div>
+
+                            <div className="flex flex-col gap-4">
+                                <button
+                                    onClick={handleTengoCuenta}
+                                    className="flex items-center justify-center gap-3 w-full py-4 bg-[#00C1A3] text-white rounded-2xl font-[1000] uppercase tracking-widest text-sm hover:bg-[#00a88f] transition-colors shadow-lg shadow-[#00C1A3]/30"
+                                >
+                                    <UserCheck size={20} />
+                                    Ya tengo cuenta
+                                </button>
+                                
+                                <div className="relative flex items-center py-2">
+                                    <div className="flex-grow border-t border-slate-200"></div>
+                                    <span className="flex-shrink-0 mx-4 text-slate-400 text-[10px] font-black tracking-widest uppercase">O</span>
+                                    <div className="flex-grow border-t border-slate-200"></div>
+                                </div>
+
+                                <button
+                                    onClick={handleCrearCuenta}
+                                    className="flex items-center justify-center gap-3 w-full py-4 bg-white border-2 border-slate-200 text-slate-700 rounded-2xl font-[1000] uppercase tracking-widest text-sm hover:border-[#00C1A3] hover:text-[#00C1A3] transition-colors"
+                                >
+                                    <UserPlus size={20} />
+                                    Crear cuenta nueva
+                                </button>
+                            </div>
+                        </motion.div>
+                    </div>
+                )}
+            </AnimatePresence>
         </section>
     );
 };
