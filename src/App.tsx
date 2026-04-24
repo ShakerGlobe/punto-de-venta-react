@@ -6,7 +6,7 @@ import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import ReactPixel from 'react-facebook-pixel';
 
 // --- PÁGINAS ---
-import Home from './pages/Home';
+import Home from './Pages/Home';
 import BenefitsPage from './pages/BenefitsPage';
 import FAQPage from './pages/FAQPage';
 import TechnologicalPage from './pages/TechnologicalPage';
