@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Check, Star, Zap, Rocket, ShieldCheck, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 export const PricingHome = () => {
     const navigate = useNavigate();
     const [isAnnual, setIsAnnual] = useState(false);
+
+    // Configuración de WhatsApp para Plan Corporativo
+    const phoneNumber = "525534618549";
+    const message = "Hola, quiero saber más sobre el plan corporativo";
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
     const plans = [
         {
@@ -38,14 +43,12 @@ export const PricingHome = () => {
                 "15 días GRATIS",
                 "Reportes avanzados"
             ],
-            highlight: true // Bloque Verde Nedimi
+            highlight: true
         },
         {
-            title: "Plan Pro",
-            priceMonthly: "799",
-            priceAnnual: "719",
-            annualTotal: "8,628",
-            description: "Control total para dueños exigentes.",
+            title: "Plan Corporativo", // Corregido
+            isEnterprise: true, // Flag para lógica especial
+            description: "Control total para multisucursales.",
             icon: <Rocket size={24} />,
             features: [
                 "Hasta 5 Usuarios",
@@ -61,7 +64,6 @@ export const PricingHome = () => {
     return (
         <section className="bg-white w-full py-20 md:py-32 overflow-hidden relative" id="precios">
             
-            {/* --- DESTELLOS VERDES REFORZADOS --- */}
             <div className="absolute inset-0 pointer-events-none">
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#00C1A3]/15 rounded-full blur-[140px]" />
                 <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-emerald-400/10 rounded-full blur-[120px]" />
@@ -69,7 +71,6 @@ export const PricingHome = () => {
 
             <div className="max-w-7xl mx-auto px-6 relative z-10">
 
-                {/* ENCABEZADO UNIFICADO */}
                 <div className="flex flex-col gap-4 text-center items-center mb-16">
                     <motion.div
                         initial={{ opacity: 0, y: -10 }}
@@ -96,7 +97,6 @@ export const PricingHome = () => {
                     </motion.h2>
                 </div>
 
-                {/* TOGGLE PAGO VERDE */}
                 <div className="flex justify-center mb-16">
                     <div className="relative flex p-1.5 bg-slate-100 rounded-full border border-slate-200 w-full max-w-[340px]">
                         <motion.div
@@ -118,7 +118,6 @@ export const PricingHome = () => {
                     </div>
                 </div>
 
-                {/* GRID DE PLANES: Optimizado para móvil */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center mb-20">
                     {plans.map((plan, index) => (
                         <motion.div
@@ -152,18 +151,26 @@ export const PricingHome = () => {
                                 {plan.description}
                             </p>
 
-                            <div className="mb-2 flex items-baseline gap-1">
-                                <span className="text-2xl font-bold">$</span>
-                                <span className="text-5xl md:text-6xl font-[1000] italic tracking-tighter">
-                                    {isAnnual ? plan.priceAnnual : plan.priceMonthly}
-                                </span>
-                                <span className={`text-[9px] font-black uppercase tracking-widest ml-2 ${plan.highlight ? 'text-emerald-100' : 'text-slate-400'}`}>
-                                    MXN / mes
-                                </span>
+                            <div className="mb-2 flex items-baseline gap-1 min-h-[80px]">
+                                {plan.isEnterprise ? (
+                                    <span className="text-3xl md:text-4xl font-[1000] italic tracking-tighter leading-tight uppercase">
+                                        Consulta con ventas
+                                    </span>
+                                ) : (
+                                    <>
+                                        <span className="text-2xl font-bold">$</span>
+                                        <span className="text-5xl md:text-6xl font-[1000] italic tracking-tighter">
+                                            {isAnnual ? plan.priceAnnual : plan.priceMonthly}
+                                        </span>
+                                        <span className={`text-[9px] font-black uppercase tracking-widest ml-2 ${plan.highlight ? 'text-emerald-100' : 'text-slate-400'}`}>
+                                            MXN / mes
+                                        </span>
+                                    </>
+                                )}
                             </div>
 
                             <div className="h-6 mb-8">
-                                {isAnnual && (
+                                {isAnnual && !plan.isEnterprise && (
                                     <span className={`text-[10px] font-bold uppercase tracking-wide ${plan.highlight ? 'text-emerald-100' : 'text-[#00C1A3]'}`}>
                                         *Pago anual de ${plan.annualTotal}
                                     </span>
@@ -181,21 +188,34 @@ export const PricingHome = () => {
                                 ))}
                             </ul>
 
-                            <button
-                                onClick={() => navigate('/register')}
-                                className={`w-full py-5 rounded-2xl font-black italic uppercase tracking-widest text-sm transition-all active:scale-95 ${
-                                    plan.highlight
-                                    ? 'bg-white text-[#00C1A3] shadow-xl hover:bg-slate-50'
-                                    : 'bg-slate-900 text-white shadow-lg hover:bg-slate-800'
-                                }`}
-                            >
-                                Seleccionar Plan
-                            </button>
+                            {plan.isEnterprise ? (
+                                <a
+                                    href={whatsappUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="w-full py-5 rounded-2xl font-black italic uppercase tracking-widest text-sm transition-all active:scale-95 flex items-center justify-center gap-3 bg-[#25D366] text-white shadow-lg shadow-emerald-200/50 hover:bg-[#1EBE5C]"
+                                >
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.72.94 3.659 1.437 5.634 1.437h.005c6.558 0 11.894-5.338 11.897-11.896a11.821 11.821 0 00-3.48-8.413z"/>
+                                    </svg>
+                                    Consultar
+                                </a>
+                            ) : (
+                                <button
+                                    onClick={() => navigate('/register')}
+                                    className={`w-full py-5 rounded-2xl font-black italic uppercase tracking-widest text-sm transition-all active:scale-95 ${
+                                        plan.highlight
+                                        ? 'bg-white text-[#00C1A3] shadow-xl hover:bg-slate-50'
+                                        : 'bg-slate-900 text-white shadow-lg hover:bg-slate-800'
+                                    }`}
+                                >
+                                    Seleccionar Plan
+                                </button>
+                            )}
                         </motion.div>
                     ))}
                 </div>
 
-                {/* CTA FINAL INFERIOR */}
                 <div className="flex flex-col items-center text-center">
                     <button
                         onClick={() => navigate('/register')}
